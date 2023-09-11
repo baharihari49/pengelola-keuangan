@@ -105,6 +105,7 @@
             let response = JSON.parse(this.responseText)
             console.log(response);
             const dataJumlahPendapatan = response.map(res => res.jumlah)
+
            
             const xhr2 = new XMLHttpRequest()
 
@@ -114,7 +115,7 @@
                     console.log(response)
                     const dataJumlahPengeluaran = response.map(res => res.jumlah)
                     const dataTanggal = response.map(res => res.tanggal)
-                    lineChart(dataJumlahPendapatan, dataJumlahPengeluaran)
+                    lineChart(dataJumlahPendapatan, dataJumlahPengeluaran, dataTanggal)
                 }
             }
 

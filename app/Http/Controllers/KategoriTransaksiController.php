@@ -6,6 +6,7 @@ use App\Http\Requests\StoreKategori_transaksiRequest;
 use App\Http\Requests\UpdateKategori_transaksiRequest;
 use App\Models\Jenis_transaksi;
 use App\Models\Kategori_transaksi;
+use App\Models\Kategori_anggaran;
 
 
 // namespace App\Http\Requests;
@@ -22,6 +23,7 @@ class KategoriTransaksiController extends Controller
         return view('dashboard.kategori.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
             'kategori_transaksi' => Kategori_transaksi::paginate(10),
+            'kategori_anggaran' => Kategori_anggaran::all(),
         ]);
     }
 
@@ -42,6 +44,8 @@ class KategoriTransaksiController extends Controller
             'nama' => 'required|max:255',
             'jenis_transaksi_id' => 'required',
         ]);
+
+        $validate['user_id'] = auth()->user()->id;
 
         Kategori_transaksi::create($validate);
 
@@ -106,7 +110,10 @@ class KategoriTransaksiController extends Controller
     }
 
     public function api4() {
-        return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->get();
+        return Kategori_transaksi::where('jenis_transaksi_id', request()->id1)
+                                ->orWhere('jenis_transaksi_id', request()->id2)
+                                ->orWhere('user_id', auth()->user()->id)
+                                ->get();
     }
 
     public function api5() {

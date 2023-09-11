@@ -4,11 +4,18 @@ const updateProductButton = Array.from(document.querySelectorAll('#updateProduct
 const kategoriAnggaranUpdate = document.getElementById('kategori-anggaran-update')
 const detailJumlah = document.getElementById('detail-jumlah')
 const idAnggran = document.getElementById('id')
+const defaultModal = document.getElementById('defaultModal')
+const updateProductModal = document.getElementById('updateProductModal')
 let dataId
+const backdrop = document.createElement('div')
+backdrop.setAttribute('id', 'backdrop')
+backdrop.setAttribute('class', 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40')
 
 defaultModalButton.addEventListener('click', function() {
     const xhr = new XMLHttpRequest();
-
+    defaultModal.classList.remove('hidden')
+    defaultModal.classList.add('flex')
+    document.body.appendChild(backdrop)
     kategoriAnggaran.innerHTML = '<option selected="">Select category</option>'
     xhr.onload = function() {
         if(this.status === 200) {
@@ -23,12 +30,21 @@ defaultModalButton.addEventListener('click', function() {
         }
     }
 
-    xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id=2', true)
+    xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id1=2&id2=3', true)
     xhr.send();
 })
 
 updateProductButton.forEach(updateProductButton => {
     updateProductButton.addEventListener('click', function() {
+
+        console.log(this);
+        updateProductModal.classList.remove('hidden')
+        updateProductModal.classList.add('flex')
+    
+        backdrop.setAttribute('id', 'backdrop')
+        backdrop.setAttribute('class', 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40')
+        document.body.appendChild(backdrop)
+
         const id = updateProductButton.getAttribute('data-id')
         const xhr = new XMLHttpRequest()
 
@@ -55,7 +71,6 @@ updateProductButton.forEach(updateProductButton => {
                 xhr2.send()
 
                 let response = JSON.parse(xhr.responseText)
-                // Akan lebih baik menggunakan async await
                 setTimeout(() => {
                     response.forEach(res => {
                     const option = document.createElement('option')
@@ -67,15 +82,33 @@ updateProductButton.forEach(updateProductButton => {
                     kategoriAnggaranUpdate.appendChild(option)
                 });
                 }, 100);
-                // Akan lebih baik menggunakan async await
             }
         }
 
         xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id=2', true)
         xhr.send()
+
+
     })
 })
 
+
+const remove = (element) => {
+    backdrop.remove()
+    element.classList.remove('flex')
+    element.classList.add('hidden')
+}
+
+const btnCloseModalAnggaran = document.getElementById('btnCloseModalAnggaran')
+const btnCloseUpdateAnggaran = document.getElementById('btnCloseUpdateAnggaran')
+
+btnCloseModalAnggaran.addEventListener('click', function(){
+    remove(defaultModal)
+})
+
+btnCloseUpdateAnggaran.addEventListener('click', function(){
+    remove(updateProductModal)
+})
 
 // fitur Live search
 
@@ -101,9 +134,9 @@ simpleSearch.addEventListener('keyup', function() {
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-3">
                                         <div class="bg-blue-300 w-[100%] h-[7px] relative rounded">
-                                            <div style="width: ${res.persentase}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
+                                            <div style="width: ${Math.round(res.persentase)}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
                                         </div>
-                                        <P>${res.persentase}%</P>
+                                        <P>${Math.round(res.persentase)}%</P>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 flex items-center justify-end">

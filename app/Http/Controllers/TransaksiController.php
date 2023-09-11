@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggaran;
 use App\Models\Jenis_transaksi;
+use App\Models\Kategori_anggaran;
 use App\Models\Kategori_transaksi;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
@@ -21,8 +21,8 @@ class TransaksiController extends Controller
 
         return view('dashboard.transaksi.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::paginate(10),
-            'total_transaksi' => number_format(Transaksi::sum('Jumlah'), 0, ',', '.')
+            'transaksi' => Transaksi::paginate(20),
+            'total_transaksi' => number_format(Transaksi::sum('Jumlah'), 0, ',', '.'),
         ]);
     }
 
@@ -47,7 +47,7 @@ class TransaksiController extends Controller
             'deskripsi' => 'required'
         ]);
 
-        $validate['user_id'] = 1;
+        $validate['user_id'] = auth()->user()->id;
 
         $data_transaksi = Transaksi::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
                         ->select('kategori_transaksi_id')
@@ -143,52 +143,19 @@ class TransaksiController extends Controller
     }
 
     public function api2() {
-        $result = [];
-        if(request()->id == 'all'){
-            $transaksi = Transaksi::all();
-            foreach($transaksi as $i => $tr) {
-                $result [] = [
-                    'jumlah' => $tr->jumlah,
-                    'tanggal' => $tr->tanggal,
-                    'kategori_transaksi' => $tr->Kategori_transaksi->nama,
-                    'uuid' => $tr->uuid,
-                    'jenis_transaksi' => $tr->jenis_transaksi_id,
-                    'deskripsi' => $tr->deskripsi,
-                    'total_transaksi' => number_format(Transaksi::sum('jumlah'), 0, ',', '.')
-                ];
-            }
-            return $result;
-        }else{
-            if(request()->id == 1) {
-                $transaksi = Transaksi::where('jenis_transaksi_id', request()->id)->get();
-                foreach($transaksi as $i => $tr) {
-                    $result [] = [
-                        'jumlah' => $tr->jumlah,
-                        'tanggal' => $tr->tanggal,
-                        'kategori_transaksi' => $tr->Kategori_transaksi->nama,
-                        'uuid' => $tr->uuid,
-                        'jenis_transaksi' => $tr->jenis_transaksi_id,
-                        'deskripsi' => $tr->deskripsi,
-                        'total_transaksi' => number_format(Transaksi::where('jenis_transaksi_id', 1)->sum('jumlah'), 0, ',', '.')
-                    ];
-                }
-                return $result;
-            }else if(request()->id == 2) {
-                $transaksi = Transaksi::where('jenis_transaksi_id', request()->id)->get();
-                foreach($transaksi as $i => $tr) {
-                    $result [] = [
-                        'jumlah' => $tr->jumlah,
-                        'tanggal' => $tr->tanggal,
-                        'kategori_transaksi' => $tr->Kategori_transaksi->nama,
-                        'uuid' => $tr->uuid,
-                        'jenis_transaksi' => $tr->jenis_transaksi_id,
-                        'deskripsi' => $tr->deskripsi,
-                        'total_transaksi' => number_format(Transaksi::where('jenis_transaksi_id', 2)->sum('jumlah'), 0, ',', '.')
-                    ];
-                }
-                return $result;
-            }
+        $records = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                            ->where('transaksis.user_id', auth()->user()->id);
+
+        if (request()->has('id') && request()->id !== 'all') {
+            $records->where('transaksis.jenis_transaksi_id', request()->id); // Menggunakan alias 'transaksis' untuk jenis_transaksi_id
         }
+
+        $records = $records->select('kategori_transaksis.nama', 'transaksis.*')
+                 ->get();
+
+
+        
+        return $records;                    
     }
 
 
@@ -227,32 +194,47 @@ class TransaksiController extends Controller
 
     public function api4() 
     {
-        $data_transaksi_pendapatan = Transaksi::where('jenis_transaksi_id', request()->id)
-                                    ->select(DB::raw('DATE(created_at) as tanggal'), DB::raw('SUM(jumlah) as total_jumlah'))
-                                    ->groupBy(DB::raw('DATE(created_at)'))
-                                    ->get();
+        $records = Transaksi::where('user_id', auth()->user()->id)
+                            ->where('jenis_transaksi_id', request()->id)
+                            ->select(
+                                DB::raw('DATE(created_at) as tanggal'), 
+                                DB::raw('SUM(jumlah) as jumlah'),
+                                'transaksis.jenis_transaksi_id'
+                                )
+                            ->groupBy(DB::raw('DATE(created_at)'), 'transaksis.jenis_transaksi_id')
+                            ->get();
 
-        $result = [];
-        foreach ($data_transaksi_pendapatan as $dtp) {
-            $tanggal = Carbon::parse($dtp->tanggal);
-                $result[] = [
-                    'jumlah' => $dtp->total_jumlah,
-                    'tanggal' => $tanggal->format('j F Y'),
-                ];
-        }
+        return $records;                    
 
-        return $result;
-
+        
     }
 
     public function api5()
     {
         $yesterday = Carbon::now()->subDay()->toDateString();
         $now = now()->format('Y-m-d');
+
         if(request()->days == 'Yesterday'){
-            return Transaksi::whereDate('created_at', $yesterday)->get();
+            $transaksi = Transaksi::whereDate('created_at', $yesterday)->get();
+            foreach($transaksi as $t) {
+                $data [] = [
+                    'jumlah' => $t->jumlah,
+                    'kategori_transaksi' => $t->kategori_transaksi->nama,
+                    'jenis_transaksi_id' => $t->jenis_transaksi_id,
+                ];
+            };
         }else{
-            return Transaksi::whereDate('created_at', $now)->get();
+            $transaksi = Transaksi::whereDate('created_at', $now)->get();
+            foreach($transaksi as $t) {
+                $data [] = [
+                    'jumlah' => $t->jumlah,
+                    'kategori_transaksi' => $t->kategori_transaksi->nama,
+                    'jenis_transaksi_id' => $t->jenis_transaksi_id,
+                ];
+            };
         }
+
+        return $data;
+
     }
 }

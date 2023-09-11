@@ -19,7 +19,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="mt-3 mb-1 text-3xl font-bold">Rp 200.000</p>
+            <p class="mt-3 mb-1 text-3xl font-bold">Rp {{number_format($saldo[0]->saldo, 0, ',', '.')}}</p>
             <p class="text-gray-500 text-sm font-bold">Saldo</p>
         </div>
     </div>
@@ -40,7 +40,9 @@
                     </svg>
                 </div>
             </div>
-            <p class="mt-3 mb-1 text-3xl font-bold">Rp 200.000</p>
+            <p class="mt-3 mb-1 text-3xl font-bold">Rp {{
+                (isset($pendapatanDanPengeluaran[0])) ? number_format($pendapatanDanPengeluaran[0]->saldo, 0, ',', '.') : 0
+            }}</p>            
             <p class="text-gray-500 text-sm font-bold">Pendapatan</p>
         </div>
     </div>
@@ -61,7 +63,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="mt-3 mb-1 text-3xl font-bold">Rp 200.000</p>
+            <p class="mt-3 mb-1 text-3xl font-bold">Rp {{number_format($jumlahAnggaran, 0, ',', '.')}}</p>
             <p class="text-gray-500 text-sm font-bold">Anggaran</p>
         </div>
     </div>
@@ -82,11 +84,104 @@
                     </svg>
                 </div>
             </div>
-            <p class="mt-3 mb-1 text-3xl font-bold">Rp 200.000</p>
+            <p class="mt-3 mb-1 text-3xl font-bold">Rp {{
+                (isset($pendapatanDanPengeluaran[1])) ? number_format($pendapatanDanPengeluaran[1]->saldo, 0, ',', '.') : 0
+            }}</p>  
             <p class="text-gray-500 text-sm font-bold">Pengeluaran</p>
         </div>
     </div>
 </div>
+
+<div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="bg-white shadow-md rounded-lg border-gray-300 p-4">
+        <div>
+            <div class="flex justify-between items-center">
+                <h5 class="text-xl font-semibold">Kebutuhan</h5>
+                <span class="font-bold text-3xl text-blue-800">{{(isset($getBudgeting[0])) ? $getBudgeting[0]->value : 0}}%</span>
+            </div>
+            @if (count($dataBudgeting) > 0)
+                <div class="">
+                    @foreach ($dataBudgeting as $index => $item)
+                        @if ($item['nama'] === 'kebutuhan')
+                        <h5 class="font-bold text-2xl mt-1 mb-3 text-gray-600">Rp {{number_format($item['jumlah'], 0, ',','.')}}</h5>
+                        @endif
+                    @endforeach
+                    <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 {{(isset($persentaseBudgeting[0]) && $persentaseBudgeting[0]['persentase'] < 0) ? 'hidden' : 'flex'}}">
+                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width:{{isset($persentaseBudgeting[0]) ? round($persentaseBudgeting[0]['persentase']) : 0}}%">{{isset($persentaseBudgeting[0]) ? round($persentaseBudgeting[0]['persentase']) : 0}}%</div>
+                    </div>
+                </div>
+
+            @else
+            <button id="btn_modal" data-budget="kebutuhan" class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+                <div class="border-2 p-6 rounded-full border-dashed">
+                    <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                    </svg>
+                </div>
+            </button>             
+            @endif
+        </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg border-gray-300 p-5">
+        <div>
+            <div class="flex justify-between items-center">
+                <h5 class="text-xl font-semibold">Keinginan</h5>
+                <span class="font-bold text-3xl text-purple-800">{{(isset($getBudgeting[1])) ? $getBudgeting[1]->value : 0}}%</span>
+            </div>
+            @if (count($dataBudgeting) > 1)
+            <div class="">
+                @foreach ($dataBudgeting as $index => $item)
+                    @if ($item['nama'] === 'keinginan')
+                    <h5 class="font-bold text-2xl mt-1 mb-3 text-gray-600">Rp {{number_format($item['jumlah'], 0, ',','.')}}</h5>
+                    @endif
+                @endforeach
+                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 {{(isset($persentaseBudgeting[1]) && $persentaseBudgeting[1]['persentase'] < 0) ? 'hidden' : 'flex'}}">
+                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width:{{isset($persentaseBudgeting[1]) ? round($persentaseBudgeting[1]['persentase']) : 0}}%">{{isset($persentaseBudgeting[1]) ? round($persentaseBudgeting[1]['persentase']) : 0}}%</div>
+                </div>
+            </div>
+
+        @else
+        <button id="btn_modal" data-budget="keinginan" class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+            <div class="border-2 p-6 rounded-full border-dashed">
+                <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                </svg>
+            </div>
+        </button>             
+        @endif
+        </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg border-gray-300 p-5">
+        <div>
+            <div class="flex justify-between items-center">
+                <h5 class="text-xl font-semibold">Tabungan</h5>
+                <span class="font-bold text-3xl text-green-700">{{(isset($getBudgeting[2])) ? $getBudgeting[2]->value : 0}}%</span>
+            </div>
+            @if (count($dataBudgeting) > 2)
+                <div class="">
+                    @foreach ($dataBudgeting as $index => $item)
+                        @if ($item['nama'] === 'tabungan')
+                        <h5 class="font-bold text-2xl mt-1 mb-3 text-gray-600">Rp {{number_format($item['jumlah'], 0, ',','.')}}</h5>
+                        @endif
+                    @endforeach
+                    <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 {{(isset($persentaseBudgeting[2]) && $persentaseBudgeting[2]['persentase'] < 0) ? 'hidden' : 'flex'}}">
+                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width:{{isset($persentaseBudgeting[2]) ? round($persentaseBudgeting[2]['persentase']) : 0}}%">{{isset($persentaseBudgeting[2]) ? round($persentaseBudgeting[2]['persentase']) : 0}}%</div>
+                    </div>
+                </div>
+
+            @else
+            <button id="btn_modal" data-budget="tabungan" class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+                <div class="border-2 p-6 rounded-full border-dashed">
+                    <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                    </svg>
+                </div>
+            </button>             
+            @endif
+        </div>
+    </div>
+</div>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
     <div class="bg-white shadow-md p-0 rounded-lg lg:col-span-2 border-gray-300 dark:border-gray-600 h-max">
         @include('dashboard.charts.line_chart')
@@ -136,19 +231,39 @@
         </div>
     </div>
 </div>
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
+
+<div class="grid grid-cols-3 gap-4">
+    <div class="col-span-2 grid grid-cols-2 gap-4">
+
+        <div class="bg-white shadow-md rounded-lg p-3">
+            <h5 class="font-semibold text-gray-700 text-xl mb-4 mt-2">Top Pengeluaran</h5>
+            @include('dashboard.top_pengeluaran')
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5">
+            @include( 'dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
+        </div>
+        
+        <div class="bg-white shadow-md rounded-lg p-5">
+            @include( 'dashboard.charts.pie_chart_budgeting')
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-5">
+            @include( 'dashboard.charts.pie_chart_transaksi_anggaran')
+        </div>
+    </div>
+    <div class="col-span-1">
+        <div class="bg-white shadow-md rounded-lg p-5">
+            @include('dashboard.charts.pie_chart_anggaran')
+        </div>
+    </div>
 </div>
-<div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-<div class="grid grid-cols-2 gap-4">
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-</div>
+
+
+<script src="js/donut_chart_transaksi_pendapatan_pengeluaran.js"></script>
 <script src="js/line_chart_script.js"></script>
 <script src="js/dashboard_script.js"></script>
+<script src="js/pie_chart_flowbite.js"></script>
+<script src="js/pie_chart_transaksi_anggaran.js"></script>
+<script src="js/charts/pie_chart_budgeting.js"></script>
 @endsection

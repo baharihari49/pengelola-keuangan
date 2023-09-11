@@ -127,6 +127,7 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" class="px-4 py-3">No</th>
                             <th scope="col" class="px-4 py-3">Tanggal</th>
                             <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3">Kategori</th>
@@ -138,9 +139,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($transaksi as $t)
+                        @foreach ($transaksi as $index => $t)
                         <tr id="tabel-row" class="border-b dark:border-gray-700">
                            <div id="container-tabel-date">
+                                <td class="px-4 py-3 w-3">{{(request()->page > 1) ? $index + request()->page * 10 - 9 : $index + 1}}</td>
                                 <th id="tabel-date" scope="row"
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$t->tanggal}}</th>
                                 <td id="tabel-date" class="px-4 py-3">Rp {{number_format($t->jumlah, 0, ',', '.')}}</td>

@@ -1,25 +1,27 @@
 const btnDaysDropdwon = Array.from(document.querySelectorAll('#btn-days-dropdown'))
 const tabelHeading = document.getElementById('tabel_heading')
-const tabelRow = document.getElementById('tabel-row')
+const tabelRow = Array.from(document.querySelectorAll('#tabel-row'))
+const tabelBody = document.getElementById('tabel-body')
 
 
 btnDaysDropdwon.forEach(btn => {
     btn.addEventListener('click', function() {
         const xhr = new XMLHttpRequest();
-
+        while(tabelBody.firstChild){
+            tabelBody.removeChild(tabelBody.firstChild)
+        }
+        console.log(tabelRow)
         xhr.onload = function() {
             if (this.status === 200) {
                 let response = JSON.parse(this.responseText);
-                tabelRow.innerHTML = ''; // Menghapus semua isi dari <tbody>
-                response.forEach(res => {
-                    const tr = document.createElement('tr'); // Buat elemen <tr> baru
-                    const th = document.createElement('th');
-                    th.textContent = res.jumlah;
-                    const td = document.createElement('td');
-                    td.textContent = res.kategori_transaksi_id;
-                    tr.appendChild(th); // Tambahkan <th> ke dalam <tr>
-                    tr.appendChild(td); // Tambahkan <td> ke dalam <tr>
-                    tabelRow.appendChild(tr); // Tambahkan <tr> ke dalam <tbody>
+                console.log(response);
+                response.forEach((res, index) => {
+                    tabelRow2 = document.createElement('tr')
+                    let element = `<th scope="row"
+                                            class="px-4 py-3 text-base text-${(res.jenis_transaksi_id == 1) ? `green-600` : `red-600`} font-medium whitespace-nowrap dark:text-white">${(res.jenis_transaksi_id == 1 ) ? `+ ${res.jumlah}` : `- ${res.jumlah}`}</th>
+                                        <td class="px-4 py-3 text-${(res.jenis_transaksi_id == 1) ? `green-600` : `red-600`} text-base">${res.kategori_transaksi}</td>`
+                    tabelRow2.innerHTML = element
+                    tabelBody.appendChild(tabelRow2)
                 });
             }
         };

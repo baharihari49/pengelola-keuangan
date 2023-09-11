@@ -14,6 +14,8 @@ class Kategori_transaksi extends Model
     protected $fillable = [
         'nama',
         'jenis_transaksi_id',
+        'kategori_anggaran_id',
+        'user_id'
     ];
 
     public function jenis_transaksi(): belongsTo

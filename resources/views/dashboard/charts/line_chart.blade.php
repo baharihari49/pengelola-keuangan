@@ -2,7 +2,7 @@
 {{-- <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800"> --}}
     <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
       <div>
-        <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">Rp 200.000</h5>
+        <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">Rp {{isset($pendapatanDanPengeluaran[0]) ? number_format($pendapatanDanPengeluaran[0]->saldo, 0, ',', '.') : 0}}</h5>
         <p class="text-base font-normal text-gray-500 dark:text-gray-400">Pendapatan bulan ini</p>
       </div>
       <div

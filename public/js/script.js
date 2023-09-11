@@ -3,11 +3,6 @@
 const containerChart = document.getElementById('container-chart')
 const containerTabel = document.getElementById('container-table')
 
-// window.addEventListener('load', function() {
-//     const height = containerTabel.getClientRects()[0].height
-//     containerChart.style.height = height + 'px'
-// })
-
 
 
 

@@ -10,12 +10,12 @@
                             <th scope="col" class="px-4 py-3 text-sm">Kategori</th>
                         </tr>
                     </thead>
-                    <tbody>
-                       @foreach ($transaksi_terkini as $tt)
+                    <tbody id="tabel-body">
+                       @foreach ($transaksiTerkini as $tt)
                         <tr id="tabel-row" class="border-b dark:border-gray-700">
                             <th scope="row"
-                                class="px-4 py-3 text-base font-medium text-{{($tt->jenis_transaksi_id == 1) ? 'green-600' : 'red-600'}} whitespace-nowrap dark:text-white">{{($tt->jenis_transaksi_id == 1) ? '+ ' : '- ' }}{{$tt->jumlah}}</th>
-                            <td class="px-4 py-3 text-base text-{{($tt->jenis_transaksi_id == 1) ? 'green-600' : 'red-600'}}">{{$tt->kategori_transaksi->nama}}</td>
+                                class="px-4 py-3 text-base font-medium text-{{($tt['jenis_transaksi_id'] == 1) ? 'green-600' : 'red-600'}} whitespace-nowrap dark:text-white">{{($tt['jenis_transaksi_id'] == 1) ? '+ ' : '- ' }}{{$tt['jumlah']}}</th>
+                            <td class="px-4 py-3 text-base text-{{($tt['jenis_transaksi_id'] == 1) ? 'green-600' : 'red-600'}}">{{$tt['kategori_transaksi']->nama}}</td>
                         </tr>
                        @endforeach
                     </tbody>

@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->integer('jumlah');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_berakhir');
             $table->foreignId('kategori_transaksi_id');
+            $table->foreignId('kategori_anggaran_id');
             $table->timestamps();
         });
     }

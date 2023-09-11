@@ -143,6 +143,7 @@
         xhr.onload = function () {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
+                console.log(response);
                 tabelRow.forEach(tr => {
                     while(tr.firstChild) {
                         tr.removeChild(tr.firstChild)
@@ -158,7 +159,7 @@
                                             currency: 'IDR', 
                                             minimumFractionDigits: 0,
                                         }).format(res.jumlah)}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${res.kategori_transaksi}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${res.nama}</td>
                                         <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pendapatan' : 'Pengeluaran'}</td>
                                         <td id="tabel-date" class="px-4 py-3">${res.deskripsi}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
