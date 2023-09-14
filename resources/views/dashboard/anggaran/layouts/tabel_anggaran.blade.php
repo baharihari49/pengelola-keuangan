@@ -44,6 +44,7 @@
                         <tr>
                             <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3">Kategori Anggaran</th>
+                            <th scope="col" class="px-4 py-3">Kategori Budgeting</th>
                             <th scope="col" class="px-4 py-3">Sisa Anggaran</th>
                             <th scope="col" class="px-4 py-3"></th>
                         </tr>
@@ -55,6 +56,7 @@
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($a->jumlah, 0, ',', '.')}}
                             </th>
                             <td class="px-4 py-3">{{$a->kategori_transaksi->nama}}</td>
+                            <td class="px-4 py-3">{{$a->kategori_anggaran->nama}}</td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-blue-300 w-[100%] h-[7px] relative rounded">

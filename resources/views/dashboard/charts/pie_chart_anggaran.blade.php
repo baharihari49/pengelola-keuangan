@@ -16,7 +16,9 @@
     </div>
   
     <!-- Line Chart -->
-    <div class="py-6 2xl:w-[65%] xl:w-[95%] mx-auto" id="pie-chart"></div>
+    <div class="p-5 lg:p-2 xl:p-3">
+      <div class="py-6" id="pie-chart"></div>
+  </div>
   {{-- </div> --}}
 
 

@@ -57,4 +57,6 @@
 </div>
 
 <!-- Line Chart -->
-<div class="py-6" id="donut-chart"></div>
+<div class="p-5 lg:p-2 xl:p-3">
+    <div class="py-6" id="donut-chart"></div>
+</div>

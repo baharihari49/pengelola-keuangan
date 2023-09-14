@@ -8,7 +8,7 @@
               show: true,
               categories: dataTanggal,
               labels: {
-                show: true,
+                show: window.innerWidth >= 768 ? true : false,
                 style: {
                   fontFamily: "Inter, sans-serif",
                   cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
@@ -30,7 +30,7 @@
                   cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
                 },
                 formatter: function (value) {
-                  return 'Rp ' + value;
+                  return value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }).split(',')[0];
                 }
               }
             },
@@ -77,7 +77,7 @@
               },
             },
             dataLabels: {
-              enabled: true,
+              enabled: false,
             },
             stroke: {
               width: 6,
@@ -103,8 +103,9 @@
     xhr.onload = function() {
         if(this.status === 200) {
             let response = JSON.parse(this.responseText)
-            console.log(response);
             const dataJumlahPendapatan = response.map(res => res.jumlah)
+
+            console.log(dataJumlahPendapatan);
 
            
             const xhr2 = new XMLHttpRequest()
@@ -112,7 +113,6 @@
             xhr2.onload = function() {
                 if(this.status === 200) {
                     let response = JSON.parse(this.responseText)
-                    console.log(response)
                     const dataJumlahPengeluaran = response.map(res => res.jumlah)
                     const dataTanggal = response.map(res => res.tanggal)
                     lineChart(dataJumlahPendapatan, dataJumlahPengeluaran, dataTanggal)

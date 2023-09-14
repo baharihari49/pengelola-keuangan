@@ -10,7 +10,7 @@ const containerTabel = document.getElementById('container-table')
 
 const btnToggleSideBar = document.getElementById('btn-toggle-sidebar')
 const textSideBar = Array.from(document.querySelectorAll('#text-sidebar'))
-const sideBar = document.getElementById('side-bar')
+const sideBar = document.getElementById('default-sidebar')
 const iconSideBar = Array.from(document.querySelectorAll('#icon-sidebar'))
 const containerSettings = Array.from(document.querySelectorAll('#container-settings'))
 const mainSection = document.getElementById('main-section')

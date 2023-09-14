@@ -152,15 +152,16 @@
                 if(response.length > 0) {
                     response.forEach((res, index) => {
 
-                        let element = `<th id="tabel-date" scope="row"
+                        let element = `<td class="px-4 py-3 w-3">${index + 1}</td>
+                                        <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${res.tanggal}</th>
-                                        <td id="tabel-date" class="px-4 py-3">Rp ${Intl.NumberFormat('id-ID', {
+                                        <td id="tabel-date" class="px-4 py-3">${Intl.NumberFormat('id-ID', {
                                             style: 'currency',
                                             currency: 'IDR', 
                                             minimumFractionDigits: 0,
                                         }).format(res.jumlah)}</td>
                                         <td id="tabel-date" class="px-4 py-3">${res.nama}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pendapatan' : 'Pengeluaran'}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pemasukan' : 'Pengeluaran'}</td>
                                         <td id="tabel-date" class="px-4 py-3">${res.deskripsi}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="flex gap-5 mr-5">
@@ -176,7 +177,6 @@
 
                             tabelRow[index].innerHTML = element
                             const updateProductButton = document.querySelectorAll('#updateProductButton')
-                            coloumnTotalTransaksi.textContent = 'Rp ' + res.total_transaksi
                             updateProductButton.forEach(upb => {
                                 upb.addEventListener('click', responseDataTransaksi)
                             });
@@ -218,6 +218,7 @@
         xhr.onload = function() {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
+                console.log(response);
                 tabelRow.forEach(tr => {
                     while(tr.firstChild) {
                         tr.removeChild(tr.firstChild)
@@ -227,15 +228,16 @@
                 if(response.length > 0) {
                     response.forEach((res, index) => {
 
-                        let element = `<th id="tabel-date" scope="row"
+                        let element = `<td class="px-4 py-3 w-3">${index + 1}</td>
+                                        <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${res.tanggal}</th>
-                                        <td id="tabel-date" class="px-4 py-3">Rp ${Intl.NumberFormat('id-ID', {
+                                        <td id="tabel-date" class="px-4 py-3">${Intl.NumberFormat('id-ID', {
                                             style: 'currency',
                                             currency: 'IDR', 
                                             minimumFractionDigits: 0,
                                         }).format(res.jumlah)}</td>
                                         <td id="tabel-date" class="px-4 py-3">${res.kategori_transaksi}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pendapatan' : 'Pengeluaran'}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pemasukan' : 'Pengeluaran'}</td>
                                         <td id="tabel-date" class="px-4 py-3">${res.deskripsi}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="flex gap-5 mr-5">
@@ -251,7 +253,6 @@
 
                             tabelRow[index].innerHTML = element
                             const updateProductButton = document.querySelectorAll('#updateProductButton')
-                            coloumnTotalTransaksi.textContent = 'Rp ' + res.total_transaksi
                             updateProductButton.forEach(upb => {
                                 upb.addEventListener('click', responseDataTransaksi)
                             });
@@ -262,7 +263,6 @@
                             tr.removeChild(tr.firstChild)
                         }
                     })
-                    coloumnTotalTransaksi.textContent = 'Rp 0' 
                 }
             }
         }

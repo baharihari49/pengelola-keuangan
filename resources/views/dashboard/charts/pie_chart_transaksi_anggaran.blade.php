@@ -18,7 +18,9 @@
     </div>
   
     <!-- Line Chart -->
-    <div class="py-6" id="pie-chart-persentase-transaksi-anggaran"></div>
+    <div class="p-5 lg:p-2 xl:p-3">
+      <div class="py-6" id="pie-chart-persentase-transaksi-anggaran"></div>
+  </div>
   {{-- </div> --}}
   
   

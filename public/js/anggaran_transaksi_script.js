@@ -2,6 +2,7 @@ const defaultModalButton = document.getElementById('defaultModalButton')
 const kategoriAnggaran = document.getElementById('kategori-anggaran')
 const updateProductButton = Array.from(document.querySelectorAll('#updateProductButton'))
 const kategoriAnggaranUpdate = document.getElementById('kategori-anggaran-update')
+const kategoriAnggaran2 = document.getElementById('kategori_anggaran')
 const detailJumlah = document.getElementById('detail-jumlah')
 const idAnggran = document.getElementById('id')
 const defaultModal = document.getElementById('defaultModal')
@@ -20,7 +21,6 @@ defaultModalButton.addEventListener('click', function() {
     xhr.onload = function() {
         if(this.status === 200) {
             let response = JSON.parse(xhr.responseText);
-            console.log(response);
             response.forEach(res => {
                 const option = document.createElement('option')
                 option.value = res.id
@@ -37,7 +37,6 @@ defaultModalButton.addEventListener('click', function() {
 updateProductButton.forEach(updateProductButton => {
     updateProductButton.addEventListener('click', function() {
 
-        console.log(this);
         updateProductModal.classList.remove('hidden')
         updateProductModal.classList.add('flex')
     
@@ -46,33 +45,23 @@ updateProductButton.forEach(updateProductButton => {
         document.body.appendChild(backdrop)
 
         const id = updateProductButton.getAttribute('data-id')
-        const xhr = new XMLHttpRequest()
 
         kategoriAnggaranUpdate.innerHTML = '<option selected="">Select category</option>'
         
         let kategori
-
-        xhr.onload = function() {
-            if(this.status === 200) {
-                const xhr2 = new XMLHttpRequest()
-                xhr2.open('GET', '/get_anggaran_by_id?id=' + id, true)
-
-                xhr2.onload = ()=> {
-                    if(xhr2.status === 200) {
-                        let response = JSON.parse(xhr2.responseText)
-                        response.forEach(res => {
-                            detailJumlah.value = res.jumlah
-                            idAnggran.value = res.id
-                            kategori = res.kategori_transaksi_id
-                            dataId = res.id
-                        })
-                    }
-                }
-                xhr2.send()
-
-                let response = JSON.parse(xhr.responseText)
-                setTimeout(() => {
-                    response.forEach(res => {
+        let kategoriAnggaraId
+        reqAjax('GET', '/get_anggaran_by_id?id=' + id, function(err, response) {
+            response.forEach(res => {
+                detailJumlah.value = res.jumlah
+                idAnggran.value = res.id
+                kategori = res.kategori_transaksi_id
+                dataId = res.id
+                kategoriAnggaraId = res.kategori_anggaran_id
+            })
+        })
+        reqAjax('GET','/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id=2',function(err, response){
+            setTimeout(() => {
+                response.forEach(res => {
                     const option = document.createElement('option')
                     option.value = res.id
                     option.textContent = res.nama
@@ -80,14 +69,28 @@ updateProductButton.forEach(updateProductButton => {
                         option.selected = true
                     }
                     kategoriAnggaranUpdate.appendChild(option)
-                });
-                }, 100);
-            }
-        }
+                })
+            }, 100)
+            
+        });
 
-        xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id=2', true)
-        xhr.send()
-
+        const kategoriAnggaran2 = document.getElementById('kategori_anggaran2');
+        kategoriAnggaran2.innerHTML = '<option selected="">Select category</option>'
+        reqAjax('GET', '/get_kategori_anggaran', function(err, response) {
+            setTimeout(() => {
+                response.forEach(res => {
+                    const option = document.createElement('option')
+                    option.value = res.id
+                    option.textContent= res.nama
+                    if(kategoriAnggaraId == res.id){
+                        option.selected = true
+                    }
+                    kategoriAnggaran2.appendChild(option)
+                })
+            }, 100);
+        });
+        
+        
 
     })
 })

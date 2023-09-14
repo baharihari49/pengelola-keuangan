@@ -22,7 +22,7 @@ class KategoriTransaksiController extends Controller
     {
         return view('dashboard.kategori.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'kategori_transaksi' => Kategori_transaksi::paginate(10),
+            'kategori_transaksi' => Kategori_transaksi::where('user_id', auth()->user()->id)->paginate(20),
             'kategori_anggaran' => Kategori_anggaran::all(),
         ]);
     }

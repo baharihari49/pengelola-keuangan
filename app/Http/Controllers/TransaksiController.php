@@ -21,8 +21,11 @@ class TransaksiController extends Controller
 
         return view('dashboard.transaksi.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::paginate(20),
-            'total_transaksi' => number_format(Transaksi::sum('Jumlah'), 0, ',', '.'),
+            'transaksi' => Transaksi::where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom created_at secara descending (terbaru ke terlama)
+            ->paginate(20),
+        
+            // 'total_transaksi' => number_format(Transaksi::sum('Jumlah'), 0, ',', '.'),
         ]);
     }
 
@@ -107,20 +110,21 @@ class TransaksiController extends Controller
             'deskripsi' => 'required',
         ]);
 
-        $data_anggaran = Anggaran::where('kategori_transaksi_id', request('old_kategori_transaksi_id'))->get();
+        $data_anggaran = Anggaran::where('user_id', auth()->user()->id)->where('kategori_transaksi_id', request('old_kategori_transaksi_id'))->get();
 
-        $validate['user_id'] = 1;
+        $validate['user_id'] = auth()->user()->id;
 
         if(empty($data_anggaran[0]['jumlah'])) {
-            Transaksi::where('uuid', $request->uuid)
-            ->update($validate);
+            Transaksi::where('user_id', auth()->user()->id)
+                      ->where('uuid', $request->uuid)
+                      ->update($validate);
             return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
         }else if($validate['jumlah'] > $data_anggaran[0]['jumlah']){
             return redirect('/transaksi')->with('error', 'Data gagal ditambahkan');
         }else{
-            Transaksi::where('uuid', $request->uuid)
-                    ->update($validate);
-    
+            Transaksi::where('user_id', auth()->user()->id)
+                      ->where('uuid', $request->uuid)
+                      ->update($validate);
             return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
         }
 
@@ -139,7 +143,7 @@ class TransaksiController extends Controller
     }
 
     public function api() {
-        return Transaksi::where('uuid', request()->uuid)->get();
+        return Transaksi::where('user_id', auth()->user()->id)->where('uuid', request()->uuid)->get();
     }
 
     public function api2() {
@@ -149,6 +153,8 @@ class TransaksiController extends Controller
         if (request()->has('id') && request()->id !== 'all') {
             $records->where('transaksis.jenis_transaksi_id', request()->id); // Menggunakan alias 'transaksis' untuk jenis_transaksi_id
         }
+
+        $records = $records->orderBy('created_at', 'desc');
 
         $records = $records->select('kategori_transaksis.nama', 'transaksis.*')
                  ->get();
@@ -161,17 +167,25 @@ class TransaksiController extends Controller
 
     public function api3() 
     {
-        if(request()->has('Semua')){
-            $transaksi = Transaksi::where('deskripsi', 'like', '%' . request('Semua') . '%')
-                                    ->orWhere('tanggal', 'like', '%' . request('Semua') . '%')
-                                    ->orWhere('jumlah', 'like', '%' . request('Semua') . '%')->get();
+        $transaksi = Transaksi::where('user_id', auth()->user()->id);
+
+        if (request()->has('Semua')) {
+            $transaksi->where(function ($query) {
+                $query->where('deskripsi', 'like', '%' . request('Semua') . '%')
+                    ->orWhere('tanggal', 'like', '%' . request('Semua') . '%')
+                    ->orWhere('jumlah', 'like', '%' . request('Semua') . '%');
+            });
         }
-        
-        if(request()->has('Kategori')) {
-            $transaksi = Transaksi::whereHas('kategori_transaksi', function($query){
+
+        if (request()->has('Kategori')) {
+            $transaksi->whereHas('kategori_transaksi', function ($query) {
                 $query->where('nama', 'like', '%' . request('Kategori') . '%');
-            })->get();
+            });
         }
+
+        // Menambahkan orderBy untuk mengurutkan berdasarkan kolom 'tanggal' secara menurun
+        $transaksi = $transaksi->orderBy('tanggal', 'desc')->get();
+
 
         if(count($transaksi) > 0) {
             foreach($transaksi as $tr) {
@@ -194,17 +208,46 @@ class TransaksiController extends Controller
 
     public function api4() 
     {
+
+        // Ambil data tanggal unik
+        $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
+                    ->select(DB::raw('DATE(created_at) as tanggal'))
+                    ->distinct()
+                    ->get();
+
+        // Ambil data jumlah untuk setiap tanggal
         $records = Transaksi::where('user_id', auth()->user()->id)
                             ->where('jenis_transaksi_id', request()->id)
                             ->select(
                                 DB::raw('DATE(created_at) as tanggal'), 
                                 DB::raw('SUM(jumlah) as jumlah'),
                                 'transaksis.jenis_transaksi_id'
-                                )
+                            )
                             ->groupBy(DB::raw('DATE(created_at)'), 'transaksis.jenis_transaksi_id')
                             ->get();
 
-        return $records;                    
+        // Buat array baru untuk hasil akhir
+        $hasilAkhir = [];
+
+        // Iterasi melalui data tanggal unik
+        foreach ($dataTanggal as $tanggal) {
+            $tanggalData = $tanggal->tanggal;
+
+            // Temukan data jumlah yang sesuai dengan tanggal
+            $jumlahData = $records->where('tanggal', $tanggalData)->first();
+
+            // Buat entri baru dengan tanggal dan jumlah yang sesuai
+            $hasilAkhir[] = [
+                'tanggal' => $tanggalData,
+                'jumlah' => $jumlahData ? $jumlahData->jumlah : 0, // Jika tidak ada, set jumlah menjadi 0
+            ];
+        }
+
+        // Hasil akhir akan berisi data yang Anda inginkan
+
+                        
+
+        return $hasilAkhir;                    
 
         
     }
@@ -215,7 +258,7 @@ class TransaksiController extends Controller
         $now = now()->format('Y-m-d');
 
         if(request()->days == 'Yesterday'){
-            $transaksi = Transaksi::whereDate('created_at', $yesterday)->get();
+            $transaksi = Transaksi::where('user_id', auth()->user()->id)->whereDate('created_at', $yesterday)->get();
             foreach($transaksi as $t) {
                 $data [] = [
                     'jumlah' => $t->jumlah,
@@ -224,7 +267,7 @@ class TransaksiController extends Controller
                 ];
             };
         }else{
-            $transaksi = Transaksi::whereDate('created_at', $now)->get();
+            $transaksi = Transaksi::where('user_id', auth()->user()->id)->whereDate('created_at', $now)->get();
             foreach($transaksi as $t) {
                 $data [] = [
                     'jumlah' => $t->jumlah,

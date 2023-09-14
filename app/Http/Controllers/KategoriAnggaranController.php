@@ -99,11 +99,13 @@ class KategoriAnggaranController extends Controller
      */
     public function destroy(Kategori_anggaran $kategori_anggaran)
     {
-        //
+        Kategori_anggaran::destroy(request()->id);
+
+        return redirect('/anggaran');
     }
 
     public static function getKategoriAnggaran()
     {
-        return Kategori_anggaran::where('user_id', auth()->user()->id)->select('id')->get();
+        return Kategori_anggaran::where('user_id', auth()->user()->id)->get();
     }
 }

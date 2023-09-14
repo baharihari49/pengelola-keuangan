@@ -22,7 +22,6 @@ class AnggaranController extends Controller
      */
     public function index()
     {
-
         return view('dashboard.anggaran.index', [
             'Anggaran' => Anggaran::where('user_id', auth()->user()->id)->get(),
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
@@ -50,6 +49,7 @@ class AnggaranController extends Controller
         $validate = $request->validate([
             'jumlah' => 'required',
             'kategori_transaksi_id' => 'required',
+            'kategori_anggaran_id' => 'required',
         ]);
 
         if(!isset($validate['kategori_anggaran_id'])){
@@ -57,9 +57,6 @@ class AnggaranController extends Controller
         }
 
         $validate['user_id'] = auth()->user()->id;
-
-        // $validate['tanggal_mulai'] = Carbon::createFromFormat('d/m/Y', request()->tanggal_mulai)->format('Y-m-d');
-        // $validate['tanggal_berakhir'] = Carbon::createFromFormat('d/m/Y', request()->tanggal_berakhir)->format('Y-m-d');
 
         Anggaran::create($validate);
 
@@ -87,9 +84,11 @@ class AnggaranController extends Controller
      */
     public function update(UpdateAnggaranRequest $request, Anggaran $anggaran)
     {
+
         $validate = $request->validate([
             'jumlah' => 'required',
             'kategori_transaksi_id' => 'required',
+            'kategori_anggaran_id' => 'required',
         ]);
 
         $validate['user_id'] = auth()->user()->id;
@@ -132,9 +131,13 @@ class AnggaranController extends Controller
 
     public function budgeting()
     {
-        return Transaksi::where('jenis_transaksi_id', 1)->sum("jumlah");
+        return Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 1)->sum("jumlah");
     }
 
+    public static function getKategoriAnggaranId()
+    {
+        return Anggaran::where('user_id', auth()->user()->id)->get();
+    }
 
 
     // public function budgeting_kebutuhan_data()

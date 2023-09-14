@@ -3,6 +3,7 @@ window.addEventListener("load", function () {
   const xhr = new XMLHttpRequest();
   xhr.onload = function () {
     let response = JSON.parse(this.responseText)
+    console.log(response);
     const getChartOptions = () => {
       return {
         series: [response],
@@ -73,7 +74,12 @@ window.addEventListener("load", function () {
         yaxis: {
           labels: {
             formatter: function (value) {
-              return value + "k"
+              return value.toLocaleString('id-ID', {
+                style: 'currency',
+                currency: 'IDR', // Anda dapat mengganti mata uang sesuai kebutuhan, 'id-ID' untuk Bahasa Indonesia
+                minimumFractionDigits: 0, // Jumlah desimal minimum (0 untuk Rupiah)
+                maximumFractionDigits: 0, // Jumlah desimal maksimum (0 untuk Rupiah)
+              });
             },
           },
         },
@@ -114,4 +120,4 @@ window.addEventListener("load", function () {
    xhr.open('GET', '/budgeting', true)
    xhr.send()
    
- });
+});

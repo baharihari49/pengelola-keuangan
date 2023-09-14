@@ -13,7 +13,9 @@
     </div>
   
     <!-- Line Chart -->
-    <div class="py-6" id="pie-chart-budgeting"></div>
+  <div class="p-5 lg:p-2 xl:p-3">
+      <div class="py-6" id="pie-chart-budgeting"></div>
+  </div>
   {{-- </div> --}}
   
   

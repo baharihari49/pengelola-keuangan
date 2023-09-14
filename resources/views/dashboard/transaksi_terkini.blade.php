@@ -11,11 +11,14 @@
                         </tr>
                     </thead>
                     <tbody id="tabel-body">
-                       @foreach ($transaksiTerkini as $tt)
+                       @foreach ($transaksiTerkini as $item)
                         <tr id="tabel-row" class="border-b dark:border-gray-700">
                             <th scope="row"
-                                class="px-4 py-3 text-base font-medium text-{{($tt['jenis_transaksi_id'] == 1) ? 'green-600' : 'red-600'}} whitespace-nowrap dark:text-white">{{($tt['jenis_transaksi_id'] == 1) ? '+ ' : '- ' }}{{$tt['jumlah']}}</th>
-                            <td class="px-4 py-3 text-base text-{{($tt['jenis_transaksi_id'] == 1) ? 'green-600' : 'red-600'}}">{{$tt['kategori_transaksi']->nama}}</td>
+                            style="color: {{($item['jenis_transaksi_id'] == 1) ? '#057A55' : (($item['jenis_transaksi_id'] == 3) ? '#1C64F2' : '#E02424')}}"
+                            class="px-4 py-3 text-sm font-medium whitespace-nowrap dark:text-white">{{($item['jenis_transaksi_id'] == 1) ? '+ Rp ' : '- Rp ' }}{{number_format($item['jumlah'], 0, ',', '.')}}</th>
+
+                            <td style="color: {{($item['jenis_transaksi_id'] == 1) ? '#057A55' : (($item['jenis_transaksi_id'] == 3) ? '#1C64F2' : '#E02424')}}"
+                             class="px-4 py-3 font-medium text-sm">{{$item['kategori_transaksi']->nama}}</td>
                         </tr>
                        @endforeach
                     </tbody>
@@ -35,7 +38,7 @@
                             class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span class="sr-only">Previous</span>
                             <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
+                                xmlns="hitemp://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                     d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                     clip-rule="evenodd" />

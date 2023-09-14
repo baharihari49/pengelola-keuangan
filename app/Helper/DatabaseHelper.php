@@ -33,17 +33,31 @@ class DatabaseHelper
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('kategori_transaksi_id', 1)
                                                 ->sum('jumlah');
-        $records = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                            ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
-                            ->select(
-                                'transaksis.kategori_transaksi_id',
-                                'anggarans.kategori_anggaran_id',
-                                'kategori_anggarans.id AS id_kategori_anggaran',
-                                'kategori_anggarans.value',
-                                DB::raw('SUM(transaksis.jumlah) AS total_jumlah')
-                            )
-                            ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
-                            ->get();
+                                                
+        // $records = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
+        //                     ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
+        //                     ->select(
+        //                         'transaksis.kategori_transaksi_id',
+        //                         'anggarans.kategori_anggaran_id',
+        //                         'kategori_anggarans.id AS id_kategori_anggaran',
+        //                         'kategori_anggarans.value',
+        //                         DB::raw('SUM(transaksis.jumlah) AS total_jumlah')
+        //                     )
+        //                     ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
+        //                     ->get();
+
+        $records = DB::table('kategori_anggarans')
+                    ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
+                    ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
+                    ->select(
+                        'kategori_anggarans.id AS id_kategori_anggaran',
+                        'kategori_anggarans.value',
+                        DB::raw('SUM(transaksis.jumlah) as total_jumlah')
+                    )
+                    ->groupBy('kategori_anggarans.id', 'kategori_anggarans.value')
+                    ->get();
+                        
+
 
         $getKategoriAnggaran = Kategori_anggaran::where('user_id', auth()->user()->id)->get();
 
@@ -58,7 +72,7 @@ class DatabaseHelper
                 };
             }
         }
-        return $persentaseBudgeting;               
+        return isset($persentaseBudgeting) ? $persentaseBudgeting : [];               
     }
 
     public static function getPersentaseAnggaran()

@@ -46,6 +46,8 @@ Route::middleware(['guest'])->group(function()
             Route::get('/login', 'login')->name('login');
 
             Route::post('/login', 'authenticate');
+
+            Route::post('/logout', 'logout');
         });
 });
 
@@ -150,6 +152,7 @@ Route::middleware(['auth'])->group(function()
             ];
 
         });
+
         
         Route::get('/budgeting', 'budgeting');
         
@@ -165,6 +168,9 @@ Route::middleware(['auth'])->group(function()
         Route::post('/budgeting_edit', 'update');
 
         Route::get('/get_kategori_anggaran', 'getKategoriAnggaran');
+
+        Route::delete('/budgeting_delete', 'destroy');
+
     });
 
 
@@ -173,3 +179,6 @@ Route::middleware(['auth'])->group(function()
     Route::get('/get_jenis_transaksi', [JenisTransaksiController::class, 'api']);
 });
 
+Route::get('/laporan', function() {
+    return view('dashboard.laporan.index');
+});

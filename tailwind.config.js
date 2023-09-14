@@ -15,13 +15,15 @@ module.exports = {
     },
     fontFamily: {
       'body': [
+        'Oswald', 
+    'Montserrat',
+    'Roboto',
     'Inter', 
     'ui-sans-serif', 
     'system-ui', 
     '-apple-system', 
     'system-ui', 
     'Segoe UI', 
-    'Roboto', 
     'Helvetica Neue', 
     'Arial', 
     'Noto Sans', 
@@ -32,7 +34,7 @@ module.exports = {
     'Noto Color Emoji'
   ],
       'sans': [
-    'Inter', 
+    'Open Sans', 
     'ui-sans-serif', 
     'system-ui', 
     '-apple-system', 
