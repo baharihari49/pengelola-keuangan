@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\DatabaseHelper;
 use App\Models\Anggaran;
 use App\Models\Jenis_transaksi;
 use App\Models\Kategori_anggaran;
@@ -10,6 +11,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -19,13 +21,13 @@ class TransaksiController extends Controller
     public function index()
     {
 
+        
         return view('dashboard.transaksi.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::where('user_id', auth()->user()->id)
-            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan kolom created_at secara descending (terbaru ke terlama)
-            ->paginate(20),
-        
-            // 'total_transaksi' => number_format(Transaksi::sum('Jumlah'), 0, ',', '.'),
+            'transaksi' => Transaksi::where('user_id', Auth::id())
+                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                ->orderBy('created_at', 'desc')
+                ->paginate(20),
         ]);
     }
 

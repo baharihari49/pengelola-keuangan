@@ -21,9 +21,9 @@
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-blue-300 w-[100%] h-[7px] relative rounded">
-                                        <div style="width: {{round($persentaseAngggarans[$index]['persentase'])}}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
+                                        <div style="width: {{round($item->persentase)}}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
                                     </div>
-                                    <P>{{round($persentaseAngggarans[$index]['persentase'])}}%</P>
+                                    <P>{{round($item->persentase)}}%</P>
                                 </div>
                             </td>
                         </tr>

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JenisTransaksiController;
 use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -47,9 +48,11 @@ Route::middleware(['guest'])->group(function()
 
             Route::post('/login', 'authenticate');
 
-            Route::post('/logout', 'logout');
         });
 });
+Route::post('/logout', [LoginController::class, 'logout']);
+
+
 
 
 Route::middleware(['auth'])->group(function()
@@ -177,8 +180,11 @@ Route::middleware(['auth'])->group(function()
 
 
     Route::get('/get_jenis_transaksi', [JenisTransaksiController::class, 'api']);
+
+
+    Route::controller(LaporanController::class)->group(function()
+    {
+        Route::get('/laporan', 'index');
+    });
 });
 
-Route::get('/laporan', function() {
-    return view('dashboard.laporan.index');
-});

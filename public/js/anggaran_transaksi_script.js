@@ -59,7 +59,7 @@ updateProductButton.forEach(updateProductButton => {
                 kategoriAnggaraId = res.kategori_anggaran_id
             })
         })
-        reqAjax('GET','/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id=2',function(err, response){
+        reqAjax('GET','/get_kategori_transaksi_by_jenis_transaksi_id_not_show/?id1=2&id2=3',function(err, response){
             setTimeout(() => {
                 response.forEach(res => {
                     const option = document.createElement('option')

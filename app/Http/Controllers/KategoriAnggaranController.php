@@ -29,7 +29,6 @@ class KategoriAnggaranController extends Controller
      */
     public function store(StoreKategori_anggaranRequest $request)
     {
-
         $validate = request()->validate([
             'value' => 'required',
             'nama' => 'required',

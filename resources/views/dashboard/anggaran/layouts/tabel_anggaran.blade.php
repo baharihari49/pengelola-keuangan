@@ -56,13 +56,16 @@
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($a->jumlah, 0, ',', '.')}}
                             </th>
                             <td class="px-4 py-3">{{$a->kategori_transaksi->nama}}</td>
-                            <td class="px-4 py-3">{{$a->kategori_anggaran->nama}}</td>
+                            <td class="px-4 py-3">
+                                {{ $a->kategori_anggaran->nama ?? '--' }}
+                            </td>
+                            
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-blue-300 w-[100%] h-[7px] relative rounded">
-                                        <div style="width: {{round($persentaseAnggarans[$index]['persentase'])}}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
+                                        <div style="width: {{round($a->persentase)}}%" class="bg-blue-600 h-[7px] absolute rounded"></div>
                                     </div>
-                                    <P>{{round($persentaseAnggarans[$index]['persentase'])}}%</P>
+                                    <P>{{round($a->persentase)}}%</P>
                                 </div>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">

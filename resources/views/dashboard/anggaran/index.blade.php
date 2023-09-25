@@ -5,6 +5,12 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-bold">Kebutuhan</h5>
+                <button class="btnEditBudget" data-budget="kebutuhan">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z"/>
+                        <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
+                      </svg>
+                </button>
             </div>
             <div class="">
                 @php $hasKebutuhan = false; @endphp
@@ -30,10 +36,10 @@
                 @endforeach
 
                 @if (!$hasKebutuhan)
-                <div id="btn_modal" data-budget="keinginan"
+                <div id="btn_modal" data-budget="kebutuhan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
-                        <span class="text-sm text-gray-600">Anda belum menambahkan budgeting</span>
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
                 @endif
@@ -44,6 +50,12 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-semibold">Keinginan</h5>
+                <button class="btnEditBudget" data-budget="keinginan">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z"/>
+                        <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
+                      </svg>
+                </button>
             </div>
             <div class="">
                 @php $hasKeinginan = false; @endphp
@@ -72,7 +84,7 @@
                 <div id="btn_modal" data-budget="keinginan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
-                        <span class="text-sm text-gray-600">Anda belum menambahkan budgeting</span>
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
                 @endif
@@ -83,6 +95,12 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-semibold">Tabungan</h5>
+                <button class="btnEditBudget" data-budget="tabungan">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z"/>
+                        <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
+                      </svg>
+                </button>
             </div>
             <div class="">
                 @php $hasTabungan = false; @endphp
@@ -95,23 +113,23 @@
                     <span
                         class="font-bold text-lg xl:text-3xl text-blue-800">{{(isset($getBudgeting[0]) && $getBudgeting[$index]->nama == 'tabungan') ? $getBudgeting[$index]->value : 0}}%</span>
                 </div>
-                @php
+                {{-- @php
                 $persentase = collect($persentaseBudgeting)->firstWhere('nama', 'tabungan');
                 $persentase = $persentase ? round($persentase['persentase']) : 0;
-                @endphp
+                @endphp --}}
 
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 {{ $persentase < 0 ? 'hidden' : 'flex' }}">
+                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 {{ (isset($persentase) ? $persentase < 0 ? 'hidden' : 'flex' : 0) }}">
                     <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                        style="width:{{ $persentase }}%">{{ $persentase }}%</div>
+                        style="width:{{ round($persentaseTabungan) }}%">{{ round($persentaseTabungan) }}%</div>
                 </div>
                 @endif
                 @endforeach
 
                 @if (!$hasTabungan)
-                <div id="btn_modal" data-budget="keinginan"
+                <div id="btn_modal" data-budget="tabungan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
-                        <span class="text-sm text-gray-600">Anda belum menambahkan budgeting</span>
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
                 @endif

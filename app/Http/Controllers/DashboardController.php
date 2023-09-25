@@ -21,43 +21,61 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $pendapatanDanPengeluaran = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
-                        ->where('transaksis.user_id', auth()->user()->id)
-                        ->select(
-                            'jenis_transaksis.id as jenis_transaksi_id',
-                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE -transaksis.jumlah END) AS saldo')
-                        )
-                        ->groupBy('jenis_transaksis.id')
-                        ->get();
+        $pendapatanDanPengeluaran = DB::table('jenis_transaksis')
+                                    ->leftJoinSub(function ($query) {
+                                        $query->select(
+                                            'transaksis.user_id',
+                                            DB::raw('SUM(transaksis.jumlah) as total_saldo_1')
+                                        )
+                                        ->from('transaksis')
+                                        ->where('user_id', auth()->user()->id)
+                                        ->where('transaksis.jenis_transaksi_id', 1)
+                                        ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                        ->groupBy('transaksis.user_id');
+                                    }, 'saldo_1', function ($join) {
+                                        $join->on('jenis_transaksis.id', '=', DB::raw(1));
+                                    })
+                                    ->leftJoinSub(function ($query) {
+                                        $query->select(
+                                            'transaksis.user_id',
+                                            DB::raw('SUM(transaksis.jumlah) as total_saldo_2_3')
+                                        )
+                                        ->from('transaksis')
+                                        ->where('user_id', auth()->user()->id)
+                                        ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                        ->whereIn('transaksis.jenis_transaksi_id', [2, 3])
+                                        ->groupBy('transaksis.user_id');
+                                    }, 'saldo_2_3', function ($join) {
+                                        $join->on('jenis_transaksis.id', '=', DB::raw(2));
+                                    })
+                                    ->select(
+                                        'jenis_transaksis.id as jenis_transaksi_id',
+                                        DB::raw('COALESCE(saldo_1.total_saldo_1, 0) as total_saldo_1'),
+                                        DB::raw('COALESCE(saldo_2_3.total_saldo_2_3, 0) as total_saldo_2_3')
+                                    )
+                                    ->get();
+
+
+
 
 
 
         $saldo = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
+                        ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                         ->select(
-                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) AS saldo')
+                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
                         )
                         ->get();   
 
 
+
+
                         
-        $persentaseAngggarans = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                        ->whereHas('kategori_transaksi', function($query){
-                            $query->where('nama', 'like', '%' . request('nama') . '%');
-                        })
-                        ->select(
-                            'anggarans.kategori_transaksi_id',
-                            DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
-                        )
-                        ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah')
-                        ->get();                
-
-        
-       
-
         $topPengeluaran = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->select('kategori_transaksi_id', 'kategori_transaksis.nama',  DB::raw('SUM(jumlah) as total_jumlah'))
                                     ->where('transaksis.user_id', auth()->user()->id)
+                                    ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                                     ->where('transaksis.jenis_transaksi_id', 2)
                                     ->groupBy('kategori_transaksi_id')
                                     ->orderByDesc('total_jumlah')
@@ -71,16 +89,16 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'pendapatanDanPengeluaran' => $pendapatanDanPengeluaran,
             'saldo' => $saldo,
-            'jumlahAnggaran' => Anggaran::where('user_id', auth()->user()->id)->sum('jumlah'),
+            'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)->sum('jumlah'),
             'transaksiTerkini' => Transaksi::where('user_id', auth()->user()->id)
                                             ->whereDate('created_at', now()->format('Y-m-d'))
                                             ->get(),
-            'anggarans' => Anggaran::where('user_id', auth()->user()->id)->get(),
-            'persentaseAngggarans' => $persentaseAngggarans,       
+            'anggarans' => DatabaseHelper::getPersentaseAnggaran(),
             'topPengeluaran' => $topPengeluaran,             
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
             'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
+            'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan()
         ]);
     }
 

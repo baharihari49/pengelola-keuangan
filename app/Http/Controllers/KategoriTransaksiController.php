@@ -96,7 +96,7 @@ class KategoriTransaksiController extends Controller
 
 
     public function api() {
-        return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->get();
+        return Kategori_transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', request()->id)->get();
     }
 
     public function api2()
@@ -110,10 +110,10 @@ class KategoriTransaksiController extends Controller
     }
 
     public function api4() {
-        return Kategori_transaksi::where('jenis_transaksi_id', request()->id1)
-                                ->orWhere('jenis_transaksi_id', request()->id2)
-                                ->orWhere('user_id', auth()->user()->id)
+        return Kategori_transaksi::where('user_id', auth()->user()->id)
+                                ->whereIn('jenis_transaksi_id', [request()->id1, request()->id2])
                                 ->get();
+
     }
 
     public function api5() {

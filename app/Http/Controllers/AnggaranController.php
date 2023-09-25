@@ -22,13 +22,22 @@ class AnggaranController extends Controller
      */
     public function index()
     {
+        
+        
+
+        // return $persentase;
+
+        // return DatabaseHelper::getPersentaseAnggaran();
+        // return Anggaran::where('user_id', auth()->user()->id)->get();
+        // return DatabaseHelper::getPersentaseBudgeting();
+        // return Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 2)->sum('jumlah');
         return view('dashboard.anggaran.index', [
-            'Anggaran' => Anggaran::where('user_id', auth()->user()->id)->get(),
+            'Anggaran' => DatabaseHelper::getPersentaseAnggaran(),
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
-            'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
-            'persentaseAnggarans' => DatabaseHelper::getPersentaseAnggaran(),
+            'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->whereMonth('created_at', DatabaseHelper::getMonth())->get(),
             'kategoriAnggarans' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
+            'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan()
         ]);
 
     }
@@ -49,7 +58,7 @@ class AnggaranController extends Controller
         $validate = $request->validate([
             'jumlah' => 'required',
             'kategori_transaksi_id' => 'required',
-            'kategori_anggaran_id' => 'required',
+            // 'kategori_anggaran_id' => 'required',
         ]);
 
         if(!isset($validate['kategori_anggaran_id'])){
