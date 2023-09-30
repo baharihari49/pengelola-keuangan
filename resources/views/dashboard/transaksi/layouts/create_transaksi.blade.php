@@ -35,9 +35,11 @@
                     <div>
                         <label for="jumlah"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">jumlah</label>
-                        <input type="number" name="jumlah" id="jumlah"
+                            <input oninput="updateFormattedCurrency(this)" type="text" name="jumlah" id="jumlah"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="$2999" required="">
+                            placeholder="250.000" required="">
+                        <div id="formattedCurrency"></div>
+                        
                     </div>
                     <div>
                         <label for="jenis_transaksi"
@@ -109,5 +111,34 @@
         xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id/?id=' + jenis_transaksi.value, true)
         xhr.send()
     })
+
+    function updateFormattedCurrency(input) {
+    // Mengambil nilai yang dimasukkan oleh pengguna
+    let value = input.value;
+
+    // Menghilangkan semua karakter selain digit dan koma (,)
+    value = value.replace(/[^\d,]/g, '');
+
+    // Mengganti semua koma (,) yang tidak memiliki digit setelahnya dengan titik (.)
+    value = value.replace(/,(?![\d,]*\d)/g, '.');
+
+    // Menghapus semua simbol "Rp"
+    value = value.replace(/Rp/g, '');
+
+    // Mengubah nilai menjadi format angka
+    const numericValue = parseFloat(value) || 0;
+
+    // Mengubah nilai menjadi format mata uang
+    const formatMataUang = numericValue.toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+    });
+
+    // Menampilkan nilai dalam format mata uang di elemen lain
+    document.getElementById("formattedCurrency").textContent = formatMataUang;
+}
+
+
+
 
 </script>

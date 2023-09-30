@@ -1,4 +1,5 @@
  // ApexCharts options and config
+
  window.addEventListener("load", function() {
 
     const lineChart = function(jumlahPendapatan, jumlahPengeluaran, dataTanggal) {

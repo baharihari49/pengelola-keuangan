@@ -92,7 +92,7 @@ class DashboardController extends Controller
             'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)->sum('jumlah'),
             'transaksiTerkini' => Transaksi::where('user_id', auth()->user()->id)
                                             ->whereDate('created_at', now()->format('Y-m-d'))
-                                            ->get(),
+                                            ->paginate(7),
             'anggarans' => DatabaseHelper::getPersentaseAnggaran(),
             'topPengeluaran' => $topPengeluaran,             
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),

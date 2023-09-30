@@ -1,4 +1,4 @@
-<section class="">
+<section class="mb-20">
     <div class="mx-auto max-w-screen-xl">
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative overflow-hidden">

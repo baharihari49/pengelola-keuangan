@@ -20,25 +20,26 @@ class LaporanController extends Controller
                                             ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
                                             ->where('transaksis.user_id', auth()->user()->id)
                                             ->where('kategori_anggarans.nama', 'kebutuhan')
-                                            ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.deskripsi', 'transaksis.kategori_transaksi_id') // Sesuaikan dengan kolom yang digunakan dalam SELECT
+                                            ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
                                             ->select(
                                                 'kategori_anggarans.nama as kategori_anggaran',
                                                 'anggarans.jumlah as jumlah_anggaran',
                                                 DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
-                                                'transaksis.deskripsi',
                                                 'transaksis.kategori_transaksi_id'
                                             )
                                             ->get();
-
+    
 
         $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                 ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
                                 ->where('transaksis.user_id', auth()->user()->id)
                                 ->where('kategori_anggarans.nama', 'keinginan')
+                                ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
                                 ->select(
                                     'kategori_anggarans.nama as kategori_anggaran',
                                     'anggarans.jumlah as jumlah_anggaran',
-                                    'transaksis.*'
+                                    DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
+                                    'transaksis.kategori_transaksi_id'
                                 )
                                 ->get();
 

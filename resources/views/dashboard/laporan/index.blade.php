@@ -2,7 +2,7 @@
 
 @section('container')
     <div class='mb-5'>
-       <h1 class="text-3xl font-semibold">Laporan Keuangan Bulan Agustus 2023</h1>
+       <h1 class="text-xl xl:text-3xl font-semibold">Laporan Keuangan Bulan Agustus 2023</h1>
     </div>
 
     <div id="tabel" class="bg-white p-3 rounded-lg shadow-md mb-5">

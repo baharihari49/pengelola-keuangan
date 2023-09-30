@@ -211,11 +211,30 @@ class TransaksiController extends Controller
     public function api4() 
     {
 
-        // Ambil data tanggal unik
         $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
-                    ->select(DB::raw('DATE(created_at) as tanggal'))
-                    ->distinct()
-                    ->get();
+                ->select(DB::raw('DATE(created_at) as tanggal'))
+                ->distinct()
+                ->orderBy('tanggal', 'desc') // Mengatur urutan menjadi ascending
+                ->paginate((isset(request()->paginate) ? request()->paginate : 7));
+    
+        // return $dataTanggal;
+
+        // Mengonversi data ke dalam bentuk array
+        $dataTanggalArray = $dataTanggal->toArray();
+        
+        // Membalikkan urutan array menggunakan array_reverse
+        $dataTanggalReversed = array_reverse($dataTanggalArray['data']);
+
+        // return $dataTanggalReversed;
+        
+        // Mengembalikan data yang telah diurutkan dari bawah ke atas
+        $dataTanggal['data'] = $dataTanggalReversed;
+
+        // return $dataTanggal;
+        
+        $dataTanggal = $dataTanggal['data'];
+
+        // return $dataTanggal;
 
         // Ambil data jumlah untuk setiap tanggal
         $records = Transaksi::where('user_id', auth()->user()->id)
@@ -233,7 +252,7 @@ class TransaksiController extends Controller
 
         // Iterasi melalui data tanggal unik
         foreach ($dataTanggal as $tanggal) {
-            $tanggalData = $tanggal->tanggal;
+            $tanggalData = $tanggal['tanggal'];
 
             // Temukan data jumlah yang sesuai dengan tanggal
             $jumlahData = $records->where('tanggal', $tanggalData)->first();

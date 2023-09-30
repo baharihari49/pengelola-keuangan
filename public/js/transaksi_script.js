@@ -33,7 +33,7 @@
 
             document.body.appendChild(newElement)  
             
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = async function () {
                 if(this.readyState === 4 && this.status === 200) {
                     let response = JSON.parse(xhr.responseText)
                     response.forEach(res => {
@@ -55,31 +55,33 @@
                     let xhr2 = new XMLHttpRequest()
 
                     detailKategori.innerHTML = '<option selected="">Select category</option>'
-                    xhr2.onreadystatechange = function () {
-                        if (this.readyState === 4 && this.status === 200) {
-                            let response2 = JSON.parse(xhr2.responseText)
-                            response2.forEach(res2 => {
-                                let option2 = document.createElement('option')
-                                option2.value = res2.id
-                                option2.textContent = res2.nama
-                                option2.classList.add('optionsDetailTransaksi')
-                                detailKategori.appendChild(option2)
-                            })
-                        }
-                    }
-                    xhr2.open('GET', 'get_kategori_transaksi_all_show_by_jenis_kategori_transaksi/?id=' + jenisTransaksiId ,true)
-                    xhr2.send()
+
+                    await new Promise((resolve) => {
+                        xhr2.onreadystatechange = function () {
+                            if (this.readyState === 4 && this.status === 200) {
+                                let response2 = JSON.parse(xhr2.responseText);
+                                response2.forEach(res2 => {
+                                    let option2 = document.createElement('option');
+                                    option2.value = res2.id;
+                                    option2.textContent = res2.nama;
+                                    option2.classList.add('optionsDetailTransaksi');
+                                    detailKategori.appendChild(option2);
+                                });
+                                resolve(); // Menyelesaikan promise saat selesai
+                            }
+                        };
+                        xhr2.open('GET', 'get_kategori_transaksi_all_show_by_jenis_kategori_transaksi/?id=' + jenisTransaksiId, true);
+                        xhr2.send();
+                    });
 
                     // sedikit perbaikan, ini bisa menggunakan asyn await agar menjadi lebih baik
 
-                    setTimeout(() => {
-                        const optionsDetailTransaksi = Array.from(document.querySelectorAll('.optionsDetailTransaksi'))
-                        for(let i = 0; i < optionsDetailTransaksi.length; i++) {
-                            if(optionsDetailTransaksi[i].value == kategoriTransaksiId){
-                                optionsDetailTransaksi[i].selected = true
-                            }
+                    const optionsDetailTransaksi = Array.from(document.querySelectorAll('.optionsDetailTransaksi'));
+                    for (let i = 0; i < optionsDetailTransaksi.length; i++) {
+                        if (optionsDetailTransaksi[i].value == kategoriTransaksiId) {
+                            optionsDetailTransaksi[i].selected = true;
                         }
-                    },100);
+                    }
 
                     // sedikit perbaikan, ini bisa menggunakan asyn await agar menjadi lebih baik
 
