@@ -19,6 +19,7 @@ class LaporanController extends Controller
         $pengeluaranKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                             ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
                                             ->where('transaksis.user_id', auth()->user()->id)
+                                            ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                             ->where('kategori_anggarans.nama', 'kebutuhan')
                                             ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
                                             ->select(
@@ -33,6 +34,7 @@ class LaporanController extends Controller
         $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                 ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
                                 ->where('transaksis.user_id', auth()->user()->id)
+                                ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                 ->where('kategori_anggarans.nama', 'keinginan')
                                 ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
                                 ->select(
@@ -46,17 +48,25 @@ class LaporanController extends Controller
 
         $tabungan = Transaksi::where('user_id', auth()->user()->id)
                                 ->where('jenis_transaksi_id', 3)
+                                ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                 ->select(
                                     'transaksis.kategori_transaksi_id',
                                     DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
                                     // 'transaksis.deskripsi'
                                 )
                                 ->groupBy('transaksis.kategori_transaksi_id')
-                                ->get();                        
+                                ->get();          
+                                
+        $month = Transaksi::where('user_id', auth()->user()->id)
+                            ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
+                            ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
+                            ->distinct()
+                            ->get();
         
         return view('dashboard.laporan.index', [
             'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
                                     ->where('jenis_transaksi_id', 1)
+                                    ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                     ->select(
                                         'transaksis.kategori_transaksi_id',
                                         DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
@@ -64,7 +74,8 @@ class LaporanController extends Controller
                                     ->groupBy('transaksis.kategori_transaksi_id')
                                     ->get(),
             'totalPemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                          ->where('jenis_transaksi_id', 1)
+                                    ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+                                    ->where('jenis_transaksi_id', 1)
                                           ->sum('jumlah'),
             'pengeluaranKebutuhan' => $pengeluaranKebutuhan,
             'jumlahTransaksiKebutuhan' => DatabaseHelper::getJumlahTransaksiBudgeting('kebutuhan'),
@@ -72,7 +83,16 @@ class LaporanController extends Controller
             'jumlahTransaksiKeinginan' => DatabaseHelper::getJumlahTransaksiBudgeting('keinginan'),
             'jumlahPengeluaran' => DatabaseHelper::getJumlahPengeluaranBudgeting(),
             'tabungan' => $tabungan,
-            'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)->sum('jumlah'),
+            'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)
+                            ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+                            ->sum('jumlah'),
+            'dataBulan' => $month,
+            'bulanSaatIni' => Transaksi::where('user_id', auth()->user()->id)
+                            ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+                            ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
+                            ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
+                            ->distinct()
+                            ->get()
         ]);
     }
 

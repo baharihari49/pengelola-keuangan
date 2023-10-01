@@ -25,7 +25,7 @@ class DatabaseHelper
                                                 DB::raw("($jumlahPendapatanTransaksi * value / 100) AS jumlah")
                                             )
                                             ->where('user_id', auth()->user()->id)
-                                            ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                            // ->whereMonth('created_at', DatabaseHelper::getMonth())
                                             ->get();
 
         return $jumlahBudgeting;                                    
@@ -35,12 +35,13 @@ class DatabaseHelper
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
-                                                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                                // ->whereMonth('created_at', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
                                                 
         $records = DB::table('kategori_anggarans')
                     ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
                     ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
+                    // ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                     ->select(
                         'kategori_anggarans.id AS id_kategori_anggaran',
                         'kategori_anggarans.value',
@@ -74,12 +75,15 @@ class DatabaseHelper
             }
         }
 
+        return $persentaseBudgeting;
+
         return isset($persentaseBudgeting) ? $persentaseBudgeting : [];               
     }
 
     public static function getPersentaseAnggaran()
     {
         $persentaseAnggarans = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
+                                ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                                 ->select(
                                     'anggarans.kategori_transaksi_id',
                                     DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
@@ -88,7 +92,7 @@ class DatabaseHelper
                                 ->get();
 
 
-        $anggaran = Anggaran::where('user_id', auth()->user()->id)->whereMonth('created_at', DatabaseHelper::getMonth())->get();
+        $anggaran = Anggaran::where('user_id', auth()->user()->id)->get();
 
         $persentaseAnggaransArray = $persentaseAnggarans->keyBy('kategori_transaksi_id')->map(function ($item) {
             return floatval($item->persentase); // Mengonversi persentase ke float
@@ -149,7 +153,7 @@ class DatabaseHelper
 
     public static function getJumlahPengeluaranBudgeting()
     {
-        $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->whereMonth('created_at', DatabaseHelper::getMonth())->sum('jumlah');
+        $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
 
 
         $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 2)->sum('jumlah');
@@ -168,7 +172,7 @@ class DatabaseHelper
         $jumlahPendapatan = Transaksi::where('user_id', $userId)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
         $jumlahTabungan = Transaksi::where('user_id', $userId)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
 
-        $dataTabungan = Kategori_anggaran::where('user_id', $userId)->whereMonth('created_at', DatabaseHelper::getMonth())->where('nama', 'tabungan')->value('value');
+        $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'tabungan')->value('value');
 
         $persentase = 0; // Inisialisasi dengan 0
 

@@ -41,9 +41,11 @@
                 @endphp
             @endforeach
     
+            @php $hasKeinginan = true; @endphp
             <tr class="border-b dark:border-gray-700">
                 <td class="px-4 py-3 border-b" {{(isset($index) ? 'rowspan=' .$index  : 0)}}>{{ $pengeluaranKeinginan[0]->kategori_anggaran ?? ''}}</td>
                 @foreach ($pengeluaranKeinginan as $item)
+            @php $hasKeinginan = false; @endphp
                 <td class="px-4 py-3 border-b">{{ $item->kategori_transaksi->nama }}</td>
                 <td class="px-4 py-3 border-b">Rp {{ number_format($item->jumlah_transaksi, 0, ',', '.') }}</td>
                 <td class="px-4 py-3 border-b">Rp {{ number_format($item->jumlah_anggaran, 0, ',', '.') }}</td>
@@ -62,7 +64,7 @@
             @endforeach
     
     
-            <tr class="border-b dark:border-gray-700 bg-red-200 font-semibold text-gray-800">
+            <tr class="{{(!$hasKeinginan) ? '' : 'hidden'}} border-b dark:border-gray-700 bg-red-200 font-semibold text-gray-800">
                 <td class="px-4 py-3" colspan="2">Total Pengeluaran</td>
                 <td class="px-4 py-3">Rp {{number_format($jumlahPengeluaran['jumlah_transaksi'], 0, ',', '.')}}</td>
                 <td class="px-4 py-3">Rp {{number_format($jumlahPengeluaran['jumlah_anggaran'], 0, ',', '.')}}</td>

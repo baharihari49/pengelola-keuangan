@@ -1,5 +1,6 @@
 <?php
 
+use App\Helper\DatabaseHelper;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\DashboardController;
@@ -188,3 +189,12 @@ Route::middleware(['auth'])->group(function()
     });
 });
 
+
+
+Route::get('/test', function() {
+    return DatabaseHelper::getPersentaseBudgeting();
+});
+
+Route::get('/test2', function() {
+    return DatabaseHelper::getJumlahPengeluaranBudgeting();
+});

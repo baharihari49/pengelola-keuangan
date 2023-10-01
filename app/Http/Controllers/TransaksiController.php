@@ -55,6 +55,7 @@ class TransaksiController extends Controller
         $validate['user_id'] = auth()->user()->id;
 
         $data_transaksi = Transaksi::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
+                        ->whereMonth('created_at', DatabaseHelper::getMonth())
                         ->select('kategori_transaksi_id')
                         ->selectRaw('SUM(jumlah) as total_jumlah')
                         ->groupBy('kategori_transaksi_id')
@@ -66,7 +67,9 @@ class TransaksiController extends Controller
             $total_jumlah = 0
         );
 
-        $data_anggaran = Anggaran::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])->get();
+        $data_anggaran = Anggaran::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
+                                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                ->get();
 
         if(empty($data_anggaran[0]['jumlah'])){
             $validate['anggaran'] = false;
@@ -77,7 +80,7 @@ class TransaksiController extends Controller
             $validate['anggaran'] = true;
             Transaksi::create($validate);
             Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
-            return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+            return redirect('/transaksi')->with('sucsess', 'Data berhas     il ditambahkan');
         }else{
             return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
         }
@@ -213,6 +216,7 @@ class TransaksiController extends Controller
 
         $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
                 ->select(DB::raw('DATE(created_at) as tanggal'))
+                ->whereMonth('created_at', DatabaseHelper::getMonth())
                 ->distinct()
                 ->orderBy('tanggal', 'desc') // Mengatur urutan menjadi ascending
                 ->paginate((isset(request()->paginate) ? request()->paginate : 7));

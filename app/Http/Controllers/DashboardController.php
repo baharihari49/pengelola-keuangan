@@ -62,7 +62,6 @@ class DashboardController extends Controller
 
         $saldo = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
-                        ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                         ->select(
                             DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
                         )
@@ -153,14 +152,21 @@ class DashboardController extends Controller
 
     public function get_persentase()
     {
-        $jumlah_pendapatan = Transaksi::where('user_id', auth()->user()->id)->
-                                        where('jenis_transaksi_id', 1)
-                                        ->sum('jumlah');
-        $jumlah_anggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
+        $jumlah_pendapatan = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
+                        ->where('transaksis.user_id', auth()->user()->id)
+                        ->select(
+                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
+                        )
+                        ->get();   
 
+        $jumlah_anggaran = Anggaran::where('user_id', auth()->user()->id)
+                                    ->sum('jumlah');
+
+
+        // return $jumlah_pendapatan[0]['saldo'];
         return [
             intval($jumlah_anggaran),
-            intval( $jumlah_pendapatan) - $jumlah_anggaran,
+            intval( $jumlah_pendapatan[0]['saldo'])
         ];
     }
 
@@ -168,9 +174,11 @@ class DashboardController extends Controller
     {
         $data_jumlah_pendapatan = Transaksi::where('user_id', auth()->user()->id)
                                             ->where('jenis_transaksi_id', 1)
+                                            ->whereMonth('created_at', DatabaseHelper::getMonth())
                                             ->sum('jumlah');
         $data_jumlah_pengeluaran = Transaksi::where('user_id', auth()->user()->id)
                                             ->where('jenis_transaksi_id', 2)
+                                            ->whereMonth('created_at', DatabaseHelper::getMonth())
                                             ->sum('jumlah');
 
         return [

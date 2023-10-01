@@ -35,7 +35,7 @@ class AnggaranController extends Controller
             'Anggaran' => DatabaseHelper::getPersentaseAnggaran(),
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
-            'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->whereMonth('created_at', DatabaseHelper::getMonth())->get(),
+            'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
             'kategoriAnggarans' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
             'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan()
         ]);
