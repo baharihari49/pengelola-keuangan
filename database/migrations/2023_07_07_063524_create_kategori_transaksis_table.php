@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('jenis_transaksi_id');
             $table->foreignId('user_id');
             $table->boolean('show')->default(true);
+            // $table->boolean('default')->default(true);
             $table->timestamps();
         });
     }

@@ -112,6 +112,7 @@
                         </svg>
                         Tambah Transaksi
                     </button>
+                    
                     <div class="flex items-center space-x-3 w-full md:w-auto">
                         <div class="">
                             <select id="select-transaksi" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -146,8 +147,8 @@
                                 <th id="tabel-date" scope="row"
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$t->tanggal}}</th>
                                 <td id="tabel-date" class="px-4 py-3">Rp {{number_format($t->jumlah, 0, ',', '.')}}</td>
-                                <td id="tabel-date" class="px-4 py-3">{{$t->kategori_transaksi->nama}}</td>
-                                <td id="tabel-date" class="px-4 py-3">{{$t->jenis_transaksi->nama}}</td>
+                                <td id="tabel-date" class="px-4 py-3">{{$t->kategori_transaksi->nama ?? '--'}}</td>
+                                <td id="tabel-date" class="px-4 py-3">{{$t->jenis_transaksi->nama ?? '--'}}</td>
                                 <td id="tabel-date" class="px-4 py-3">{{$t->deskripsi}}</td>
                             </div>
                             <td class="px-4 py-3 flex items-center justify-end">
