@@ -2,7 +2,7 @@
 
 @section('container')
     <div class='mb-5 flex justify-between'>
-       <h1 class="text-xl xl:text-3xl font-semibold">Laporan Keuangan Bulan {{$bulanSaatIni[0]->bulan_transaksi}} 2023</h1>
+       <h1 class="text-xl xl:text-3xl font-semibold">Laporan Keuangan Bulan {{(isset($bulanSaatIni[0]) ? $bulanSaatIni[0]->bulan_transaksi : '')}} 2023</h1>
        <div>
 
         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown-month" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Pilih bulan<svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">

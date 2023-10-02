@@ -35,13 +35,13 @@ class DatabaseHelper
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
-                                                // ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                                ->whereMonth('created_at', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
                                                 
         $records = DB::table('kategori_anggarans')
                     ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
                     ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
-                    // ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
+                    ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                     ->select(
                         'kategori_anggarans.id AS id_kategori_anggaran',
                         'kategori_anggarans.value',
