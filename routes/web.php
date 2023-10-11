@@ -117,6 +117,8 @@ Route::middleware(['auth'])->group(function()
         Route::delete('/kategori_transaksi', 'destroy');
 
         Route::get('/get_kategori_transaksi_all_show_by_jenis_kategori_transaksi','api3');
+
+        Route::get('/get_kategori_transaksi_all', 'getAllTransaksi');
     });
 
 
@@ -189,6 +191,9 @@ Route::middleware(['auth'])->group(function()
     });
 });
 
+Route::get('/panduan', function() {
+    return view('dashboard.panduan.index');
+});
 
 
 Route::get('/test', function() {

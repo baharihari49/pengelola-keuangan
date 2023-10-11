@@ -22,15 +22,6 @@ class AnggaranController extends Controller
      */
     public function index()
     {
-        
-        
-
-        // return $persentase;
-
-        // return DatabaseHelper::getPersentaseAnggaran();
-        // return Anggaran::where('user_id', auth()->user()->id)->get();
-        // return DatabaseHelper::getPersentaseBudgeting();
-        // return Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 2)->sum('jumlah');
         return view('dashboard.anggaran.index', [
             'Anggaran' => DatabaseHelper::getPersentaseAnggaran(),
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
@@ -55,22 +46,30 @@ class AnggaranController extends Controller
      */
     public function store(StoreAnggaranRequest $request)
     {
-        $validate = $request->validate([
+        $validateRules = [
             'jumlah' => 'required',
             'kategori_transaksi_id' => 'required',
-            // 'kategori_anggaran_id' => 'required',
-        ]);
-
-        if(!isset($validate['kategori_anggaran_id'])){
-            $validate['kategori_anggaran_id'] = 0;
+        ];
+    
+        $kategoriAnggaranId = $request->input('kategori_anggaran_id');
+    
+        // Check if 'kategori_anggaran_id' is empty or contains "Select category"
+        if (empty($kategoriAnggaranId) || $kategoriAnggaranId === "Select category") {
+            $kategoriAnggaranId = 0; // Set default value to 0
+        } else {
+            $validateRules['kategori_anggaran_id'] = 'required|integer';
         }
-
+    
+        $validate = $request->validate($validateRules);
+        $validate['kategori_anggaran_id'] = $kategoriAnggaranId;
         $validate['user_id'] = auth()->user()->id;
-
+    
         Anggaran::create($validate);
-
+    
         return redirect('/anggaran');
     }
+    
+
 
     /**
      * Display the specified resource.

@@ -15,7 +15,6 @@ const colors2 = ['#F98080', '#F05252', '#E02424', '#C81E1E', '#9B1C1C', '#771D1D
         xhr.onload = function() {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
-                console.log(response);
                 const kategoriAnggaran = response.kategori_anggaran
                 const jumlahAnggaran = response.anggaran
                 

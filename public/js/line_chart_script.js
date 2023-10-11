@@ -106,9 +106,6 @@
             let response = JSON.parse(this.responseText)
             const dataJumlahPendapatan = response.map(res => res.jumlah)
 
-            console.log(dataJumlahPendapatan);
-
-           
             const xhr2 = new XMLHttpRequest()
 
             xhr2.onload = function() {

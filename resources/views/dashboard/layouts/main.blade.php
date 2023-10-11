@@ -11,7 +11,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{(request()->path() == '/' ) ? 'Dashboard' : request()->path()}}</title>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="{{ asset('js/echarts.min.js') }}"></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/datepicker.min.js"></script>
@@ -19,7 +18,7 @@
 </head>
 <body class="font-body">
 
-    <div class="antialiased bg-gray-50 dark:bg-gray-900 h-max">
+    <div style="min-height: 100vh" class="antialiased bg-gray-50 dark:bg-gray-900">
 
     @include('dashboard.layouts.nav')
     @include('dashboard.layouts.sidebar')

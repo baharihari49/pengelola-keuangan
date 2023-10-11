@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
                 total: {
                   showAlways: true,
                   show: true,
-                  label: "Budget kebutuhan",
+                  label: "Budget",
                   fontFamily: "Inter, sans-serif",
                   formatter: function (w) {
                     const sum = w.globals.seriesTotals.reduce((a, b) => {

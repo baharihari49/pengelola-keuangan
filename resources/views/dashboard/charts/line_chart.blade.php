@@ -7,7 +7,7 @@
         <p class="text-sm lg:text-base font-normal text-gray-500 dark:text-gray-400">Pendapatan bulan ini</p>
     </div>
     <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-        23%
+        %
         <svg class="w-3 h-3 ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5 13V1m0 0L1 5m4-4 4 4" />
@@ -30,7 +30,7 @@
             </svg>
         </button>
         <!-- Dropdown menu -->
-        <div id="lastDaysdropdown"
+        {{-- <div id="lastDaysdropdown"
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                 <li>
@@ -49,8 +49,8 @@
                         days</a>
                 </li>
             </ul>
-        </div>
-        <a href="#"
+        </div> --}}
+        <a aria-disabled="true" href="#"
             class="uppercase text-xs lg:text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
             Full Report
             <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"

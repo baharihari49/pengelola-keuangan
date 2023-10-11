@@ -21,99 +21,64 @@
     }
 
 
-    const responseDataTransaksi = function() {
-        const xhr = new XMLHttpRequest()
-
-            const uuid = this.getAttribute('data-uuid')
-
-            let jenisTransaksiId
-            let kategoriTransaksiId
-
-            updateProductModal.classList.replace('hidden', 'flex')
-
-            document.body.appendChild(newElement)  
-            
-            xhr.onreadystatechange = async function () {
-                if(this.readyState === 4 && this.status === 200) {
-                    let response = JSON.parse(xhr.responseText)
-                    response.forEach(res => {
-                        detailTanggal.value = res.tanggal
-                        detailJumlah.value = res.jumlah
-                        detailDeskripsi.value = res.deskripsi
-                        uuidDetail.value = uuid
-                        oldKategoriTransaksiId.value = res.kategori_transaksi_id
-                        btnDelete.setAttribute('data-uuid', res.uuid)
-                        if(res.jenis_transaksi_id == 1) {
-                            optionTransaksi[0].selected = true
-                        }else if (res.jenis_transaksi_id == 2) {
-                            optionTransaksi[1].selected = true
-                        }
-                        jenisTransaksiId = res.jenis_transaksi_id
-                        kategoriTransaksiId = res.kategori_transaksi_id
-                    })
-
-                    let xhr2 = new XMLHttpRequest()
-
-                    detailKategori.innerHTML = '<option selected="">Select category</option>'
-
-                    await new Promise((resolve) => {
-                        xhr2.onreadystatechange = function () {
-                            if (this.readyState === 4 && this.status === 200) {
-                                let response2 = JSON.parse(xhr2.responseText);
-                                response2.forEach(res2 => {
-                                    let option2 = document.createElement('option');
-                                    option2.value = res2.id;
-                                    option2.textContent = res2.nama;
-                                    option2.classList.add('optionsDetailTransaksi');
-                                    detailKategori.appendChild(option2);
-                                });
-                                resolve(); // Menyelesaikan promise saat selesai
-                            }
-                        };
-                        xhr2.open('GET', 'get_kategori_transaksi_all_show_by_jenis_kategori_transaksi/?id=' + jenisTransaksiId, true);
-                        xhr2.send();
-                    });
-
-                    // sedikit perbaikan, ini bisa menggunakan asyn await agar menjadi lebih baik
-
-                    const optionsDetailTransaksi = Array.from(document.querySelectorAll('.optionsDetailTransaksi'));
-                    for (let i = 0; i < optionsDetailTransaksi.length; i++) {
-                        if (optionsDetailTransaksi[i].value == kategoriTransaksiId) {
-                            optionsDetailTransaksi[i].selected = true;
-                        }
-                    }
-
-                    // sedikit perbaikan, ini bisa menggunakan asyn await agar menjadi lebih baik
-
-
-                }
+    const responseDataTransaksi = async function () {
+        try {
+            const uuid = this.getAttribute('data-uuid');
+            let jenisTransaksiId;
+            let kategoriTransaksiId;
+    
+            updateProductModal.classList.replace('hidden', 'flex');
+            document.body.appendChild(newElement);
+    
+            // Fetch data dari API dengan menggunakan async/await
+            const response = await fetch(`/get_transaksi/?uuid=${uuid}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
-            jenisTransaksi.forEach(jt => {
-                jt.addEventListener('change', function(){
-                    detailKategori.innerHTML = '<option selected="">Select category</option>'
-                    const xhr = new XMLHttpRequest()
-                    xhr.onreadystatechange = function() {
-                        if(this.readyState === 4 && this.status === 200) {
-                            let response = JSON.parse(xhr.responseText)
-                            response.forEach(res => {
-                                let option = document.createElement('option')
-                                option.value = res.id
-                                option.textContent = res.nama
-                                detailKategori.appendChild(option)
-                            })
-                        }
-                    }
-                    xhr.open('GET', '/get_kategori_transaksi_by_jenis_transaksi_id/?id=' +  jt.value, true)
-                    xhr.send()
-                })
-            })
-
-
-            xhr.open('GET', 'get_transaksi/?uuid=' + uuid, true)
-            xhr.send()
+    
+            const data = await response.json();
+            data.forEach(res => {
+                detailTanggal.value = res.tanggal;
+                detailJumlah.value = res.jumlah;
+                detailDeskripsi.value = res.deskripsi;
+                uuidDetail.value = uuid;
+                oldKategoriTransaksiId.value = res.kategori_transaksi_id;
+                btnDelete.setAttribute('data-uuid', res.uuid);
+                if (res.jenis_transaksi_id == 1) {
+                    optionTransaksi[0].selected = true;
+                } else if (res.jenis_transaksi_id == 2) {
+                    optionTransaksi[1].selected = true;
+                }
+                jenisTransaksiId = res.jenis_transaksi_id;
+                kategoriTransaksiId = res.kategori_transaksi_id;
+                detailKategori.innerHTML = `<option selected="">${res.nama_kategori_transaksi}</option>`;
+            });
+        } catch (error) {
+        }
     }
-
+    
+    jenisTransaksi.forEach(jt => {
+        jt.addEventListener('change', async function () {
+            detailKategori.innerHTML = '<option selected="">Select category</option>';
+            try {
+                // Fetch data kategori_transaksi berdasarkan jenis_transaksi_id
+                const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                data.forEach(res => {
+                    let option = document.createElement('option');
+                    option.value = res.id;
+                    option.textContent = res.nama;
+                    detailKategori.appendChild(option);
+                });
+            } catch (error) {
+            }
+        });
+    });
+    
     let newElement = document.createElement('div')
     newElement.setAttribute('modal-backdrop', '')
     newElement.setAttribute('class', 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40')
@@ -145,7 +110,6 @@
         xhr.onload = function () {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
-                console.log(response);
                 tabelRow.forEach(tr => {
                     while(tr.firstChild) {
                         tr.removeChild(tr.firstChild)
@@ -220,7 +184,6 @@
         xhr.onload = function() {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
-                console.log(response);
                 tabelRow.forEach(tr => {
                     while(tr.firstChild) {
                         tr.removeChild(tr.firstChild)

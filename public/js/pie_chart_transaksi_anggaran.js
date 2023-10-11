@@ -5,7 +5,6 @@
         xhr.onload = function() {
             if(this.status === 200) {
                 let response = JSON.parse(this.responseText)
-                console.log(response);
                 const getChartOptions = () => {
                 return {
                   series: response,

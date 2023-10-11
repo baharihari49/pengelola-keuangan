@@ -19,6 +19,7 @@ class LaporanController extends Controller
         $pengeluaranKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                             ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
                                             ->where('transaksis.user_id', auth()->user()->id)
+                                            ->where('anggarans.user_id', auth()->user()->id)
                                             ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                             ->where('kategori_anggarans.nama', 'kebutuhan')
                                             ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
@@ -30,10 +31,10 @@ class LaporanController extends Controller
                                             )
                                             ->get();
     
-
         $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                 ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
                                 ->where('transaksis.user_id', auth()->user()->id)
+                                ->where('anggarans.user_id', auth()->user()->id)
                                 ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                 ->where('kategori_anggarans.nama', 'keinginan')
                                 ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')

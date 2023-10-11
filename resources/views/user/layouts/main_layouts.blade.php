@@ -9,9 +9,10 @@
     <title>{{request()->path()}}</title>
 </head>
 <body>
-    
-<div>
-    @yield('container')
+<div style="min-height: 100vh" class="antialiased bg-gray-50 dark:bg-gray-900">  
+    <div>
+        @yield('container')
+    </div>
 </div>
 </body>
 </html>

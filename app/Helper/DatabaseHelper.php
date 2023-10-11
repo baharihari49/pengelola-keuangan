@@ -39,8 +39,10 @@ class DatabaseHelper
                                                 ->sum('jumlah');
                                                 
         $records = DB::table('kategori_anggarans')
+                    ->where('anggarans.user_id', auth()->user()->id)
                     ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
                     ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
+                    ->where('transaksis.user_id', auth()->user()->id)
                     ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                     ->select(
                         'kategori_anggarans.id AS id_kategori_anggaran',
@@ -75,7 +77,6 @@ class DatabaseHelper
             }
         }
 
-        return $persentaseBudgeting;
 
         return isset($persentaseBudgeting) ? $persentaseBudgeting : [];               
     }
@@ -83,6 +84,8 @@ class DatabaseHelper
     public static function getPersentaseAnggaran()
     {
         $persentaseAnggarans = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
+                                ->where('transaksis.user_id', auth()->user()->id)
+                                ->where('anggarans.user_id', auth()->user()->id)
                                 ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                                 ->select(
                                     'anggarans.kategori_transaksi_id',
@@ -114,6 +117,7 @@ class DatabaseHelper
     {
         $jumlahTransaksiKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                         ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
+                                        ->where('anggarans.user_id', auth()->user()->id)
                                         ->where('transaksis.user_id', auth()->user()->id)
                                         ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                         ->where('kategori_anggarans.nama', $param)
@@ -174,15 +178,19 @@ class DatabaseHelper
 
         $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'tabungan')->value('value');
 
+        // // Debugging: Cetak nilai variabel
+        // var_dump($jumlahPendapatan, $jumlahTabungan, $dataTabungan);
+
+        // exit();
+
         $persentase = 0; // Inisialisasi dengan 0
 
-        if ($dataTabungan !== 0 && $jumlahPendapatan !== 0 && $jumlahTabungan) {
+        if ($dataTabungan !== 0 && $dataTabungan !== null && $jumlahPendapatan !== 0 && $jumlahTabungan !== 0) {
             $persentase = ($jumlahTabungan / ($dataTabungan / 100 * $jumlahPendapatan)) * 100;
         }
 
-                
-
         return $persentase;
+
     }
 
     public static function getMonth()

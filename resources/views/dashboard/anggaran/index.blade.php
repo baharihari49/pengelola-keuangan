@@ -11,7 +11,7 @@
                         <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
                       </svg>
                 </button>
-            </div>
+            </div> 
             <div class="">
                 @php $hasKebutuhan = false; @endphp
                 @foreach ($dataBudgeting as $index => $item)
@@ -153,7 +153,6 @@
 {{-- @include('dashboard.anggaran.layouts.pie_chart_anggaran') --}}
 @include('dashboard.anggaran.layouts.create_budget')
 <script src="js/request_ajax.js"></script>
-<script src="js/pie_chart.js"></script>
 <script src="js/pie_chart_flowbite.js"></script>
 <script src="js/script.js"></script>
 <script src="js/anggaran/create_budget.js"></script>

@@ -7,7 +7,6 @@ window.addEventListener("load", function() {
             let response = JSON.parse(this.responseText)
             let nama = response.map(res => res.nama)
             let jumlah = response.map(res => parseInt(res.jumlah))
-            console.log(jumlah);
             
             const getChartOptions = () => {
             return {

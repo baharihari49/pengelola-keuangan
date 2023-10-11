@@ -55,6 +55,7 @@ class TransaksiController extends Controller
         $validate['user_id'] = auth()->user()->id;
 
         $data_transaksi = Transaksi::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
+                        ->where('user_id', auth()->user()->id)
                         ->whereMonth('created_at', DatabaseHelper::getMonth())
                         ->select('kategori_transaksi_id')
                         ->selectRaw('SUM(jumlah) as total_jumlah')
@@ -67,7 +68,8 @@ class TransaksiController extends Controller
             $total_jumlah = 0
         );
 
-        $data_anggaran = Anggaran::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
+        $data_anggaran = Anggaran::where('user_id', auth()->user()->id)
+                                ->where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                 ->get();
 
@@ -148,7 +150,14 @@ class TransaksiController extends Controller
     }
 
     public function api() {
-        return Transaksi::where('user_id', auth()->user()->id)->where('uuid', request()->uuid)->get();
+        return Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                        ->where('transaksis.uuid', request()->uuid)
+                        ->where('transaksis.user_id', auth()->user()->id)
+                        ->select(
+                            'kategori_transaksis.nama as nama_kategori_transaksi',
+                            'transaksis.*'
+                        )
+                        ->get();
     }
 
     public function api2() {

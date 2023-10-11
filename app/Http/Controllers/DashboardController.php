@@ -21,39 +21,39 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $pendapatanDanPengeluaran = DB::table('jenis_transaksis')
-                                    ->leftJoinSub(function ($query) {
-                                        $query->select(
-                                            'transaksis.user_id',
-                                            DB::raw('SUM(transaksis.jumlah) as total_saldo_1')
-                                        )
-                                        ->from('transaksis')
-                                        ->where('user_id', auth()->user()->id)
-                                        ->where('transaksis.jenis_transaksi_id', 1)
-                                        ->whereMonth('created_at', DatabaseHelper::getMonth())
-                                        ->groupBy('transaksis.user_id');
-                                    }, 'saldo_1', function ($join) {
-                                        $join->on('jenis_transaksis.id', '=', DB::raw(1));
-                                    })
-                                    ->leftJoinSub(function ($query) {
-                                        $query->select(
-                                            'transaksis.user_id',
-                                            DB::raw('SUM(transaksis.jumlah) as total_saldo_2_3')
-                                        )
-                                        ->from('transaksis')
-                                        ->where('user_id', auth()->user()->id)
-                                        ->whereMonth('created_at', DatabaseHelper::getMonth())
-                                        ->whereIn('transaksis.jenis_transaksi_id', [2, 3])
-                                        ->groupBy('transaksis.user_id');
-                                    }, 'saldo_2_3', function ($join) {
-                                        $join->on('jenis_transaksis.id', '=', DB::raw(2));
-                                    })
-                                    ->select(
-                                        'jenis_transaksis.id as jenis_transaksi_id',
-                                        DB::raw('COALESCE(saldo_1.total_saldo_1, 0) as total_saldo_1'),
-                                        DB::raw('COALESCE(saldo_2_3.total_saldo_2_3, 0) as total_saldo_2_3')
-                                    )
-                                    ->get();
+        // $pendapatanDanPengeluaran = DB::table('jenis_transaksis')
+        //                             ->leftJoinSub(function ($query) {
+        //                                 $query->select(
+        //                                     'transaksis.user_id',
+        //                                     DB::raw('SUM(transaksis.jumlah) as total_saldo_1')
+        //                                 )
+        //                                 ->from('transaksis')
+        //                                 ->where('user_id', auth()->user()->id)
+        //                                 ->where('transaksis.jenis_transaksi_id', 1)
+        //                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
+        //                                 ->groupBy('transaksis.user_id');
+        //                             }, 'saldo_1', function ($join) {
+        //                                 $join->on('jenis_transaksis.id', '=', DB::raw(1));
+        //                             })
+        //                             ->leftJoinSub(function ($query) {
+        //                                 $query->select(
+        //                                     'transaksis.user_id',
+        //                                     DB::raw('SUM(transaksis.jumlah) as total_saldo_2_3')
+        //                                 )
+        //                                 ->from('transaksis')
+        //                                 ->where('user_id', auth()->user()->id)
+        //                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
+        //                                 ->whereIn('transaksis.jenis_transaksi_id', [2, 3])
+        //                                 ->groupBy('transaksis.user_id');
+        //                             }, 'saldo_2_3', function ($join) {
+        //                                 $join->on('jenis_transaksis.id', '=', DB::raw(2));
+        //                             })
+        //                             ->select(
+        //                                 'jenis_transaksis.id as jenis_transaksi_id',
+        //                                 DB::raw('COALESCE(saldo_1.total_saldo_1, 0) as total_saldo_1'),
+        //                                 DB::raw('COALESCE(saldo_2_3.total_saldo_2_3, 0) as total_saldo_2_3')
+        //                             )
+        //                             ->get();
 
 
 
@@ -76,7 +76,7 @@ class DashboardController extends Controller
                                     ->where('transaksis.user_id', auth()->user()->id)
                                     ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                                     ->where('transaksis.jenis_transaksi_id', 2)
-                                    ->groupBy('kategori_transaksi_id')
+                                    ->groupBy('kategori_transaksi_id', 'kategori_transaksis.nama')
                                     ->orderByDesc('total_jumlah')
                                     ->get();
 
@@ -86,7 +86,12 @@ class DashboardController extends Controller
 
                                     
         return view('dashboard.index', [
-            'pendapatanDanPengeluaran' => $pendapatanDanPengeluaran,
+            'pendapatan' => Transaksi::where('user_id', auth()->user()->id)
+                                      ->where('jenis_transaksi_id', 1)
+                                      ->sum('jumlah'),
+            'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
+                                    ->where('jenis_transaksi_id', 2)
+                                    ->sum('jumlah'),
             'saldo' => $saldo,
             'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)->sum('jumlah'),
             'transaksiTerkini' => Transaksi::where('user_id', auth()->user()->id)
