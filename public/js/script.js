@@ -14,6 +14,8 @@ const sideBar = document.getElementById('default-sidebar')
 const iconSideBar = Array.from(document.querySelectorAll('#icon-sidebar'))
 const containerSettings = Array.from(document.querySelectorAll('#container-settings'))
 const mainSection = document.getElementById('main-section')
+const footerSection = document.getElementById('footer-section')
+const containerMain = document.getElementById('container-main')
 
 let show = true
 
@@ -26,6 +28,7 @@ btnToggleSideBar.addEventListener('click', function() {
             cs.style.flexDirection = 'column'
         })
         mainSection.style.marginLeft = '4rem'
+        footerSection.style.marginLeft = '4rem'
        }else{
         ts.style.display = ''
         sideBar.style.width = ''
@@ -33,6 +36,7 @@ btnToggleSideBar.addEventListener('click', function() {
             cs.style.flexDirection = 'row'
         })
         mainSection.style.marginLeft = ''
+        footerSection.style.marginLeft = ''
        }
     })
     show = !show

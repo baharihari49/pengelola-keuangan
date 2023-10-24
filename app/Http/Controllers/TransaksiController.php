@@ -24,7 +24,8 @@ class TransaksiController extends Controller
         
         return view('dashboard.transaksi.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::where('user_id', Auth::id())
+            'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi'])
+                ->where('user_id', Auth::id())
                 ->orderBy('created_at', 'desc')
                 ->paginate(20),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),

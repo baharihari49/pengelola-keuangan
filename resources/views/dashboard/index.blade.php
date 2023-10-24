@@ -248,7 +248,7 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-32">
     <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <div class="bg-white shadow-md rounded-lg p-3">
@@ -274,6 +274,7 @@
         </div>
     </div>
 </div>
+
 
 
 <script src="js/donut_chart_transaksi_pendapatan_pengeluaran.js"></script>

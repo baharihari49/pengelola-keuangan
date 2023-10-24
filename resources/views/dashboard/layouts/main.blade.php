@@ -14,7 +14,6 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/datepicker.min.js"></script>
-    {{-- <script src="https://unpkg.com/feather-icons"></script> --}}
 </head>
 <body class="font-body">
 
@@ -23,9 +22,15 @@
     @include('dashboard.layouts.nav')
     @include('dashboard.layouts.sidebar')
 
-    <main id="main-section" class="p-4 md:ml-64 h-auto pt-20">
-        @yield('container')
+    <main id="container-main" class="">
+        <div style="min-height: 100vh" id="main-section" class="p-4 md:ml-64 h-auto pt-20 border">
+            @yield('container')
+        </div>
+        <div id="footer-section" class="md:ml-64 h-auto relative">
+            @include('dashboard.footer.index')
+        </div>
     </main>
+
 
 </div>
 <script src="js/script.js"></script>
