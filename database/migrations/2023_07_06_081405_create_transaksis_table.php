@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->date('tanggal');
+            $table->string('no_transaksi');
             $table->integer('jumlah');
             $table->text('deskripsi');
             $table->foreignId('user_id');

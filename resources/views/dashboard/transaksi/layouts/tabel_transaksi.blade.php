@@ -130,10 +130,11 @@
                         <tr>
                             <th scope="col" class="px-4 py-3">No</th>
                             <th scope="col" class="px-4 py-3">Tanggal</th>
-                            <th scope="col" class="px-4 py-3">Jumlah</th>
+                            <th scope="col" class="px-4 py-3">No transaksi</th>
                             <th scope="col" class="px-4 py-3">Kategori</th>
                             <th scope="col" class="px-4 py-3">Jenis Transaksi</th>
                             <th scope="col" class="px-4 py-3">Deskripsi</th>
+                            <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">Test</span>
                             </th>
@@ -146,10 +147,11 @@
                                 <td class="px-4 py-3 w-3">{{(request()->page > 1) ? $index + request()->page * 10 - 9 : $index + 1}}</td>
                                 <th id="tabel-date" scope="row"
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$t->tanggal}}</th>
-                                <td id="tabel-date" class="px-4 py-3">Rp {{number_format($t->jumlah, 0, ',', '.')}}</td>
+                                <td id="tabel-date" class="px-4 py-3">{{$t->no_transaksi ?? '--'}}</td>
                                 <td id="tabel-date" class="px-4 py-3">{{$t->kategori_transaksi->nama ?? '--'}}</td>
                                 <td id="tabel-date" class="px-4 py-3">{{$t->jenis_transaksi->nama ?? '--'}}</td>
                                 <td id="tabel-date" class="px-4 py-3">{{$t->deskripsi}}</td>
+                                <td id="tabel-date" class="px-4 py-3">Rp {{number_format($t->jumlah, 0, ',', '.')}}</td>
                             </div>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="flex gap-5 mr-5">

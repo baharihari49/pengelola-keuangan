@@ -34,7 +34,7 @@
         @include('dashboard.laporan.layouts.tabel_pengeluaran')
     </div>
 
-    <div id="tabel" class="bg-white p-3 rounded-lg shadow-md">
+    <div id="tabel" class="bg-white p-3 rounded-lg shadow-md mb-28">
         <h2 class="text-2xl mb-3 font-semibold">Tabungan</h2>
         @include('dashboard.laporan.layouts.tabel_tabungan')
     </div>

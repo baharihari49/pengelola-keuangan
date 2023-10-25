@@ -42,19 +42,17 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3">Kategori Anggaran</th>
                             <th scope="col" class="px-4 py-3">Kategori Budgeting</th>
                             <th scope="col" class="px-4 py-3">Sisa Anggaran</th>
+                            <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($Anggaran as $index => $a)
                         <tr id="tabel-row" class="border-b dark:border-gray-700">
-                            <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($a->jumlah, 0, ',', '.')}}
-                            </th>
+                            
                             <td class="px-4 py-3">{{$a->kategori_transaksi->nama}}</td>
                             <td class="px-4 py-3">
                                 {{ $a->kategori_anggaran->nama ?? '--' }}
@@ -67,6 +65,10 @@
                                     </div>
                                     <P>{{round($a->persentase)}}%</P>
                                 </div>
+                            </td>
+
+                            <td scope="row"
+                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($a->jumlah, 0, ',', '.')}}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="flex gap-5 mr-5">

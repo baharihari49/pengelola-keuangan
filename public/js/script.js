@@ -28,6 +28,7 @@ btnToggleSideBar.addEventListener('click', function() {
             cs.style.flexDirection = 'column'
         })
         mainSection.style.marginLeft = '4rem'
+        console.log(footerSection);
         footerSection.style.marginLeft = '4rem'
        }else{
         ts.style.display = ''

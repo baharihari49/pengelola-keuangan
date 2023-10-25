@@ -4,7 +4,7 @@
         <div class="flex justify-start items-center">
             
             <button id="btn-toggle-sidebar" class="p-2 rounded-lg hover:border hidden md:block">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     width="16" height="12" fill="none" viewBox="0 0 16 12">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M1 1h14M1 6h14M1 11h7" />
@@ -20,15 +20,11 @@
                 <span class="sr-only">Toggle sidebar</span>
             </button>
 
-            <div class="flex ms-3">
-                <svg class="w-6 h-6 text-blue-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z" />
-                    <path
-                        d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z" />
-                </svg>
-                <h1 class="text-2xl font-semibold ms-2">octans</h1>
+            <div class="flex ms-8">
+                <figure class="flex items-end gap-2">
+                    <img class="h-12" src="./image/logo/octans_logo.png" alt="">
+                    <p class="font-bold text-2xl">octans</p>
+                </figure>
             </div>
 
         </div>
@@ -37,11 +33,7 @@
                 class="flex mx-3 text-sm rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                 <span class="sr-only">Open user menu</span>
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                </svg>
+                <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="https://lh3.googleusercontent.com/pw/ADCreHcEuwkDMB0jFg20408w0Bl9txsKht-YkiVgbkXErZxWc7f8ZihGifqnHfz5Z-RIP_MzzyVAd5G3aUantnHc8i_W0qYxxdpqLZzr8voPvZNydHtjHomddU_tWGzNxqG7HYUYb9dLkyM_ryFslKmWVXafoWphV12kt8m_hPZvxyh7x3F9vTm5YmlH_0mmsWZ94LSpZtMgb8raGgzl-VUIXbHGHYp7VaFmPhhHJcYIuAHmdkp2Qfn_ihnmdawOHujIFFBR5hUQT4UaPf89lzi8fWIJRqJyDJ72yEJgkfYeAAHnWVydKxYBdZ9Uuu1UB0dou25syCeRaSUaCmEp2mGfATJw3ibA6rGLQayFjO2KPHfql_N8YJDmdtiJVQa3BNGM1XoPepUyBQlqxoMAaZe1gBGtOeGDyVoqu17CPZvk_K206VlKmX7uxZ_bInvgWFX2_X2KDecBLfXqu_kyGTsKBmSmS3e-oxZreVU8NKTWM2ku1X55WfnTwHrTscpO_oVXSK4G9so6y7ocj1_Ud5q-xgshq7Ba0k0LCl4NpsaHxh0BqG5f2253OPpLFtlrsuAcipjnqgtSDxlBH5MxVlbEb1a6KTHZ-luTsXPftM0xO9iJo2CBuZL7vSzEchO4mTuUPaadJ5D-z65SDO4VulNZxWv2zwmq5rUuDS3RjatOJB9kJ0xMQehYKk5d0rFONrTJ4O9UCp8bi6XAnYJLccLwnad0eHIT2MHSDkjbRpwK65LHG--pGyzIam-hYOgK5ySyrIb0txowCVkFaqpunICMwgof82Tat7O5-40Xafr7F2KqwUweIPjXRMV0gMubv6OQFbaayK-UvKu-FpkEml2UIMW6xzxQpc2mf0uzHNz2oMKSsL2IC9svTqP9MKe0PBne9mfdDjN9qtM0BAqMdmjQ7nqpKg=w720-h720-s-no?authuser=0" alt="User dropdown">
             </button>
             <!-- Dropdown menu -->
             <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"

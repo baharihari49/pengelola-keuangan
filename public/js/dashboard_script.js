@@ -17,12 +17,12 @@ btnDaysDropdwon.forEach(btn => {
                 console.log(response);
                 response.forEach((res, index) => {
                     tabelRow2 = document.createElement('tr')
-                    let element2 = `<th scope="row"
+                    let element2 = `<td style="color: ${(res.jenis_transaksi_id == 1) ? `#057A55` : (res.jenis_transaksi_id == 3 ) ? '#1C64F2' : '#E02424'} "
+                    class="px-4 py-3 font-medium text-sm">${res.kategori_transaksi}</td><th scope="row"
                                     style="color:${(res.jenis_transaksi_id == 1) ? `#057A55` : (res.jenis_transaksi_id == 3 ) ? '#1C64F2' : '#E02424'}"
                                     class="px-4 py-3 text-sm font-medium whitespace-nowrap dark:text-white">${(res.jenis_transaksi_id == 1 ) ? `+ ${res.jumlah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }).split(',')[0]}` : `- ${res.jumlah.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }).split(',')[0]}`}</th>
 
-                                    <td style="color: ${(res.jenis_transaksi_id == 1) ? `#057A55` : (res.jenis_transaksi_id == 3 ) ? '#1C64F2' : '#E02424'} "
-                                    class="px-4 py-3 font-medium text-sm">${res.kategori_transaksi}</td>`
+                                    `
                                     
                     let element = `<th scope="row"
                                             class="px-4 py-3 text-base text-${(res.jenis_transaksi_id == 1) ? `green-600` : `red-600`} font-medium whitespace-nowrap dark:text-white">${(res.jenis_transaksi_id == 1 ) ? `+ ${res.jumlah}` : `- ${res.jumlah}`}</th>

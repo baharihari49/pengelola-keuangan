@@ -27,6 +27,7 @@ class Transaksi extends Model
         'jumlah',
         'kategori_transaksi_id',
         'jenis_transaksi_id',
+        'no_transaksi',
         'deskripsi',
         'user_id',
         'show',

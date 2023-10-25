@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link class="text-blue-600" rel="icon" href="/favicon.svg" type="image/svg+xml">
+    {{-- <link rel="icon" href="https://drive.google.com/file/d/1lOQcnPpV5U0QQoT7w-bml-Z-YRgqM5oL/view?usp=drive_link" type="image/svg+xml"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{(request()->path() == '/' ) ? 'Dashboard' : request()->path()}}</title>
@@ -27,7 +27,7 @@
             @yield('container')
         </div>
         <div id="footer-section" class="md:ml-64 h-auto relative">
-            @include('dashboard.footer.index')
+            @include('dashboard.layouts.footer')
         </div>
     </main>
 

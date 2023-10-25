@@ -53,7 +53,21 @@ class TransaksiController extends Controller
             'deskripsi' => 'required'
         ]);
 
+
+        
+        
         $validate['user_id'] = auth()->user()->id;
+        
+        $transaksi = Transaksi::where('user_id', auth()->user()->id)->select('id')->get();
+        foreach($transaksi as $item) {
+            $validate['no_transaksi'] = ($validate['jenis_transaksi_id'] == 1) ? 'ITR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000' : 
+                        (($validate['jenis_transaksi_id'] == 2) ? 'OTR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000' . ($item->id + 1) :
+                        'STR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000');
+
+
+        }
+
+        return $validate;
 
         $data_transaksi = Transaksi::where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
                         ->where('user_id', auth()->user()->id)
