@@ -101,6 +101,7 @@ class AnggaranController extends Controller
 
         $validate['user_id'] = auth()->user()->id;
 
+        
         Anggaran::where('id', request()->id)
                 ->update($validate);
 

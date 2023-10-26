@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('no_transaksi');
             $table->integer('jumlah');
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('kategori_transaksi_id');
             $table->boolean('anggaran');

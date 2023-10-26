@@ -28,7 +28,7 @@ class Transaksi extends Model
         'kategori_transaksi_id',
         'jenis_transaksi_id',
         'no_transaksi',
-        'deskripsi',
+        'deskripsi', // Tambahkan kolom 'deskripsi' ke dalam $fillable
         'user_id',
         'show',
         'anggaran'

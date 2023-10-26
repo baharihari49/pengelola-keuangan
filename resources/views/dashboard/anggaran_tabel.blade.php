@@ -6,18 +6,14 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-4 py-3 text-sm">Jumlah</th>
-                            <th scope="col" class="px-4 py-3 text-sm">Kategori</th>
                             <th scope="col" class="px-4 py-3 text-sm">Persentase</th>
+                            <th scope="col" class="px-4 py-3 text-sm">Kategori</th>
+                            <th scope="col" class="px-4 py-3 text-sm">Jumlah</th>
                         </tr>
                     </thead>
                     <tbody id="tabel-body">
                         @foreach ($anggarans as $index => $item)
                         <tr id="tabel-row" class="border-b dark:border-gray-700">
-                            <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($item->jumlah, 0, ',', '.')}}
-                            </th>
-                            <td class="px-4 py-3">{{$item->kategori_transaksi->nama}}</td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-blue-300 w-[100%] h-[7px] relative rounded">
@@ -25,6 +21,10 @@
                                     </div>
                                     <P>{{round($item->persentase)}}%</P>
                                 </div>
+                            </td>
+                            <td class="px-4 py-3">{{$item->kategori_transaksi->nama}}</td>
+                            <td scope="row"
+                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{number_format($item->jumlah, 0, ',', '.')}}
                             </td>
                         </tr>
                         @endforeach

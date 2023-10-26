@@ -2,16 +2,16 @@
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
             <th scope="col" class="px-4 py-3">Deskripsi</th>
-            <th scope="col" class="px-4 py-3">Jumlah</th>
             <th scope="col" class="px-4 py-3">Keterangan</th>
+            <th scope="col" class="px-4 py-3">Jumlah</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($tabungan as $item)
         <tr class="border-b dark:border-gray-700">
             <td class="px-4 py-3">{{$item->kategori_transaksi->nama ?? '--'}}</td>
-            <td class="px-4 py-3">Rp {{number_format($item->jumlah_transaksi, 0, ',', '.')}}</td>
             <td class="px-4 py-3">{{$item->kategori_transaksi->nama ?? '--'}} Bulan Ini</td>
+            <td class="px-4 py-3">Rp {{number_format($item->jumlah_transaksi, 0, ',', '.')}}</td>
         </tr>
         @endforeach
 
