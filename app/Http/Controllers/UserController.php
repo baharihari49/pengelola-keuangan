@@ -58,7 +58,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('user.profile.index');
+        $user = User::where('id', auth()->user()->id)->get();
+        return view('user.profile.index', [
+            'user' => $user[0]
+        ]);
     }
 
     /**
@@ -74,7 +77,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        ddd($request);
+        return request()->file('profile-image')->store('profile-images');
+        // ddd(request());
     }
 
     /**
