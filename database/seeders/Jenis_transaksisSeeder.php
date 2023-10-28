@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Jenis_transaksi;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class JenisTransaksiSeeder extends Seeder
+class Jenis_transaksisSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +15,11 @@ class JenisTransaksiSeeder extends Seeder
     {
         DB::table('jenis_transaksis')->insert([
             'nama' => 'Pemasukan',
+        ]);
+        DB::table('jenis_transaksis')->insert([
+            'nama' => 'Pengeluaran',
+        ]);DB::table('jenis_transaksis')->insert([
+            'nama' => 'Tabungan',
         ]);
     }
 }
