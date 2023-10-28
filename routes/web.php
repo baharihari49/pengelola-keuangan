@@ -195,11 +195,6 @@ Route::get('/panduan', function() {
     return view('dashboard.panduan.index');
 });
 
+Route::get('/profile', [UserController::class, 'show']);
 
-Route::get('/test', function() {
-    return DatabaseHelper::getPersentaseBudgeting();
-});
-
-Route::get('/test2', function() {
-    return DatabaseHelper::getJumlahPengeluaranBudgeting();
-});
+Route::put('/user', [UserController::class, 'update']);

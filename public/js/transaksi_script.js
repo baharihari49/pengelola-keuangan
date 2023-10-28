@@ -116,19 +116,19 @@
                     }
                 })
                 if(response.length > 0) {
-                    response.forEach((res, index) => {
-
+                    response.forEach((res, index) => {  
                         let element = `<td class="px-4 py-3 w-3">${index + 1}</td>
                                         <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${res.tanggal}</th>
+                                        <td id="tabel-date" class="px-4 py-3">${res.no_transaksi}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${res.nama}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi_id == 1) ? 'Pendapatan' : 'Pengeluaran'}</td>
+                                        <td id="tabel-date" class="px-4 py-3">${res.deskripsi}</td>
                                         <td id="tabel-date" class="px-4 py-3">${Intl.NumberFormat('id-ID', {
                                             style: 'currency',
                                             currency: 'IDR', 
                                             minimumFractionDigits: 0,
                                         }).format(res.jumlah)}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${res.nama}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi == 1) ? 'Pemasukan' : 'Pengeluaran'}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${res.deskripsi}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="flex gap-5 mr-5">
                                    <button data-uuid="${res.uuid}" id="updateProductButton">

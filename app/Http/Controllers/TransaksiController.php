@@ -138,9 +138,8 @@ class TransaksiController extends Controller
     public function update(Request $request, Transaksi $transaksi)
     {
 
+        // return $request;
         $validate = $request->validate([
-            'tanggal' => 'required|max:255',
-            'jumlah' => 'required|max:255',
             'deskripsi' => 'required',
         ]);
 
@@ -148,19 +147,26 @@ class TransaksiController extends Controller
 
         $validate['user_id'] = auth()->user()->id;
 
-        if(empty($data_anggaran[0]['jumlah'])) {
-            Transaksi::where('user_id', auth()->user()->id)
-                      ->where('uuid', $request->uuid)
-                      ->update($validate);
-            return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
-        }else if($validate['jumlah'] > $data_anggaran[0]['jumlah']){
-            return redirect('/transaksi')->with('error', 'Data gagal ditambahkan');
-        }else{
-            Transaksi::where('user_id', auth()->user()->id)
-                      ->where('uuid', $request->uuid)
-                      ->update($validate);
-            return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
-        }
+
+        // return $validate;
+
+        Transaksi::where('user_id', auth()->user()->id)
+                    ->where('uuid', $request->uuid)
+                    ->update($validate);
+
+        // if(empty($data_anggaran[0]['jumlah'])) {
+        //     Transaksi::where('user_id', auth()->user()->id)
+        //               ->where('uuid', $request->uuid)
+        //               ->update($validate);
+        //     return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
+        // }else if($validate['jumlah'] > $data_anggaran[0]['jumlah']){
+        //     return redirect('/transaksi')->with('error', 'Data gagal ditambahkan');
+        // }else{
+        //     Transaksi::where('user_id', auth()->user()->id)
+        //               ->where('uuid', $request->uuid)
+        //               ->update($validate);
+        //     return redirect('/transaksi')->with('succes_update', 'Transaksi anda berhasi diperbarui');
+        // }
 
 
         

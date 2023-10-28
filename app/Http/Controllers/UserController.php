@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('user.profile.index');
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        ddd($request);
     }
 
     /**

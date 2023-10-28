@@ -45,6 +45,9 @@
                 </div>
                
                 <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
+                    <li class="w-full flex">
+                        <a class="py-2 px-4 text-base w-full hover:bg-gray-200" href="/profile">Profile</a>
+                    </li>
                     <li>
                         <form method="POST" action="/logout">
                             @csrf
