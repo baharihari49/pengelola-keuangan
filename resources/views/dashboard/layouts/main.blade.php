@@ -33,6 +33,32 @@
 
 
 </div>
+{{-- <script>
+    const btnDeleteImage = document.getElementById('delete-image');
+    console.log('okeee');
+
+    btnDeleteImage.addEventListener('click', function () {
+        if (confirm('Anda yakin ingin menghapus?')) {
+            const foto = this.getAttribute('data-foto');
+
+            fetch(`/delete_foto/?foto=${foto}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    window.location.href = "/";
+                }
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+        }
+    });
+</script> --}}
 <script src="js/script.js"></script>
 </body>
 </html>

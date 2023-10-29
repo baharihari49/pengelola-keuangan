@@ -198,3 +198,7 @@ Route::get('/panduan', function() {
 Route::get('/profile', [UserController::class, 'show']);
 
 Route::put('/user', [UserController::class, 'update']);
+
+Route::delete('/delete_image', [UserController::class, 'deleteImage']);
+
+Route::post('/store_image', [UserController::class, 'storeImage']);

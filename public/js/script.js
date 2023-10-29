@@ -43,3 +43,50 @@ btnToggleSideBar.addEventListener('click', function() {
     show = !show
 })
 
+
+
+// preview image
+
+const imageInput = document.querySelector('.file_input');
+const profileImage = document.getElementById('user-image-review');
+const dropzoneTailwind = document.getElementById('dropzone-tailwind');
+const hapusButton = document.getElementById('hapus-preview')
+const simpanGambar = document.getElementById('simpan-gambar')
+
+imageInput.addEventListener('change', previewImage);
+
+hapusButton.addEventListener('click', function () {
+    // Menghapus gambar preview dan mengatur kembali input file
+    profileImage.src = '';
+    imageInput.value = ''; // Mengatur kembali input file ke null
+    hapusButton.classList.add('hidden')
+    dropzoneTailwind.classList.remove('hidden');
+    simpanGambar.disabled = true
+  });
+  
+
+function previewImage() {
+  const file = imageInput.files[0]; // Mengambil file dari input
+
+  if (file) {
+    const imagePreview = new FileReader();
+
+    imagePreview.onload = function (e) {
+      profileImage.src = e.target.result; // Menampilkan gambar dalam elemen img
+      dropzoneTailwind.classList.add('hidden');
+      hapusButton.classList.remove('hidden')
+      simpanGambar.disabled = false
+    };
+
+    imagePreview.readAsDataURL(file); // Membaca file sebagai data URL
+  } else {
+    // Hapus gambar preview jika tidak ada file yang dipilih
+    profileImage.src = '';
+    dropzoneTailwind.classList.remove('hidden');
+  }
+}
+
+
+
+// delete image 
+

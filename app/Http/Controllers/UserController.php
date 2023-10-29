@@ -6,6 +6,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -77,8 +79,42 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return request()->file('profile-image')->store('profile-images');
-        // ddd(request());
+       
+
+        $validate = $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'alamat' => 'required',
+            'username' => 'required',
+            'no_handphone' => 'required',
+        ]);
+
+        if($request->file('profile-image')){
+            if($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $validate['foto'] = request()->file('profile-image')->store('profile-images');
+        }
+        User::where('id', auth()->user()->id)->update($validate);
+        return redirect('/profile');
+    }
+
+    public function storeImage() 
+    {
+        $validate = request()->validate([
+            'foto' => 'image|file|max:2048'
+        ]);
+        
+        if (request()->hasFile('profile_image')) {
+            if (request()->oldImage) {
+                Storage::delete(request()->oldImage);
+            }
+            $validate['foto'] = request()->file('profile_image')->storeAs('profile-images', uniqid() . '-' . request()->file('profile_image')->getClientOriginalName());
+        }
+        
+        User::where('id', auth()->user()->id)->update($validate);
+        return redirect('/profile');
+        
     }
 
     /**
@@ -86,6 +122,17 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+         
+    }
+
+    public function deleteImage() 
+    {
+        Storage::delete(request()->image);
+
+        DB::table('users')
+            ->where('id', auth()->user()->id)
+            ->update(['foto' => null]);
+
+        return redirect('/profile');
     }
 }
