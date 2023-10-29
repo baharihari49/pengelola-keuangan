@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Kategori_anggaran;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 
 class DatabaseHelper
 {
@@ -234,6 +235,26 @@ class DatabaseHelper
                             ->distinct()
                             ->get();
 
+    }
+
+    public static function getDate() 
+    {
+        App::setLocale('id');
+
+        $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
+        $formattedDate = $date->isoFormat('dddd D MMMM YYYY, h:mm A'); // Format dalam bahasa Indonesia
+
+        return $formattedDate;
+    }
+
+    public static function getDay()
+    {
+        App::setLocale('id');
+
+        $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
+        $formattedDate = $date->isoFormat('A'); // Format dalam bahasa Indonesia
+
+        return $formattedDate;
     }
 
     public static function getUser()

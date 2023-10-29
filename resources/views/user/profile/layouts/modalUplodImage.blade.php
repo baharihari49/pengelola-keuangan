@@ -70,8 +70,6 @@ hapusButton.addEventListener('click', function () {
 
   const previewImage = () => {
     const file = imageInput.files[0]; // Mengambil file dari input
-    console.log('okee');
-    console.log(file);
     if (file) {
       const imageUrl = URL.createObjectURL(file); // Membuat URL objek dari file
       profileImage.src = imageUrl; // Menampilkan gambar dalam elemen img

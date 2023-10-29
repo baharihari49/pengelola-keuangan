@@ -64,7 +64,9 @@ class DashboardController extends Controller
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
             'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
             'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan(),
-            'user' => DatabaseHelper::getUser()[0]
+            'user' => DatabaseHelper::getUser()[0],
+            'date' => DatabaseHelper::getDate(),
+            'day' => DatabaseHelper::getDay()
         ]);
     }
 
