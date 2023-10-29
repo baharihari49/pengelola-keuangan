@@ -79,10 +79,6 @@ function previewImage() {
     };
 
     imagePreview.readAsDataURL(file); // Membaca file sebagai data URL
-  } else {
-    // Hapus gambar preview jika tidak ada file yang dipilih
-    profileImage.src = '';
-    dropzoneTailwind.classList.remove('hidden');
   }
 }
 
