@@ -63,6 +63,7 @@ hapusButton.addEventListener('click', function () {
   });
   
 imageInput.addEventListener('change', function() {
+  console.log('okee');
   const file = imageInput.files[0]; // Mengambil file dari input
 
     const imagePreview = new FileReader();
