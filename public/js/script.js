@@ -53,8 +53,6 @@ const dropzoneTailwind = document.getElementById('dropzone-tailwind');
 const hapusButton = document.getElementById('hapus-preview')
 const simpanGambar = document.getElementById('simpan-gambar')
 
-imageInput.addEventListener('change', previewImage);
-
 hapusButton.addEventListener('click', function () {
     // Menghapus gambar preview dan mengatur kembali input file
     profileImage.src = '';
@@ -64,8 +62,7 @@ hapusButton.addEventListener('click', function () {
     simpanGambar.disabled = true
   });
   
-
-function previewImage() {
+imageInput.addEventListener('change', function() {
   const file = imageInput.files[0]; // Mengambil file dari input
 
     const imagePreview = new FileReader();
@@ -78,6 +75,10 @@ function previewImage() {
     };
 
     imagePreview.readAsDataURL(file); // Membaca file sebagai data URL
+});
+
+function previewImage() {
+  
 }
 
 
