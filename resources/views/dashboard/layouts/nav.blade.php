@@ -20,9 +20,9 @@
                 <span class="sr-only">Toggle sidebar</span>
             </button>
 
-            <div class="flex ms-8">
+            <div class="flex ms-1 lg:ms-8">
                 <figure class="flex items-end gap-2">
-                    <img class="h-12" src="./image/logo/octans_logo.png" alt="">
+                    <img class="h-10 md:h-12" src="./image/logo/octans_logo.png" alt="">
                     <p class="font-bold text-2xl">octans</p>
                 </figure>
             </div>

@@ -54,7 +54,19 @@ Route::middleware(['guest'])->group(function()
 Route::post('/logout', [LoginController::class, 'logout']);
 
 
+Route::middleware(['auth'])->group(function()
+{
+   Route::controller(UserController::class)->group(function()
+   {
+    Route::get('/profile','show');
 
+    Route::put('/user', 'update');
+
+    Route::delete('/delete_image', 'deleteImage');
+
+    Route::post('/store_image', 'storeImage');
+   });
+});
 
 Route::middleware(['auth'])->group(function()
 {
@@ -187,7 +199,7 @@ Route::middleware(['auth'])->group(function()
 
     Route::controller(LaporanController::class)->group(function()
     {
-        Route::get('/laporan', 'index');
+        Route::get('/laporan/pemasukan', 'showLaporanPemasukan');
     });
 });
 
@@ -195,10 +207,3 @@ Route::get('/panduan', function() {
     return view('dashboard.panduan.index');
 });
 
-Route::get('/profile', [UserController::class, 'show']);
-
-Route::put('/user', [UserController::class, 'update']);
-
-Route::delete('/delete_image', [UserController::class, 'deleteImage']);
-
-Route::post('/store_image', [UserController::class, 'storeImage']);

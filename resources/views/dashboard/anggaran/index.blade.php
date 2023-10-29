@@ -190,7 +190,7 @@
         </div>
     </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-32">
     <div class="col-span-3 bg-white shadow-md rounded-lg border-gray-300 dark:border-gray-600 h-fit md:h-72">
         @include('dashboard.anggaran.layouts.tabel_anggaran')
     </div>

@@ -1,7 +1,7 @@
 @include('dashboard.kategori.layouts.create_kategori_transaksi')
 @include('dashboard.kategori.layouts.update_kategori_transaksi')
 
-<section class="">
+<section class="mb-32">
     <div class="mx-auto w-full">
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">

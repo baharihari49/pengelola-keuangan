@@ -242,10 +242,19 @@ class DatabaseHelper
         App::setLocale('id');
 
         $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
-        $formattedDate = $date->isoFormat('dddd D MMMM YYYY, h:mm a'); // Format dalam bahasa Indonesia
-        $formattedDate = str_replace(['siang', 'malam'], ['AM', 'PM'], $formattedDate); // Mengganti "siang" dengan "AM" dan "malam" dengan "PM"
+        $formattedDate = $date->isoFormat('dddd D MMMM YYYY'); // Format dalam bahasa Indonesia
+        // $formattedDate = str_replace(['siang', 'malam'], ['AM', 'PM'], $formattedDate); // Mengganti "siang" dengan "AM" dan "malam" dengan "PM"
 
         return $formattedDate;
+    }
+
+    public static function getTime() 
+    {App::setLocale('id');
+
+        $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
+        $formattedTime = $date->format('H:i A'); // Format waktu dalam format 24 jam (misalnya, "00:55")
+
+        return $formattedTime;
     }
 
     public static function getDay()

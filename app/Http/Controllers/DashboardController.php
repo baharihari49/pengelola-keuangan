@@ -66,6 +66,7 @@ class DashboardController extends Controller
             'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan(),
             'user' => DatabaseHelper::getUser()[0],
             'date' => DatabaseHelper::getDate(),
+            'time' => DatabaseHelper::getTime(),
             'day' => DatabaseHelper::getDay()
         ]);
     }

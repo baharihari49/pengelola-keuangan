@@ -3,7 +3,7 @@
 @section('container')
 <div class="mb-5 p-5 bg-white rounded-md shadow-md">
     <p class="text-gray-800 text-xl lg:text-3xl font-bold">Selamat {{$day}}, {{$user->nama ?? $user->username}}!</p>
-    <p class="text-gray-600 text-xs md:text-base">{{$date}}</p>
+    <p class="text-gray-600 mt-1 text-xs md:text-sm">{{$date . ', ' .$time}}</p>
 </div>
 <div class="grid grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-2 xl:gap-4 mb-4">
     <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">

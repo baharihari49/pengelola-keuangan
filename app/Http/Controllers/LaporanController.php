@@ -93,6 +93,11 @@ class LaporanController extends Controller
         ]);
     }
 
+    public function showLaporanPemasukan()
+    {
+        return view('dashboard.laporan.pemasukan.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
