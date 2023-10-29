@@ -242,7 +242,8 @@ class DatabaseHelper
         App::setLocale('id');
 
         $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
-        $formattedDate = $date->isoFormat('dddd D MMMM YYYY, h:mm A'); // Format dalam bahasa Indonesia
+        $formattedDate = $date->isoFormat('dddd D MMMM YYYY, h:mm a'); // Format dalam bahasa Indonesia
+        $formattedDate = str_replace(['siang', 'malam'], ['AM', 'PM'], $formattedDate); // Mengganti "siang" dengan "AM" dan "malam" dengan "PM"
 
         return $formattedDate;
     }
