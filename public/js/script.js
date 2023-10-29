@@ -62,25 +62,18 @@ hapusButton.addEventListener('click', function () {
     simpanGambar.disabled = true
   });
   
-imageInput.addEventListener('change', function() {
-  console.log('okee');
-  const file = imageInput.files[0]; // Mengambil file dari input
-
-    const imagePreview = new FileReader();
-
-    imagePreview.onload = function (e) {
-      profileImage.src = e.target.result; // Menampilkan gambar dalam elemen img
+  imageInput.addEventListener('change', function () {
+    const file = imageInput.files[0]; // Mengambil file dari input
+    console.log('okee');
+    console.log(file);
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // Membuat URL objek dari file
+      profileImage.src = imageUrl; // Menampilkan gambar dalam elemen img
       dropzoneTailwind.classList.add('hidden');
-      hapusButton.classList.remove('hidden')
-      simpanGambar.disabled = false
-    };
-
-    imagePreview.readAsDataURL(file); // Membaca file sebagai data URL
-});
-
-function previewImage() {
-  
-}
+      hapusButton.classList.remove('hidden');
+      simpanGambar.disabled = false;
+    }
+  });
 
 
 
