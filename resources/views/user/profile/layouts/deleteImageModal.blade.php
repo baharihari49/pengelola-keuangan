@@ -14,9 +14,10 @@
                         No, cancel
                     </button>
                 </form>
-                <form class="" method="POST" action="/delete_image/?image={{$user->foto}}">
+                <form id="deleteImageForm" method="POST" action="/delete_image">
                     @csrf
                     @method('DELETE')
+                    <input type="hidden" name="image" value="{{ $user->foto }}">
                     <button type="submit" class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                         Yes, I'm sure
                     </button>
@@ -25,3 +26,33 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('deleteImageForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Menggunakan JavaScript untuk mengirim permintaan DELETE
+        fetch('/delete_image', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                image: "{{ $user->foto }}"
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                // Handle ketika permintaan berhasil
+                window.location.href = "/profile";
+            }
+        }).catch(error => {
+            console.error('Terjadi kesalahan:', error);
+        });
+    });
+</script>
+
+
+
+
+
