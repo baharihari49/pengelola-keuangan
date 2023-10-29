@@ -62,7 +62,11 @@ hapusButton.addEventListener('click', function () {
     simpanGambar.disabled = true
   });
   
-  imageInput.addEventListener('change', function () {
+  // imageInput.addEventListener('change', function () {
+    
+  // });
+
+  const previewImage = () => {
     const file = imageInput.files[0]; // Mengambil file dari input
     console.log('okee');
     console.log(file);
@@ -73,9 +77,7 @@ hapusButton.addEventListener('click', function () {
       hapusButton.classList.remove('hidden');
       simpanGambar.disabled = false;
     }
-  });
-
-
+  }
 
 // delete image 
 

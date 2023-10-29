@@ -31,7 +31,7 @@
                         </div>
                         <form method="POST" action="/store_image" enctype="multipart/form-data">
                         @csrf
-                        <input name="profile_image" id="dropzone-file" type="file" class="hidden file_input" />
+                        <input onchange="previewImage()" name="profile_image" id="dropzone-file" type="file" class="hidden file_input" />
                         <input name="oldImage" type="hidden" value="{{$user->foto}}" class="hidden file_input" />
                     </label> 
                 </div> 
