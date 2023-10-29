@@ -68,7 +68,6 @@ hapusButton.addEventListener('click', function () {
 function previewImage() {
   const file = imageInput.files[0]; // Mengambil file dari input
 
-  if (file) {
     const imagePreview = new FileReader();
 
     imagePreview.onload = function (e) {
@@ -79,7 +78,6 @@ function previewImage() {
     };
 
     imagePreview.readAsDataURL(file); // Membaca file sebagai data URL
-  }
 }
 
 
