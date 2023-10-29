@@ -29,6 +29,7 @@ class TransaksiController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(20),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
+            'user' => DatabaseHelper::getUser()[0]
         ]);
     }
 

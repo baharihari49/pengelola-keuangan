@@ -88,7 +88,8 @@ class LaporanController extends Controller
                             ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
                             ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
                             ->distinct()
-                            ->get()
+                            ->get(),
+            'user' => DatabaseHelper::getUser()[0],
         ]);
     }
 

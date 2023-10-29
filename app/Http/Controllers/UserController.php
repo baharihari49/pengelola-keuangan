@@ -133,6 +133,5 @@ class UserController extends Controller
             ->where('id', auth()->user()->id)
             ->update(['foto' => null]);
 
-        return redirect('/profile');
     }
 }

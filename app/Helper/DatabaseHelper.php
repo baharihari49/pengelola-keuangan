@@ -7,6 +7,7 @@ use App\Models\Kategori_transaksi;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\DB;
 use App\Models\Kategori_anggaran;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 
 class DatabaseHelper
@@ -233,5 +234,10 @@ class DatabaseHelper
                             ->distinct()
                             ->get();
 
+    }
+
+    public static function getUser()
+    {
+        return User::where('id', auth()->user()->id)->get();
     }
 }

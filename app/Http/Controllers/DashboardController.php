@@ -21,45 +21,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $pendapatanDanPengeluaran = DB::table('jenis_transaksis')
-        //                             ->leftJoinSub(function ($query) {
-        //                                 $query->select(
-        //                                     'transaksis.user_id',
-        //                                     DB::raw('SUM(transaksis.jumlah) as total_saldo_1')
-        //                                 )
-        //                                 ->from('transaksis')
-        //                                 ->where('user_id', auth()->user()->id)
-        //                                 ->where('transaksis.jenis_transaksi_id', 1)
-        //                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
-        //                                 ->groupBy('transaksis.user_id');
-        //                             }, 'saldo_1', function ($join) {
-        //                                 $join->on('jenis_transaksis.id', '=', DB::raw(1));
-        //                             })
-        //                             ->leftJoinSub(function ($query) {
-        //                                 $query->select(
-        //                                     'transaksis.user_id',
-        //                                     DB::raw('SUM(transaksis.jumlah) as total_saldo_2_3')
-        //                                 )
-        //                                 ->from('transaksis')
-        //                                 ->where('user_id', auth()->user()->id)
-        //                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
-        //                                 ->whereIn('transaksis.jenis_transaksi_id', [2, 3])
-        //                                 ->groupBy('transaksis.user_id');
-        //                             }, 'saldo_2_3', function ($join) {
-        //                                 $join->on('jenis_transaksis.id', '=', DB::raw(2));
-        //                             })
-        //                             ->select(
-        //                                 'jenis_transaksis.id as jenis_transaksi_id',
-        //                                 DB::raw('COALESCE(saldo_1.total_saldo_1, 0) as total_saldo_1'),
-        //                                 DB::raw('COALESCE(saldo_2_3.total_saldo_2_3, 0) as total_saldo_2_3')
-        //                             )
-        //                             ->get();
-
-
-
-
-
-
         $saldo = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->select(
@@ -102,7 +63,8 @@ class DashboardController extends Controller
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
             'getBudgeting' => Kategori_anggaran::where('user_id', auth()->user()->id)->get(),
-            'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan()
+            'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan(),
+            'user' => DatabaseHelper::getUser()[0]
         ]);
     }
 

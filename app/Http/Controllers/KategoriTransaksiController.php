@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateKategori_transaksiRequest;
 use App\Models\Jenis_transaksi;
 use App\Models\Kategori_transaksi;
 use App\Models\Kategori_anggaran;
+use App\Helper\DatabaseHelper;
 
 
 // namespace App\Http\Requests;
@@ -23,6 +24,7 @@ class KategoriTransaksiController extends Controller
         return view('dashboard.kategori.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
             'kategori_transaksi' => Kategori_transaksi::where('default', true)->orWhere('user_id', auth()->user()->id)->with('jenis_transaksi')->paginate(20),
+            'user' => DatabaseHelper::getUser()[0]
         ]);
     }
 
