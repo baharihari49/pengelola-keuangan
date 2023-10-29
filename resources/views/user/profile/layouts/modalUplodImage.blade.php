@@ -45,3 +45,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    // preview image
+
+const imageInput = document.querySelector('.file_input');
+const profileImage = document.getElementById('user-image-review');
+const dropzoneTailwind = document.getElementById('dropzone-tailwind');
+const hapusButton = document.getElementById('hapus-preview')
+const simpanGambar = document.getElementById('simpan-gambar')
+
+hapusButton.addEventListener('click', function () {
+    // Menghapus gambar preview dan mengatur kembali input file
+    profileImage.src = '';
+    imageInput.value = ''; // Mengatur kembali input file ke null
+    hapusButton.classList.add('hidden')
+    dropzoneTailwind.classList.remove('hidden');
+    simpanGambar.disabled = true
+  });
+  
+  // imageInput.addEventListener('change', function () {
+    
+  // });
+
+  const previewImage = () => {
+    const file = imageInput.files[0]; // Mengambil file dari input
+    console.log('okee');
+    console.log(file);
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // Membuat URL objek dari file
+      profileImage.src = imageUrl; // Menampilkan gambar dalam elemen img
+      dropzoneTailwind.classList.add('hidden');
+      hapusButton.classList.remove('hidden');
+      simpanGambar.disabled = false;
+    }
+  }
+
+// delete image 
+
+</script>
