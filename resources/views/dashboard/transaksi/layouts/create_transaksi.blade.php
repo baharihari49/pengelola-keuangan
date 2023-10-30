@@ -60,7 +60,7 @@
                             <option selected="">Select category</option>
                         </select>
                     </div>
-                    <div class="col-span-2">
+                    <div class="sm:col-span-2">
                         <label for="suplayer"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Supplier/Customer</label>
                         <select name="suppliers_or_customers_id" id="suplayer_id"
