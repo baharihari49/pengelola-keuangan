@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title style="text-transform: capitalize;">{{ request()->path() }} - Octans by Boxity</title>
+    <link rel="shortcut icon" href="https://www.octansidn.com/webpage/demos/business/images/octans/icon_2.ico"
+        type="image/x-icon">
 </head>
 
 <body>
