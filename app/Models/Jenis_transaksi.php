@@ -10,7 +10,7 @@ use App\Models\kategori_transaksi;
 class Jenis_transaksi extends Model
 {
     use HasFactory;
-
+    protected $table = 'jenis_transaksis';
     protected $fillable = [
         'nama',
     ];

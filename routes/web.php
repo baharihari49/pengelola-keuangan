@@ -9,12 +9,14 @@ use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SuppliersorCustomersController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Anggaran;
 use App\Models\Dashboard;
 use App\Models\Kategori_anggaran;
 use App\Models\Kategori_transaksi;
+use App\Models\SupplierorCustomers;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeUnit\FunctionUnit;
@@ -201,7 +203,14 @@ Route::middleware(['auth'])->group(function()
     {
         Route::get('/laporan/pemasukan', 'showLaporanPemasukan');
     });
+
+    Route::controller(SuppliersorCustomersController::class)->group(function()
+    {
+        Route::get('/get_suplier_by_jenis_transaksi_id', 'showSupOrCus');
+    });
 });
+
+
 
 Route::get('/panduan', function() {
     return view('dashboard.panduan.index');

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('kategori_transaksi_id');
+            $table->foreignId('suppliers_or_customers_id');
             $table->boolean('anggaran');
             $table->foreignId('jenis_transaksi_id');
             $table->timestamps();

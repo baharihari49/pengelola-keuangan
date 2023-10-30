@@ -20,11 +20,14 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-
-        
+        // $a = Transaksi::with(['kategori_transaksi', 'jenis_transaksi'])
+        // ->where('user_id', Auth::id())
+        // ->orderBy('created_at', 'desc')
+        // ->paginate(20);
+        // return response()->json($a);
         return view('dashboard.transaksi.index', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi'])
+            'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                 ->where('user_id', Auth::id())
                 ->orderBy('created_at', 'desc')
                 ->paginate(20),
@@ -50,11 +53,12 @@ class TransaksiController extends Controller
             'tanggal' => 'required|max:255',
             'jumlah' => 'required|max:255',
             'kategori_transaksi_id' => 'required',
+            'suppliers_or_customers_id' => 'required',
             'jenis_transaksi_id' => 'required',
+            'deskripsi' => 'max:255'
         ]);
 
 
-        
         
         $validate['user_id'] = auth()->user()->id;
         
@@ -100,6 +104,8 @@ class TransaksiController extends Controller
                                 ->where('kategori_transaksi_id', $validate['kategori_transaksi_id'])
                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                 ->get();
+
+        // return $validate;
 
         if(empty($data_anggaran[0]['jumlah'])){
             $validate['anggaran'] = false;

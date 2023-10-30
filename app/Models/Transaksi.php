@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\belongsTo;
-use App\Models\jenis_transaksi;
+use Illuminate\Database\Eloquent\Relations\BelongsTo; // Gunakan BelongsTo dengan huruf kapital
+use App\Models\Jenis_transaksi;
 use App\Models\Kategori_transaksi;
+use App\Models\suppliers_or_customers;
 
 class Transaksi extends Model
 {
@@ -15,7 +16,7 @@ class Transaksi extends Model
     use HasFactory;
 
     public function uniqueIds(): array
-    {   
+    {
         return ['uuid', 'uuid'];
     }
 
@@ -27,20 +28,27 @@ class Transaksi extends Model
         'jumlah',
         'kategori_transaksi_id',
         'jenis_transaksi_id',
+        'suppliers_or_customers_id', // Perbaiki nama kolom
         'no_transaksi',
-        'deskripsi', // Tambahkan kolom 'deskripsi' ke dalam $fillable
+        'deskripsi',
         'user_id',
         'show',
-        'anggaran'
+        'anggaran',
     ];
 
-    public function kategori_transaksi(): belongsTo
+    public function kategori_transaksi(): BelongsTo // Perbaiki BelongsTo
     {
         return $this->belongsTo(Kategori_transaksi::class);
     }
 
-    public function jenis_transaksi(): belongsTo
+    public function jenis_transaksi(): BelongsTo // Perbaiki BelongsTo
     {
-        return $this->belongsTo(jenis_transaksi::class);
+        return $this->belongsTo(Jenis_transaksi::class);
+    }
+
+    public function suppliers_or_customers(): BelongsTo // Perbaiki BelongsTo
+    {
+        return $this->belongsTo(suppliers_or_customers::class);
     }
 }
+

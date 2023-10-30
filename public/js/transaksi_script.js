@@ -10,7 +10,8 @@
     const oldKategoriTransaksiId = document.getElementById('old-kategori-transaksi-id')
     const updateProductModal = document.getElementById('updateProductModal')
     const btnCloseModal = document.getElementById('close-modal-update')
-
+    const kategoriSuplayerId = document.getElementById('suplayer_id')
+ 
 
     const modalError = document.getElementById('modalError')
     const modalBackdrop = document.getElementById('modal-backdrop')
@@ -60,12 +61,28 @@
     jenisTransaksi.forEach(jt => {
         jt.addEventListener('change', async function () {
             detailKategori.innerHTML = '<option selected="">Select category</option>';
+            console.log(kategoriSuplayerId);
+            kategoriSuplayerId. innerHTML = '<option selected="">Select category</option>';
             try {
                 // Fetch data kategori_transaksi berdasarkan jenis_transaksi_id
                 const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
+                const response2 = await fetch(`/get_suplier_by_jenis_transaksi_id/?id=${jt.value}` )
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+
+                if (!response2.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data2 = await response2.json();
+                console.log(data2);
+                data2.forEach(res => {
+                    let option = document.createElement('option');
+                    option.value = res.id;
+                    option.textContent = res.nama_bisnis;
+                    kategoriSuplayerId.appendChild(option);
+                });
     
                 const data = await response.json();
                 data.forEach(res => {
@@ -74,6 +91,8 @@
                     option.textContent = res.nama;
                     detailKategori.appendChild(option);
                 });
+
+               
             } catch (error) {
             }
         });
