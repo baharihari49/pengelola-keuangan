@@ -207,6 +207,8 @@ Route::middleware(['auth'])->group(function()
     Route::controller(SuppliersorCustomersController::class)->group(function()
     {
         Route::get('/get_suplier_by_jenis_transaksi_id', 'showSupOrCus');
+
+        Route::get('/hapus_seeder', 'hapusSeeder');
     });
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\suppliers_or_customers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SuppliersorCustomersController extends Controller
 {
@@ -18,6 +19,14 @@ class SuppliersorCustomersController extends Controller
     public function showSupOrCus()
     {
 
+        return suppliers_or_customers::where('user_id', auth()->user()->id)
+                                  ->where('jenis_transaksi_id', request()->id)
+                                  ->get();
+    }
+
+    public function hapusSeeder()
+    {
+        DB::table('suppliers_or_customers')->truncate();
         return suppliers_or_customers::where('user_id', auth()->user()->id)
                                   ->where('jenis_transaksi_id', request()->id)
                                   ->get();
