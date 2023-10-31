@@ -58,30 +58,30 @@
         }
     }
     
-    jenisTransaksi.forEach(jt => {
-        jt.addEventListener('change', async function () {
-            detailKategori.innerHTML = '<option selected="">Select category</option>';
-            console.log(kategoriSuplayerId);
-            kategoriSuplayerId. innerHTML = '<option selected="">Select category</option>';
-            try {
-                // Fetch data kategori_transaksi berdasarkan jenis_transaksi_id
-                const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                data.forEach(res => {
-                    let option = document.createElement('option');
-                    option.value = res.id;
-                    option.textContent = res.nama;
-                    detailKategori.appendChild(option);
-                });
+    // jenisTransaksi.forEach(jt => {
+    //     jt.addEventListener('change', async function () {
+    //         detailKategori.innerHTML = '<option selected="">Select category</option>';
+    //         console.log(kategoriSuplayerId);
+    //         kategoriSuplayerId. innerHTML = '<option selected="">Select category</option>';
+    //         try {
+    //             // Fetch data kategori_transaksi berdasarkan jenis_transaksi_id
+    //             const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! Status: ${response.status}`);
+    //             }
+    //             const data = await response.json();
+    //             data.forEach(res => {
+    //                 let option = document.createElement('option');
+    //                 option.value = res.id;
+    //                 option.textContent = res.nama;
+    //                 detailKategori.appendChild(option);
+    //             });
 
                
-            } catch (error) {
-            }
-        });
-    });
+    //         } catch (error) {
+    //         }
+    //     });
+    // });
 
     jenisTransaksi.forEach(jt => {
         jt.addEventListener('change', async function () {
