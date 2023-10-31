@@ -157,7 +157,7 @@
             </div>
             <div class="overflow-x-auto">
                 <table
-                    class="w-max text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
+                    class="w-max md:w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">No</th>
