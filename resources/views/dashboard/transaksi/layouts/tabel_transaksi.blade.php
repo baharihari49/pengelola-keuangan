@@ -157,7 +157,7 @@
             </div>
             <div class="overflow-x-auto">
                 <table
-                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
+                    class="w-max text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">No</th>
@@ -178,7 +178,7 @@
                             <tr id="tabel-row" class="border-b dark:border-gray-700">
                                 <div id="container-tabel-date">
                                     <td class="px-4 py-3 w-3">
-                                        {{ request()->page > 1 ? $index + request()->page * 10 - 9 : $index + 1 }}
+                                        {{ request()->page > 1 ? $index + request()->page * 15 - 14 : $index + 1 }}
                                     </td>
                                     <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -190,7 +190,7 @@
                                     <td id="tabel-date" class="px-4 py-3">
                                         {{ $t->suppliers_or_customers->nama_bisnis ?? '--' }}</td>
                                     <td id="tabel-date" class="px-4 py-3">{{ $t->deskripsi ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3">Rp
+                                    <td id="tabel-date" class="px-4 py-3 text-right">Rp
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                                 </div>
                                 <td class="px-4 py-3 flex items-center justify-end">

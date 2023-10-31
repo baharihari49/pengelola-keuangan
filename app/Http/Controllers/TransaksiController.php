@@ -30,7 +30,7 @@ class TransaksiController extends Controller
             'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                 ->where('user_id', Auth::id())
                 ->orderBy('created_at', 'desc')
-                ->paginate(20),
+                ->paginate(15),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
             'user' => DatabaseHelper::getUser()[0]
         ]);
