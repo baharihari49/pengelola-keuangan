@@ -201,7 +201,7 @@ Route::middleware(['auth'])->group(function()
 
     Route::controller(LaporanController::class)->group(function()
     {
-        Route::get('/laporan/pemasukan', 'showLaporanPemasukan');
+        Route::get('/pemasukan', 'showLaporanPemasukan');
     });
 
     Route::controller(SuppliersorCustomersController::class)->group(function()

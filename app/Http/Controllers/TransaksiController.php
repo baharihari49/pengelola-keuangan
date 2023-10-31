@@ -53,7 +53,7 @@ class TransaksiController extends Controller
             'tanggal' => 'required|max:255',
             'jumlah' => 'required|max:255',
             'kategori_transaksi_id' => 'required',
-            'suppliers_or_customers_id' => 'required',
+            'suppliers_or_customers_id' => 'max:255',
             'jenis_transaksi_id' => 'required',
             'deskripsi' => 'max:255'
         ]);
@@ -105,7 +105,9 @@ class TransaksiController extends Controller
                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                 ->get();
 
-        // return $validate;
+        if($validate['suppliers_or_customers_id'] === 'Select Supplier/Customer') {
+            $validate['suppliers_or_customers_id'] = null;
+        }
 
         if(empty($data_anggaran[0]['jumlah'])){
             $validate['anggaran'] = false;

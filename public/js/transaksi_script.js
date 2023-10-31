@@ -62,7 +62,7 @@
 jenisTransaksi.forEach(jt => {
     jt.addEventListener('change', async function () {
         // Clear the supplier and detailKategori options
-        kategoriSuplayerId.innerHTML = '<option selected="">Select Supplier/Customer</option>';
+        kategoriSuplayerId.innerHTML = '<option value="0" selected="">Select Supplier/Customer</option>';
 
         try {
             // Fetch data supplier based on jenis_transaksi_id

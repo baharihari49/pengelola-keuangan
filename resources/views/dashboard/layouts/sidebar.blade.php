@@ -64,7 +64,7 @@
                 </button>
                 <ul id="dropdown-pages" class="hidden py-2 space-y-2">
                   <li>
-                    <a href="/laporan/pemasukan" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Pemasukan</a>
+                    <a href="/pemasukan" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Pemasukan</a>
                   </li>
                   <li>
                     <a  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Pengeluaran</a>
