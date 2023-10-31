@@ -106,7 +106,7 @@ class TransaksiController extends Controller
                                 ->get();
 
         if($validate['suppliers_or_customers_id'] === 'Select Supplier/Customer') {
-            $validate['suppliers_or_customers_id'] = null;
+            $validate['suppliers_or_customers_id'] = 0;
         }
 
         if(empty($data_anggaran[0]['jumlah'])){
