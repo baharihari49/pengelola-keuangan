@@ -45,7 +45,7 @@
                 id="dropdown">
                 <div class="py-3 px-4">
                     <span
-                        class="block text-sm font-semibold text-gray-900 dark:text-white">{{ auth()->user()->username }}</span>
+                        class="block text-sm font-semibold text-gray-900 dark:text-white">{{ auth()->user()->nama }}</span>
                     <span
                         class="block text-sm text-gray-900 truncate dark:text-white">{{ auth()->user()->email }}</span>
                 </div>
