@@ -165,7 +165,7 @@
                             <th scope="col" class="px-4 py-3">No transaksi</th>
                             <th scope="col" class="px-4 py-3">Jenis Transaksi</th>
                             <th scope="col" class="px-4 py-3">Kategori</th>
-                            <th scope="col" class="px-4 py-3">Sup/Cus</th>
+                            <th scope="col" class="px-4 py-3">Customer/Supplier</th>
                             <th scope="col" class="px-4 py-3">Deskripsi</th>
                             <th scope="col" class="px-4 py-3">Jumlah</th>
                             <th scope="col" class="px-4 py-3">
@@ -188,8 +188,8 @@
                                     <td id="tabel-date" class="px-4 py-3">{{ $t->kategori_transaksi->nama ?? '--' }}
                                     </td>
                                     <td id="tabel-date" class="px-4 py-3">
-                                        {{ $t->suppliers_or_customers->nama_bisnis ?? '' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3">{{ $t->deskripsi ?? '' }}</td>
+                                        {{ $t->suppliers_or_customers->nama_bisnis ?? '--' }}</td>
+                                    <td id="tabel-date" class="px-4 py-3">{{ $t->deskripsi ?? '--' }}</td>
                                     <td id="tabel-date" class="px-4 py-3">Rp
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                                 </div>
