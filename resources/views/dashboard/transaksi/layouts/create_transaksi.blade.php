@@ -46,7 +46,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Transaksi</label>
                         <select name="jenis_transaksi_id" id="jenis_transaksi"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
+                            <option selected="">Select Jenis Transaksi</option>
                             @foreach ($jenis_transaksi as $jt)
                             <option value="{{$jt->id}}">{{$jt->nama}}</option>
                             @endforeach 
@@ -57,7 +57,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
                         <select name="kategori_transaksi_id" id="kategori"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option selected="">Select category</option>
+                            <option selected="">Select Kategory</option>
                         </select>
                     </div>
                     <div class="sm:col-span-2">
@@ -133,7 +133,7 @@
             console.log(data);
 
             const kategori = document.getElementById('kategori');
-            kategori.innerHTML = '<option selected="">Select category</option>';
+            kategori.innerHTML = '<option selected="">Select Kategory</option>';
             
             data.forEach(res => {
                 let option = document.createElement('option');
