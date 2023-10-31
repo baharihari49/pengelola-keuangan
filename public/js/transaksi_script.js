@@ -58,30 +58,53 @@
         }
     }
     
-    // jenisTransaksi.forEach(jt => {
-    //     jt.addEventListener('change', async function () {
-    //         detailKategori.innerHTML = '<option selected="">Select category</option>';
-    //         console.log(kategoriSuplayerId);
-    //         kategoriSuplayerId. innerHTML = '<option selected="">Select category</option>';
-    //         try {
-    //             // Fetch data kategori_transaksi berdasarkan jenis_transaksi_id
-    //             const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! Status: ${response.status}`);
-    //             }
-    //             const data = await response.json();
-    //             data.forEach(res => {
-    //                 let option = document.createElement('option');
-    //                 option.value = res.id;
-    //                 option.textContent = res.nama;
-    //                 detailKategori.appendChild(option);
-    //             });
+// Assuming you have an array of jenisTransaksi elements
+jenisTransaksi.forEach(jt => {
+    jt.addEventListener('change', async function () {
+        // Clear the supplier and detailKategori options
+        kategoriSuplayerId.innerHTML = '<option selected="">Select supplier</option>';
+        detailKategori.innerHTML = '<option selected="">Select category</option>';
 
-               
-    //         } catch (error) {
-    //         }
-    //     });
-    // });
+        try {
+            // Fetch data supplier based on jenis_transaksi_id
+            const response2 = await fetch(`/get_suplier_by_jenis_transaksi_id/?id=${jt.value}`);
+            if (!response2.ok) {
+                throw new Error(`HTTP error! Status: ${response2.status}`);
+            }
+
+            const data2 = await response2.json();
+            console.log(data2);
+
+            data2.forEach(res => {
+                let option = document.createElement('option');
+                option.value = res.id;
+                option.textContent = res.nama_bisnis;
+                kategoriSuplayerId.appendChild(option);
+            });
+
+            // You have a commented-out section here. If you want to use data from another fetch, you can uncomment and modify it as needed.
+
+            // const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
+            // if (!response.ok) {
+            //     throw new Error(`HTTP error! Status: ${response.status}`);
+            // }
+
+            // const data = await response.json();
+            // console.log(data);
+
+            // data.forEach(res => {
+            //     let option = document.createElement('option');
+            //     option.value = res.id;
+            //     option.textContent = res.nama;
+            //     detailKategori.appendChild(option);
+            // });
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
 
     jenisTransaksi.forEach(jt => {
         jt.addEventListener('change', async function () {
@@ -102,6 +125,16 @@
                     option.textContent = res.nama_bisnis;
                     kategoriSuplayerId.appendChild(option);
                 });
+    
+                const data = await response.json();
+                data.forEach(res => {
+                    let option = document.createElement('option');
+                    option.value = res.id;
+                    option.textContent = res.nama;
+                    detailKategori.appendChild(option);
+                });
+
+               
             } catch (error) {
             }
         });
