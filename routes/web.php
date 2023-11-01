@@ -206,10 +206,22 @@ Route::middleware(['auth'])->group(function()
 
     Route::controller(SuppliersorCustomersController::class)->group(function()
     {
+        Route::get('/supplier_costumer', 'index');
+        
         Route::get('/get_suplier_by_jenis_transaksi_id', 'showSupOrCus');
 
         Route::get('/hapus_seeder', 'hapusSeeder');
+
+        Route::post('/supplier_or_customer', 'store');
+
+        Route::get('/get_sup_or_cos_by_no_hp', 'showDetail');
+
+        Route::delete('/supplier_costumer_delete', 'destroy');
+
+        Route::put('/supplier_or_customer_update', 'update');
+
     });
+    
 });
 
 

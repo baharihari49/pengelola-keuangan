@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jenis_transaksi;
 use App\Models\suppliers_or_customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Helper\DatabaseHelper;
 
 class SuppliersorCustomersController extends Controller
 {
@@ -13,7 +15,12 @@ class SuppliersorCustomersController extends Controller
      */
     public function index()
     {
-        //
+        // return suppliers_or_customers::where('user_id', auth()->user()->id)->get();
+        return view('dashboard.supplier.index', [
+            'data' => suppliers_or_customers::where('user_id', auth()->user()->id)->paginate(15),
+            'tipe' => Jenis_transaksi::where('id', 1)->orWhere('id', 2)->get(),
+            'user' => DatabaseHelper::getUser()[0]
+        ]);
     }
 
     public function showSupOrCus()
@@ -32,6 +39,13 @@ class SuppliersorCustomersController extends Controller
                                   ->get();
     }
 
+    public function showDetail()
+    {
+        return suppliers_or_customers::where('user_id', auth()->user()->id)
+                                ->where('no_hp', request()->no_hp)
+                                ->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -45,7 +59,19 @@ class SuppliersorCustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama_bisnis' => 'required',
+            'alamat' => 'required',
+            'email' => 'email|required',
+            'no_hp' => 'required',
+            'jenis_transaksi_id' => 'required'
+        ]);
+
+        $validate['user_id'] = auth()->user()->id;
+
+        suppliers_or_customers::create($validate);
+
+        return redirect('/supplier_costumer');
     }
 
     /**
@@ -69,7 +95,20 @@ class SuppliersorCustomersController extends Controller
      */
     public function update(Request $request, suppliers_or_customers $suppliers_or_customers)
     {
-        //
+        // return request();
+        $validate = $request->validate([
+            'nama_bisnis' => 'required',
+            'alamat' => 'required',
+            'email' => 'email|required',
+            'no_hp' => 'required',
+            'jenis_transaksi_id' => 'required'
+        ]);
+
+        suppliers_or_customers::where('user_id', auth()->user()->id)
+                                ->where('email', $validate['email'])
+                                ->update($validate);
+
+        return redirect('/supplier_costumer');
     }
 
     /**
@@ -77,6 +116,7 @@ class SuppliersorCustomersController extends Controller
      */
     public function destroy(suppliers_or_customers $suppliers_or_customers)
     {
-        //
+        // return request()->email;
+        suppliers_or_customers::destroy(request()->id);
     }
 }

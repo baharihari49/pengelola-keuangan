@@ -10,7 +10,16 @@ class suppliers_or_customers extends Model // Sesuaikan nama model dengan huruf 
 {
     use HasFactory;
 
-    protected $table = 'suppliers_or_customers'; // Sesuaikan nama tabel
+    // protected $table = 'suppliers_or_customers'; // Sesuaikan nama tabel
+    // protected $primaryKey = 'email';
+    protected $fillable = [
+        'nama_bisnis',
+        'alamat',
+        'email',
+        'no_hp',
+        'jenis_transaksi_id',
+        'user_id'
+    ];
 
     public function jenis_transaksi(): BelongsTo // Perbaiki BelongsTo
     {

@@ -81,23 +81,6 @@ jenisTransaksi.forEach(jt => {
                 kategoriSuplayerId.appendChild(option);
             });
 
-            // You have a commented-out section here. If you want to use data from another fetch, you can uncomment and modify it as needed.
-
-            // const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${jt.value}`);
-            // if (!response.ok) {
-            //     throw new Error(`HTTP error! Status: ${response.status}`);
-            // }
-
-            // const data = await response.json();
-            // console.log(data);
-
-            // data.forEach(res => {
-            //     let option = document.createElement('option');
-            //     option.value = res.id;
-            //     option.textContent = res.nama;
-            //     detailKategori.appendChild(option);
-            // });
-
         } catch (error) {
             console.error('Error:', error);
         }
