@@ -7,9 +7,8 @@
     <span>Rp {{number_format($pemasukan, 0, ',', '.')}}</span>
     <p class="text-gray-500 text-sm font-medium mt-1">Total Pemasukan</p>
 </div>
-<div class="bg-white overflow-x-auto shadow-md rounded-lg border-gray-300 dark:border-gray-600 h-fit mb-32 lg:mb-24">
-    @include('dashboard.laporan.pemasukan.layouts.container_laporan_pemasukan')
-</div>
+
+@include('dashboard.laporan.pemasukan.layouts.container_laporan_pemasukan')
 
 <script src="./js/laporan/pemasukan.js"></script>
 @endsection

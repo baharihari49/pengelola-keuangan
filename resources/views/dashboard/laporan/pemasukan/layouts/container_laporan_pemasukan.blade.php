@@ -1,7 +1,7 @@
-<section class="bg-gray-50 dark:bg-gray-900">
-    <div class="">
+<section class="bg-gray-50 overflow-visible dark:bg-gray-900">
+    <div class="overflow-visible">
         <!-- Start coding here -->
-        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        <div class="bg-white overflow-visible dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
                     <form class="flex items-center">
@@ -35,7 +35,7 @@
                         Kategori
                     </button>
                     <div id="actionsDropdown"
-                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        class="hidden  w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
                             <li onclick="acttionFilter(this)" id="filterKategori" data-id="all">
                                 <a
@@ -61,7 +61,7 @@
                     Periode
                 </button>
                 <div id="periodeDropdown"
-                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                    class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
                         <li onclick="acttionPeriode(this)" id="filterKategori" data-id="all">
                             <a
