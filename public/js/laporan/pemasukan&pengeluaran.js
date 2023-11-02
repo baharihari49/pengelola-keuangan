@@ -3,14 +3,16 @@ const tabelBody = document.getElementById('tabelBody')
 const tabelRowPem= Array.from(document.querySelectorAll('#tabelRowPem'))
 
 function acttionFilter(target) {
+    console.log(target);
     tabelRowPem.forEach(tr => {
         while(tr.firstChild) {
             tr.removeChild(tr.firstChild)
         }
     })
-    fetch('get_pemasukan_by_kategori_transaksi_id/?id=' + target.getAttribute('data-id'))
+    fetch('get_pemasukan_by_kategori_transaksi_id/?id=' + target.getAttribute('data-id') + '&jenis_transaksi_id=' + target.getAttribute('data-id-2'))
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             data.forEach((item, index) => {
                 let element = `
                                 <th scope="row"
@@ -57,14 +59,16 @@ function acttionFilter(target) {
 }
 
 function acttionPeriode(target) {
+    console.log(target);
     tabelRowPem.forEach(tr => {
         while(tr.firstChild) {
             tr.removeChild(tr.firstChild)
         }
     })
-    fetch('/get_pemasukan_by_month/?id=' + target.getAttribute('data-id'))
+    fetch('/get_pemasukan_by_month/?id=' + target.getAttribute('data-id') + '&jenis_transaksi_id=' + target.getAttribute('data-id-2'))
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             data.forEach((item, index) => {
                 let element = `
                                 <th scope="row"

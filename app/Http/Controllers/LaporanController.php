@@ -117,11 +117,33 @@ class LaporanController extends Controller
         ]);
     }
 
+    public function showLaporanPengeluaran()
+    {
+        return view('dashboard.laporan.pengeluaran.index', [
+            'data' => Transaksi::where('user_id', auth()->user()->id)
+                                ->where('jenis_transaksi_id', 2)
+                                ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
+                                ->get(),
+            'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
+                                    ->where('jenis_transaksi_id', 2)
+                                    ->sum('jumlah'),
+            'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                                    ->where('transaksis.user_id', auth()->user()->id)
+                                    ->where('transaksis.jenis_transaksi_id', 2)
+                                    ->distinct()
+                                    ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
+                                    ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
+                                    ->get(),
+            'dataBulan' => DatabaseHelper::getMonthTransaki(),
+            'user' => DatabaseHelper::getUser()[0]
+        ]);
+    }
+
     public function getTransaksiByKategori()
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
                             ->where('user_id', auth()->user()->id)
-                            ->where('jenis_transaksi_id', 1);
+                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id);
     
     if (request()->id == 'all') {
         $transaksi = $transaksi->get();
@@ -148,7 +170,7 @@ class LaporanController extends Controller
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
                             ->where('user_id', auth()->user()->id)
-                            ->where('jenis_transaksi_id', 1);
+                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id);
     
         if (request()->id == 'all') {
             $transaksi = $transaksi->get();

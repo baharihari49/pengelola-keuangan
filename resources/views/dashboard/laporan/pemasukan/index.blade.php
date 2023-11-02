@@ -10,5 +10,5 @@
 
 @include('dashboard.laporan.pemasukan.layouts.container_laporan_pemasukan')
 
-<script src="./js/laporan/pemasukan.js"></script>
+<script src="./js/laporan/pemasukan&pengeluaran.js"></script>
 @endsection
