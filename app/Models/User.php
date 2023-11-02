@@ -15,4 +15,9 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function checkNewUser()
+    {
+        return !empty($this->name) && !empty($this->alamat) && !empty($this->no_handphone);
+    }
 }

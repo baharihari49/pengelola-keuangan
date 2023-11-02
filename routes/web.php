@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function()
    });
 });
 
-Route::middleware(['auth'])->group(function()
+Route::middleware(['auth', 'check.user'])->group(function()
 {
     Route::controller(DashboardController::class)->group(function()
     {

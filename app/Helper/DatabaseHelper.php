@@ -271,4 +271,9 @@ class DatabaseHelper
     {
         return User::where('id', auth()->user()->id)->get();
     }
+
+    public static function checkNewUser()
+    {
+        return !empty(auth()->user()->alamat) && !empty(auth()->user()->no_handphone) && !empty(auth()->user()->username);
+    }
 }
