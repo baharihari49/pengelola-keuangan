@@ -202,6 +202,10 @@ Route::middleware(['auth'])->group(function()
     Route::controller(LaporanController::class)->group(function()
     {
         Route::get('/pemasukan', 'showLaporanPemasukan');
+
+        Route::get('/get_pemasukan_by_kategori_transaksi_id', 'getTransaksiByKategori');
+
+        Route::get('/get_pemasukan_by_month', 'getTransaksiByMonth');
     });
 
     Route::controller(SuppliersorCustomersController::class)->group(function()
