@@ -14,7 +14,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="https://www.octansidn.com/webpage/demos/business/images/octans/icon_2.ico"
         type="image/x-icon">
-    <title style="text-transform: capitalize;">
+    <title class="capitalize" style="text-transform: capitalize;">
         {{ request()->path() == '/' ? 'Dashboard - Octans by Boxity' : request()->path() . ' - Octans by Boxity' }}
     </title>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -31,7 +31,7 @@
         @include('dashboard.layouts.sidebar')
 
         <main id="container-main" class="">
-            <div style="min-height: 100vh" id="main-section" class="p-4 md:ml-64 h-auto pt-20 border">
+            <div style="min-height: 100vh" id="main-section" class="p-4 md:ml-64 h-auto pt-20 border overflow-hidden">
                 @yield('container')
             </div>
             <div id="footer-section" class="md:ml-64 h-auto relative">
