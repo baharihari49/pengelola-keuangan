@@ -55,7 +55,7 @@
                 }
             });
 
-            const response2 = await fetch('/get_kategori_transaksi_by_jenis_transaksi_select/?id=' + data[0].jenis_transaksi_id)
+            const response2 = await fetch('/get_kategori_transaksi_by_jenis_transaksi_id/?id=' + data[0].jenis_transaksi_id)
 
             const data2 = await response2.json()
 
