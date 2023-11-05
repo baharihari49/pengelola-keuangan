@@ -4,6 +4,7 @@ use App\Helper\DatabaseHelper;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackCenterController;
 use App\Http\Controllers\JenisTransaksiController;
 use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
@@ -226,6 +227,11 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         Route::put('/supplier_or_customer_update', 'update');
 
+    });
+
+    Route::controller(FeedbackCenterController::class)->group(function() 
+    {
+        Route::get('/feedback', 'index');
     });
     
 });

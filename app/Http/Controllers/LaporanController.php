@@ -100,13 +100,16 @@ class LaporanController extends Controller
         return view('dashboard.laporan.pemasukan.index', [
             'data' => Transaksi::where('user_id', auth()->user()->id)
                                 ->where('jenis_transaksi_id', 1)
+                                ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                                 ->get(),
             'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
                                     ->where('jenis_transaksi_id', 1)
+                                    ->where('void', false)
                                     ->sum('jumlah'),
             'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->where('transaksis.user_id', auth()->user()->id)
+                                    ->where('void', false)
                                     ->where('transaksis.jenis_transaksi_id', 1)
                                     ->distinct()
                                     ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
@@ -122,13 +125,16 @@ class LaporanController extends Controller
         return view('dashboard.laporan.pengeluaran.index', [
             'data' => Transaksi::where('user_id', auth()->user()->id)
                                 ->where('jenis_transaksi_id', 2)
+                                ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                                 ->get(),
             'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
                                     ->where('jenis_transaksi_id', 2)
+                                    ->where('void', false)
                                     ->sum('jumlah'),
             'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->where('transaksis.user_id', auth()->user()->id)
+                                    ->where('void', false)
                                     ->where('transaksis.jenis_transaksi_id', 2)
                                     ->distinct()
                                     ->select('kategori_transaksis.nama', 'kategori_transaksis.id')

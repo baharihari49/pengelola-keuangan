@@ -20,18 +20,19 @@
                 <input id="uuid" name="uuid" type="hidden">
                 <input type="hidden" name="old_kategori_transaksi_id" id="old-kategori-transaksi-id">
                 <input type="hidden" name="kategori_transaksi_id" id="katgeori_transaksi_id">
+                <input type="hidden" name="anggaran" id="anggaranBollean">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
                         <label for="detail-tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
-                        <input disabled type="date" name="tanggal" id="detail-tanggal" value="iPad Air Gen 5th Wi-Fi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Ex. Apple iMac 27&ldquo;">
+                        <input type="date" name="tanggal" id="detail-tanggal" value="iPad Air Gen 5th Wi-Fi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Ex. Apple iMac 27&ldquo;">
                     </div>
                     <div>
                         <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah</label>
-                        <input disabled type="number" value="399" name="jumlah" id="detail-jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$299">
+                        <input type="number" value="399" name="jumlah" id="detail-jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$299">
                     </div>
                     <div>
                         <label for="jenis_transaksi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Transaksi</label>
-                        <select disabled name="jenis_transaksi_id" id="jenis_transaksi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <select name="jenis_transaksi_id" id="jenis_transaksi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option id="opt-jenis-transaksi" value="1">Pendapatan</option>
                             <option id="opt-jenis-transaksi" value="2">Pengeluaran</option>
                             <option id="opt-jenis-transaksi" value="3">Tabungan</option>
@@ -39,12 +40,12 @@
                     </div>
                     <div>
                         <label for="kategori" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
-                        <select disabled name="kategori_transaksi_id" id="detail-kategori" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <select name="kategori_transaksi_id" id="detail-kategori" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             
                         </select>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="detail-deskripsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan void</label>
+                        <label for="detail-deskripsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                         <textarea name="deskripsi" id="detail-deskripsi" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tulis keterangan void.."></textarea>                    
                     </div>
                 </div>

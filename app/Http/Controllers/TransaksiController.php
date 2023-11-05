@@ -29,6 +29,7 @@ class TransaksiController extends Controller
             'jenis_transaksi' => Jenis_transaksi::all(),
             'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                 ->where('user_id', Auth::id())
+                ->where('void', false)
                 ->orderBy('created_at', 'desc')
                 ->paginate(15),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
@@ -63,10 +64,10 @@ class TransaksiController extends Controller
         $validate['user_id'] = auth()->user()->id;
         
         // Ambil ID terakhir dari tabel Transaksi
-        $lastTransaction = Transaksi::where('user_id', auth()->user()->id)->select('id')->latest('id')->first();
+        $lastTransaction = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->count();
 
         if ($lastTransaction) {
-            $lastTransactionId = $lastTransaction->id;
+            $lastTransactionId = $lastTransaction;
         } else {
             $lastTransactionId = 0;
         }
@@ -147,21 +148,53 @@ class TransaksiController extends Controller
     public function update(Request $request, Transaksi $transaksi)
     {
 
-        // return $request;
+        $void['void'] = request()->void = true;
+
+        Transaksi::where('user_id', auth()->user()->id)
+                    ->where('uuid', $request->uuid)
+                    ->update($void);
+
         $validate = $request->validate([
-            'deskripsi' => 'required',
+            'tanggal' => 'required|max:255',
+            'jumlah' => 'required|max:255',
+            'kategori_transaksi_id' => 'required',
+            'suppliers_or_customers_id' => 'max:255',
+            'jenis_transaksi_id' => 'required',
+            'deskripsi' => 'max:255'
         ]);
 
         $data_anggaran = Anggaran::where('user_id', auth()->user()->id)->where('kategori_transaksi_id', request('old_kategori_transaksi_id'))->get();
 
         $validate['user_id'] = auth()->user()->id;
 
+        $validate['anggaran'] = request()->anggaran;
+ 
+        $lastTransaction = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->count();
 
-        // return $validate;
+        if ($lastTransaction) {
+            $lastTransactionId = $lastTransaction;
+        } else {
+            $lastTransactionId = 0;
+        }
+
+        // Tetapkan $no_transaksi berdasarkan jenis transaksi dan nomor ID terakhir
+        if ($validate['jenis_transaksi_id'] == 1) {
+            $validate['no_transaksi'] = 'ITR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000' . ($lastTransactionId + 1);
+        } elseif ($validate['jenis_transaksi_id'] == 2) {
+            $validate['no_transaksi'] = 'OTR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000' . ($lastTransactionId + 1);
+        } else {
+            $validate['no_transaksi'] = 'STR-' . DatabaseHelper::getYear() . DatabaseHelper::getMonth() . '-00000' . ($lastTransactionId + 1);
+        }
+
 
         Transaksi::where('user_id', auth()->user()->id)
-                    ->where('uuid', $request->uuid)
-                    ->update($validate);
+                    ->where('uuid', request()->uuid)
+                    ->create($validate);
+        
+
+        return redirect('/transaksi');
+
+        
 
         // if(empty($data_anggaran[0]['jumlah'])) {
         //     Transaksi::where('user_id', auth()->user()->id)
@@ -355,5 +388,10 @@ class TransaksiController extends Controller
 
         return $data;
 
+    }
+
+    public function api6()
+    {
+        return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->orWhere('user_id', auth()->user()->id)->Where('default', true)->get();
     }
 }

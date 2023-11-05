@@ -97,7 +97,7 @@ class KategoriTransaksiController extends Controller
 
 
     public function api() {
-        return Kategori_transaksi::where('default', true)->where('jenis_transaksi_id', request()->id)->orWhere('user_id', auth()->user()->id)->get();
+        return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->orWhere('user_id', auth()->user()->id)->Where('default', true)->get();
     }
 
     public function api2()

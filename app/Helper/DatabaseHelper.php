@@ -17,6 +17,7 @@ class DatabaseHelper
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
+                                                ->where('void', false)
                                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
 
@@ -37,6 +38,7 @@ class DatabaseHelper
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
+                                                ->where('void', false)
                                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
                                                 
@@ -45,6 +47,7 @@ class DatabaseHelper
                     ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
                     ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
                     ->where('transaksis.user_id', auth()->user()->id)
+                    ->where('transaksis.void', false)
                     ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                     ->select(
                         'kategori_anggarans.id AS id_kategori_anggaran',
@@ -87,6 +90,7 @@ class DatabaseHelper
     {
         $persentaseAnggarans = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
                                 ->where('transaksis.user_id', auth()->user()->id)
+                                ->where('transaksis.void', false)
                                 ->where('anggarans.user_id', auth()->user()->id)
                                 ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
                                 ->select(
@@ -121,6 +125,7 @@ class DatabaseHelper
                                         ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
                                         ->where('anggarans.user_id', auth()->user()->id)
                                         ->where('transaksis.user_id', auth()->user()->id)
+                                        ->where('void', false)
                                         ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                         ->where('kategori_anggarans.nama', $param)
                                         ->select(
@@ -162,7 +167,7 @@ class DatabaseHelper
         $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
 
 
-        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->where('jenis_transaksi_id', 2)->sum('jumlah');
+        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->where('jenis_transaksi_id', 2)->sum('jumlah');
 
         return [
             'jumlah_anggaran' => $jumlahAnggaran,
@@ -175,8 +180,8 @@ class DatabaseHelper
     {
         $userId = auth()->user()->id;
 
-        $jumlahPendapatan = Transaksi::where('user_id', $userId)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
-        $jumlahTabungan = Transaksi::where('user_id', $userId)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
+        $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
+        $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
 
         $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'tabungan')->value('value');
 
@@ -230,6 +235,7 @@ class DatabaseHelper
     public static function getMonthTransaki()
     {
         return Transaksi::where('user_id', auth()->user()->id)
+                            ->where('void', false)
                             ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
                             ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
                             ->distinct()

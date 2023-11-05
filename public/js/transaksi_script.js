@@ -11,6 +11,8 @@
     const updateProductModal = document.getElementById('updateProductModal')
     const btnCloseModal = document.getElementById('close-modal-update')
     const kategoriSuplayerId = document.getElementById('suplayer_id')
+    const anggaranBollean = document.getElementById('anggaranBollean')
+
  
 
     const modalError = document.getElementById('modalError')
@@ -44,16 +46,32 @@
                 detailDeskripsi.value = res.deskripsi;
                 uuidDetail.value = uuid;
                 oldKategoriTransaksiId.value = res.kategori_transaksi_id;
+                anggaranBollean.value = res.anggaran
                 btnDelete.setAttribute('data-uuid', res.uuid);
                 if (res.jenis_transaksi_id == 1) {
                     optionTransaksi[0].selected = true;
                 } else if (res.jenis_transaksi_id == 2) {
                     optionTransaksi[1].selected = true;
                 }
-                jenisTransaksiId = res.jenis_transaksi_id;
-                kategoriTransaksiId = res.kategori_transaksi_id;
-                detailKategori.innerHTML = `<option selected="">${res.nama_kategori_transaksi}</option>`;
             });
+
+            const response2 = await fetch('/get_kategori_transaksi_by_jenis_transaksi_select/?id=' + data[0].jenis_transaksi_id)
+
+            const data2 = await response2.json()
+
+            detailKategori.innerHTML = '<option value="0" selected="">Select Kategori</option>';
+
+            data2.forEach(res => {
+                let option = document.createElement('option');
+                option.value = res.id;
+                option.textContent = res.nama;
+                
+                if(data[0].kategori_transaksi_id == res.id) {
+                    option.selected = true
+                }
+                detailKategori.appendChild(option);
+            })
+
         } catch (error) {
         }
     }
@@ -72,7 +90,6 @@ jenisTransaksi.forEach(jt => {
             }
 
             const data2 = await response2.json();
-            console.log(data2);
 
             data2.forEach(res => {
                 let option = document.createElement('option');

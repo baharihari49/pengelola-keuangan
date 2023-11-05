@@ -157,7 +157,7 @@
             </div>
             <div class="overflow-x-auto">
                 <table
-                    class="w-max md:w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
+                    class="min-w-full w-max 2xl:w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">No</th>
@@ -189,7 +189,7 @@
                                     </td>
                                     <td id="tabel-date" class="px-4 py-3">
                                         {{ $t->suppliers_or_customers->nama_bisnis ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3">{{ $t->deskripsi ?? '--' }}</td>
+                                    <td id="tabel-date" class="px-4 py-3 max-w-sm">{{ $t->deskripsi ?? '--' }}</td>
                                     <td id="tabel-date" class="px-4 py-3 text-right">Rp
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                                 </div>
