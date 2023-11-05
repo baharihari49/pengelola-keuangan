@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('suppliers_or_customers_id')->nullable();
             $table->boolean('anggaran');
             $table->foreignId('jenis_transaksi_id');
-            $table->boolean('void')->default(false);
+            $table->boolean('void')->default(false)->change();
             $table->timestamps();
         });
     }
