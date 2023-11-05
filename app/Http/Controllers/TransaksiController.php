@@ -299,6 +299,7 @@ class TransaksiController extends Controller
     {
 
         $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
+                ->where('void', false)
                 ->select(DB::raw('DATE(created_at) as tanggal'))
                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                 ->distinct()
@@ -327,6 +328,7 @@ class TransaksiController extends Controller
         // Ambil data jumlah untuk setiap tanggal
         $records = Transaksi::where('user_id', auth()->user()->id)
                             ->where('jenis_transaksi_id', request()->id)
+                            ->where('void', false)
                             ->select(
                                 DB::raw('DATE(created_at) as tanggal'), 
                                 DB::raw('SUM(jumlah) as jumlah'),
