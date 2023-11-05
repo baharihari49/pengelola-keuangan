@@ -72,6 +72,35 @@
                 detailKategori.appendChild(option);
             })
 
+            const jenis_transaksi_update = document.getElementById('jenis_transaks_update')
+
+
+
+            jenis_transaksi_update.addEventListener('input', async function () {
+                try {
+                    const response = await fetch(`/get_kategori_transaksi_by_jenis_transaksi_id/?id=${ jenis_transaksi_update.value}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log(data);
+
+                    const kategori = document.getElementById('detail-kategori');
+                    kategori.innerHTML = '<option selected="">Select Kategory</option>';
+                    
+                    data.forEach(res => {
+                        let option = document.createElement('option');
+                        option.value = res.id;
+                        option.textContent = res.nama;
+                        kategori.appendChild(option);
+                    });
+                    kategori.disabled = false;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+    });
+
         } catch (error) {
         }
     }

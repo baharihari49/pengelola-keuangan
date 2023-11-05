@@ -8,6 +8,8 @@ use App\Models\Jenis_transaksi;
 use App\Models\Kategori_transaksi;
 use App\Models\Kategori_anggaran;
 use App\Helper\DatabaseHelper;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 
 
 // namespace App\Http\Requests;
@@ -97,7 +99,16 @@ class KategoriTransaksiController extends Controller
 
 
     public function api() {
-        return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->orWhere('user_id', auth()->user()->id)->Where('default', true)->get();
+        $results = Kategori_transaksi::where(function ($query) {
+            $query->where('jenis_transaksi_id', request()->id)
+                  ->where('user_id', auth()->user()->id);
+        })->orWhere(function ($query) {
+            $query->where('jenis_transaksi_id', request()->id)
+                  ->where('default', true);
+        })->get();
+
+        return $results;
+        
     }
 
     public function api2()
