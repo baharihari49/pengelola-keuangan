@@ -33,8 +33,8 @@
 
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">* Pendapatan</th>
-                            <td class="px-4 py-3 text-base text-right">Rp {{number_format($pemasukan, 0, ',', '.')}}</td>
+                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">* Pengeluaran</th>
+                            <td class="px-4 py-3 text-base text-right">Rp {{number_format($pengeluaran, 0, ',', '.')}}</td>
                         </tr>
                         @foreach ($pengeluaranByKategori as $item)
                         <tr class="border-b dark:border-gray-700">
