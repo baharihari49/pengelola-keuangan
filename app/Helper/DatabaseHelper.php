@@ -292,7 +292,7 @@ class DatabaseHelper
                         ->select('kategori_transaksis.nama',
                                 DB::raw('SUM(transaksis.jumlah) as jumlah')        
                         )
-                        ->groupBy('transaksis.kategori_transaksi_id',)
+                        ->groupBy('transaksis.kategori_transaksi_id', 'transaksis.jumlah','kategori_transakisi.nama')
                         ->get();
 
     }
@@ -306,7 +306,7 @@ class DatabaseHelper
                         ->select('kategori_transaksis.nama',
                                 DB::raw('SUM(transaksis.jumlah) as jumlah')        
                         )
-                        ->groupBy('transaksis.kategori_transaksi_id', 'transaksis.jumlah')
+                        ->groupBy('transaksis.kategori_transaksi_id', 'transaksis.jumlah', 'kategori_transakisi.nama')
                         ->get();
 
     }
