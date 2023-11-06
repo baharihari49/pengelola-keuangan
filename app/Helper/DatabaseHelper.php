@@ -282,4 +282,32 @@ class DatabaseHelper
     {
         return !empty(auth()->user()->alamat) && !empty(auth()->user()->no_handphone) && !empty(auth()->user()->username);
     }
+
+    public static function getTransaksiPemasukanGroupByKategori()
+    {
+        return Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                        ->where('transaksis.user_id', auth()->user()->id)
+                        ->where('void', false)
+                        ->where('transaksis.jenis_transaksi_id', 1)
+                        ->select('kategori_transaksis.nama',
+                                DB::raw('SUM(transaksis.jumlah) as jumlah')        
+                        )
+                        ->groupBy('transaksis.kategori_transaksi_id',)
+                        ->get();
+
+    }
+
+    public static function getTransaksiPengeluaranGroupByKategori()
+    {
+        return Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                        ->where('transaksis.user_id', auth()->user()->id)
+                        ->where('void', false)
+                        ->where('transaksis.jenis_transaksi_id', 2)
+                        ->select('kategori_transaksis.nama',
+                                DB::raw('SUM(transaksis.jumlah) as jumlah')        
+                        )
+                        ->groupBy('transaksis.kategori_transaksi_id',)
+                        ->get();
+
+    }
 }

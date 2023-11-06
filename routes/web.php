@@ -202,6 +202,9 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
     Route::controller(LaporanController::class)->group(function()
     {
+
+        Route::get('/laporan', 'index');
+
         Route::get('/pemasukan', 'showLaporanPemasukan');
 
         Route::get('/pengeluaran', 'showLaporanPengeluaran');
@@ -209,6 +212,8 @@ Route::middleware(['auth', 'check.user'])->group(function()
         Route::get('/get_pemasukan_by_kategori_transaksi_id', 'getTransaksiByKategori');
 
         Route::get('/get_pemasukan_by_month', 'getTransaksiByMonth');
+
+        Route::get('/laba_rugi', 'showLaporanLabaRugi');
     });
 
     Route::controller(SuppliersorCustomersController::class)->group(function()
