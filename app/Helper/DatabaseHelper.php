@@ -289,11 +289,10 @@ class DatabaseHelper
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
                         ->where('transaksis.jenis_transaksi_id', 1)
-                        ->select('kategori_transaksis.nama',
-                                DB::raw('SUM(transaksis.jumlah) as jumlah')        
-                        )
-                        ->groupBy('transaksis.kategori_transaksi_id')
+                        ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+                        ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')
                         ->get();
+
 
     }
 
@@ -303,11 +302,10 @@ class DatabaseHelper
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
                         ->where('transaksis.jenis_transaksi_id', 2)
-                        ->select('kategori_transaksis.nama',
-                                DB::raw('SUM(transaksis.jumlah) as jumlah')        
-                        )
-                        ->groupBy('transaksis.kategori_transaksi_id')
+                        ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+                        ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')
                         ->get();
+
 
     }
 }
