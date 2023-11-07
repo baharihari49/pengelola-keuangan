@@ -102,7 +102,7 @@ class LaporanController extends Controller
                                 ->where('jenis_transaksi_id', 1)
                                 ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-                                ->get(),
+                                ->paginate(15),
             'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
                                     ->where('jenis_transaksi_id', 1)
                                     ->where('void', false)
@@ -127,7 +127,7 @@ class LaporanController extends Controller
                                 ->where('jenis_transaksi_id', 2)
                                 ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-                                ->get(),
+                                ->paginate(15),
             'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
                                     ->where('jenis_transaksi_id', 2)
                                     ->where('void', false)
