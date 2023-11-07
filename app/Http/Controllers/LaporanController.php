@@ -15,84 +15,84 @@ class LaporanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $pengeluaranKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                                            ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
-                                            ->where('transaksis.user_id', auth()->user()->id)
-                                            ->where('anggarans.user_id', auth()->user()->id)
-                                            ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                            ->where('kategori_anggarans.nama', 'kebutuhan')
-                                            ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
-                                            ->select(
-                                                'kategori_anggarans.nama as kategori_anggaran',
-                                                'anggarans.jumlah as jumlah_anggaran',
-                                                DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
-                                                'transaksis.kategori_transaksi_id'
-                                            )
-                                            ->get();
+    // public function index()
+    // {
+    //     $pengeluaranKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
+    //                                         ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
+    //                                         ->where('transaksis.user_id', auth()->user()->id)
+    //                                         ->where('anggarans.user_id', auth()->user()->id)
+    //                                         ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                                         ->where('kategori_anggarans.nama', 'kebutuhan')
+    //                                         ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
+    //                                         ->select(
+    //                                             'kategori_anggarans.nama as kategori_anggaran',
+    //                                             'anggarans.jumlah as jumlah_anggaran',
+    //                                             DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
+    //                                             'transaksis.kategori_transaksi_id'
+    //                                         )
+    //                                         ->get();
     
-        $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                                ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
-                                ->where('transaksis.user_id', auth()->user()->id)
-                                ->where('anggarans.user_id', auth()->user()->id)
-                                ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                ->where('kategori_anggarans.nama', 'keinginan')
-                                ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
-                                ->select(
-                                    'kategori_anggarans.nama as kategori_anggaran',
-                                    'anggarans.jumlah as jumlah_anggaran',
-                                    DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
-                                    'transaksis.kategori_transaksi_id'
-                                )
-                                ->get();
+    //     $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
+    //                             ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
+    //                             ->where('transaksis.user_id', auth()->user()->id)
+    //                             ->where('anggarans.user_id', auth()->user()->id)
+    //                             ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                             ->where('kategori_anggarans.nama', 'keinginan')
+    //                             ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
+    //                             ->select(
+    //                                 'kategori_anggarans.nama as kategori_anggaran',
+    //                                 'anggarans.jumlah as jumlah_anggaran',
+    //                                 DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
+    //                                 'transaksis.kategori_transaksi_id'
+    //                             )
+    //                             ->get();
 
 
-        $tabungan = Transaksi::where('user_id', auth()->user()->id)
-                                ->where('jenis_transaksi_id', 3)
-                                ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                ->select(
-                                    'transaksis.kategori_transaksi_id',
-                                    DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
-                                    // 'transaksis.deskripsi'
-                                )
-                                ->groupBy('transaksis.kategori_transaksi_id')
-                                ->get();          
+    //     $tabungan = Transaksi::where('user_id', auth()->user()->id)
+    //                             ->where('jenis_transaksi_id', 3)
+    //                             ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                             ->select(
+    //                                 'transaksis.kategori_transaksi_id',
+    //                                 DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
+    //                                 // 'transaksis.deskripsi'
+    //                             )
+    //                             ->groupBy('transaksis.kategori_transaksi_id')
+    //                             ->get();          
                                 
         
-        return view('dashboard.laporan.index', [
-            'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 1)
-                                    ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                    ->select(
-                                        'transaksis.kategori_transaksi_id',
-                                        DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
-                                    )
-                                    ->groupBy('transaksis.kategori_transaksi_id')
-                                    ->get(),
-            'totalPemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                    ->where('jenis_transaksi_id', 1)
-                                          ->sum('jumlah'),
-            'pengeluaranKebutuhan' => $pengeluaranKebutuhan,
-            'jumlahTransaksiKebutuhan' => DatabaseHelper::getJumlahTransaksiBudgeting('kebutuhan'),
-            'pengeluaranKeinginan' => $pengeluaranKeinginan,
-            'jumlahTransaksiKeinginan' => DatabaseHelper::getJumlahTransaksiBudgeting('keinginan'),
-            'jumlahPengeluaran' => DatabaseHelper::getJumlahPengeluaranBudgeting(),
-            'tabungan' => $tabungan,
-            'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)
-                            ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                            ->sum('jumlah'),
-            'dataBulan' => DatabaseHelper::getMonthTransaki(),
-            'bulanSaatIni' => Transaksi::where('user_id', auth()->user()->id)
-                            ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                            ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
-                            ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
-                            ->distinct()
-                            ->get(),
-            'user' => DatabaseHelper::getUser()[0],
-        ]);
-    }
+    //     return view('dashboard.laporan.index', [
+    //         'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
+    //                                 ->where('jenis_transaksi_id', 1)
+    //                                 ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                                 ->select(
+    //                                     'transaksis.kategori_transaksi_id',
+    //                                     DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi'),
+    //                                 )
+    //                                 ->groupBy('transaksis.kategori_transaksi_id')
+    //                                 ->get(),
+    //         'totalPemasukan' => Transaksi::where('user_id', auth()->user()->id)
+    //                                 ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                                 ->where('jenis_transaksi_id', 1)
+    //                                       ->sum('jumlah'),
+    //         'pengeluaranKebutuhan' => $pengeluaranKebutuhan,
+    //         'jumlahTransaksiKebutuhan' => DatabaseHelper::getJumlahTransaksiBudgeting('kebutuhan'),
+    //         'pengeluaranKeinginan' => $pengeluaranKeinginan,
+    //         'jumlahTransaksiKeinginan' => DatabaseHelper::getJumlahTransaksiBudgeting('keinginan'),
+    //         'jumlahPengeluaran' => DatabaseHelper::getJumlahPengeluaranBudgeting(),
+    //         'tabungan' => $tabungan,
+    //         'jumlahTabungan' => Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 3)
+    //                         ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                         ->sum('jumlah'),
+    //         'dataBulan' => DatabaseHelper::getMonthTransaki(),
+    //         'bulanSaatIni' => Transaksi::where('user_id', auth()->user()->id)
+    //                         ->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+    //                         ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
+    //                         ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
+    //                         ->distinct()
+    //                         ->get(),
+    //         'user' => DatabaseHelper::getUser()[0],
+    //     ]);
+    // }
 
     public function showLaporanPemasukan()
     {

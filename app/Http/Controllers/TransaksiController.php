@@ -119,7 +119,7 @@ class TransaksiController extends Controller
             $validate['anggaran'] = true;
             Transaksi::create($validate);
             Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
-            return redirect('/transaksi')->with('sucsess', 'Data berhas     il ditambahkan');
+            return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
         }else{
             return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
         }

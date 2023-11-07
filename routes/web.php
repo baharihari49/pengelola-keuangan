@@ -237,6 +237,8 @@ Route::middleware(['auth', 'check.user'])->group(function()
     Route::controller(FeedbackCenterController::class)->group(function() 
     {
         Route::get('/feedback', 'index');
+
+        Route::post('/feedback', 'store');
     });
     
 });

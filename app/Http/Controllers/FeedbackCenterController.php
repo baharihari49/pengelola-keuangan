@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorefeedbackCenterRequest;
 use App\Http\Requests\UpdatefeedbackCenterRequest;
 use App\Models\feedbackCenter;
-
+use App\Helper\DatabaseHelper;
 class FeedbackCenterController extends Controller
 {
     /**
@@ -29,7 +29,27 @@ class FeedbackCenterController extends Controller
      */
     public function store(StorefeedbackCenterRequest $request)
     {
-        //
+
+        $validate = request()->validate([
+            'kategori' => 'required',
+            'deskripsi' => 'required',
+            'info_tambahan' => 'max:225',
+        ]);
+
+        $count_feedback = feedbackCenter::count();
+
+        $validate['no_feedback'] = 'OCTNS-FDB-000' . $count_feedback + 1 . '-' . DatabaseHelper::getYear();
+
+        $validate['user_id'] = auth()->user()->id;
+        
+        if(request()->hasFile('lampiran')) {
+            $validate['lampiran'] = request()->file('lampiran')->storeAs('lampiran-feedback-images', uniqid() . '-' . request()->file('lampiran')->getClientOriginalName());
+        }
+
+
+        feedbackCenter::create($validate);
+
+        return redirect('/feedback')->with('success', 'feedback berhasil dikirim');
     }
 
     /**
