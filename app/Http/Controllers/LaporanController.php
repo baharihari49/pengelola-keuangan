@@ -158,6 +158,7 @@ class LaporanController extends Controller
                                     ->sum('jumlah'),
             'pemasukanByKategori' => DatabaseHelper::getTransaksiPemasukanGroupByKategori(),
             'pengeluaranByKategori' => DatabaseHelper::getTransaksiPengeluaranGroupByKategori(),
+            'user' => DatabaseHelper::getUser()[0]
         ]);
     }
 
