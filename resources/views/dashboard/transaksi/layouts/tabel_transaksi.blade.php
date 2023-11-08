@@ -150,6 +150,8 @@
                                 <option selected value="all">Semua</option>
                                 <option value="1">Pendapatan</option>
                                 <option value="2">Pengeluaran</option>
+                                <option value="3">Tabungan</option>
+
                             </select>
                         </div>
                     </div>
@@ -192,7 +194,7 @@
                                             <i class="fa-solid fa-arrow-up-long" style="color: #e61e1e;"></i>
                                             Pengeluaran
                                         @elseif ($t->jenis_transaksi->nama == 'Tabungan')
-                                            <i class="fa-solid fa-wallet"></i> Tabungan
+                                            <i class="fa-solid fa-wallet" style="color: #1C64F2"></i> Tabungan
                                         @else
                                             --
                                         @endif

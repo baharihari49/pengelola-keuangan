@@ -257,7 +257,8 @@ class TransaksiController extends Controller
 
     public function api3() 
     {
-        $transaksi = Transaksi::where('user_id', auth()->user()->id);
+        $transaksi = Transaksi::where('user_id', auth()->user()->id)
+                                ->where('void', false);
 
         if (request()->has('Semua')) {
             $transaksi->where(function ($query) {
