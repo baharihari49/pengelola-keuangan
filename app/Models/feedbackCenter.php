@@ -16,7 +16,8 @@ class feedbackCenter extends Model
         'no_feedback',
         'info_tambahan',
         'progres',
-        'user_id'
+        'user_id',
+        'lampiran'
     ];
 
     public function progres_by () : BelongsTo
