@@ -160,14 +160,14 @@
                     class="min-w-full w-max 2xl:w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto md:overflow-hidden">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-4 py-3">No</th>
+                            {{-- <th scope="col" class="px-4 py-3">No</th> --}}
                             <th scope="col" class="px-4 py-3">Tanggal</th>
                             <th scope="col" class="px-4 py-3">No transaksi</th>
                             <th scope="col" class="px-4 py-3">Jenis Transaksi</th>
-                            <th scope="col" class="px-4 py-3">Kategori</th>
+                            {{-- <th scope="col" class="px-4 py-3">Kategori</th>
                             <th scope="col" class="px-4 py-3">Customer/Supplier</th>
-                            <th scope="col" class="px-4 py-3">Deskripsi</th>
-                            <th scope="col" class="px-4 py-3">Jumlah</th>
+                            <th scope="col" class="px-4 py-3">Deskripsi</th> --}}
+                            <th scope="col" class="px-4 py-3" align="right">Jumlah</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">Test</span>
                             </th>
@@ -177,30 +177,66 @@
                         @foreach ($transaksi as $index => $t)
                             <tr id="tabel-row" class="border-b dark:border-gray-700">
                                 <div id="container-tabel-date">
-                                    <td class="px-4 py-3 w-3">
+                                    {{-- <td class="px-4 py-3 w-3">
                                         {{ request()->page > 1 ? $index + request()->page * 15 - 14 : $index + 1 }}
-                                    </td>
+                                    </td> --}}
                                     <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $t->tanggal }}</th>
                                     <td id="tabel-date" class="px-4 py-3">{{ $t->no_transaksi ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3">{{ $t->jenis_transaksi->nama ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3">{{ $t->kategori_transaksi->nama ?? '--' }}
+                                    <td id="tabel-date" class="px-4 py-3">
+                                        @if ($t->jenis_transaksi->nama == 'Pemasukan')
+                                            <i class="fa-solid fa-arrow-down-long" style="color: #25c137;"></i>
+                                            Pemasukan
+                                        @elseif ($t->jenis_transaksi->nama == 'Pengeluaran')
+                                            <i class="fa-solid fa-arrow-up-long" style="color: #e61e1e;"></i>
+                                            Pengeluaran
+                                        @elseif ($t->jenis_transaksi->nama == 'Tabungan')
+                                            <i class="fa-solid fa-wallet"></i> Tabungan
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    {{-- <td id="tabel-date" class="px-4 py-3">{{ $t->kategori_transaksi->nama ?? '--' }}
                                     </td>
                                     <td id="tabel-date" class="px-4 py-3">
                                         {{ $t->suppliers_or_customers->nama_bisnis ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3 max-w-sm">{{ $t->deskripsi ?? '--' }}</td>
+                                    <td id="tabel-date" class="px-4 py-3 max-w-sm">{{ $t->deskripsi ?? '--' }}</td> --}}
                                     <td id="tabel-date" class="px-4 py-3 text-right">Rp
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
+                                    <td class="px-4 py-3 flex items-center justify-end">
+                                        <div class="flex gap-5 mr-5">
+                                            <button class="p-3 border bg-red-600 text-white rounded-xl"
+                                                style="border-radius: 50%;" data-uuid="{{ $t->uuid }}"
+                                                id="updateProductButton" title="Void Transaksi">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                    <style>
+                                                        svg {
+                                                            fill: #ffffff
+                                                        }
+                                                    </style>
+                                                    <path
+                                                        d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384v38.6C310.1 219.5 256 287.4 256 368c0 59.1 29.1 111.3 73.7 143.3c-3.2 .5-6.4 .7-9.7 .7H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zm48 96a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z" />
+                                                </svg>
+                                            </button>
+                                            <button class="p-3 border bg-blue-600 text-white rounded-xl"
+                                                style="border-radius: 50%;" data-uuid="{{ $t->uuid }}"
+                                                id="detailTransaksiButton" title="Detail Transaksi">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                    <style>
+                                                        svg {
+                                                            fill: #ffffff
+                                                        }
+                                                    </style>
+                                                    <path
+                                                        d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </div>
-                                <td class="px-4 py-3 flex items-center justify-end">
-                                    <div class="flex gap-5 mr-5">
-                                        <button class="py-1 px-3 border bg-red-600 text-white rounded-xl"
-                                            data-uuid="{{ $t->uuid }}" id="updateProductButton">
-                                            void
-                                        </button>
-                                    </div>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
