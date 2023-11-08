@@ -15,7 +15,7 @@
                     <tbody>
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">* Pengeluaran</th>
+                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">* Pemasuka</th>
                             <td class="px-4 py-3 text-base text-right">Rp {{number_format($pemasukan, 0, ',', '.')}}</td>
                         </tr>
                         @foreach ($pemasukanByKategori as $item)
