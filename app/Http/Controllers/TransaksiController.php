@@ -237,7 +237,8 @@ class TransaksiController extends Controller
 
     public function api2() {
         $records = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                            ->where('transaksis.user_id', auth()->user()->id);
+                            ->where('transaksis.user_id', auth()->user()->id)
+                            ->where('void', false);
 
         if (request()->has('id') && request()->id !== 'all') {
             $records->where('transaksis.jenis_transaksi_id', request()->id); // Menggunakan alias 'transaksis' untuk jenis_transaksi_id
