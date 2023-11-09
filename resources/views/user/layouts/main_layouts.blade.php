@@ -10,6 +10,12 @@
     <title style="text-transform: capitalize;">{{ request()->path() }} - Octans by Boxity</title>
     <link rel="shortcut icon" href="https://www.octansidn.com/webpage/demos/business/images/octans/icon_2.ico"
         type="image/x-icon">
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden !important;
+        }
+    </style>
+    {!! RecaptchaV3::initJs() !!}
 </head>
 
 <body>

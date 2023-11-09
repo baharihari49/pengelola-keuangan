@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
 
 class LoginController extends Controller
 {
@@ -14,14 +15,15 @@ class LoginController extends Controller
         return view('user.login.index');
     }
 
-    public function authenticate(Request $request):RedirectResponse
+    public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
+            // 'g-recaptcha-response' => 'required|recaptchav3:register,0.5',
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
@@ -35,12 +37,11 @@ class LoginController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-     
+
         $request->session()->invalidate();
-     
+
         $request->session()->regenerateToken();
-     
+
         return redirect('/login');
     }
-
 }
