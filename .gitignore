@@ -22,3 +22,4 @@ vendor/composer/ClassLoader.php
 vendor/composer/installed.php
 vendor/composer/LICENSE
 public/storage
+composer.lock
