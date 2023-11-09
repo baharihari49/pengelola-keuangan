@@ -107,6 +107,8 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         Route::get('/get_transaksi', 'api');
 
+        Route::get('/detail_transaksi', 'show');
+
     });
 
 

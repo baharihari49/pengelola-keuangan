@@ -24,7 +24,11 @@
 
             <div class="flex ms-1 lg:ms-8">
                 <figure class="flex items-end gap-2">
-                    <img class="h-10 md:h-12" src="./image/logo/octans_logo.png" alt="">
+                    @if(file_exists(public_path('./image/logo/octans_logo.png')))
+                    <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
+                    @else
+                    <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
+                    @endif
                     <p class="font-bold text-2xl">octans</p>
                 </figure>
             </div>
@@ -36,9 +40,10 @@
                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                 <span class="sr-only">Open user menu</span>
                 <img id="avatarButton" type="button" style="object-fit: cover;" data-dropdown-toggle="userDropdown"
-                    data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer"
-                    src="{{ isset($user->foto) ? 'storage/' . $user->foto : './image/profile_picture/no_image.jpg' }}"
-                    alt="User dropdown">
+     data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer"
+     src="{{ isset($user->foto) && file_exists(public_path('storage/' . $user->foto)) ? asset('storage/' . $user->foto) : asset('./image/profile_picture/no_image.jpg') }}"
+     alt="User dropdown">
+
             </button>
             <!-- Dropdown menu -->
             <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"

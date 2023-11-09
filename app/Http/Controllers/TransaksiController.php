@@ -131,7 +131,10 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        //
+        return view('dashboard.transaksi.layouts.detail_transaksi', [
+            'data' => Transaksi::where('user_id', auth()->user()->id)->where('uuid', request()->uuid)->with('jenis_transaksi', 'kategori_transaksi')->get(),
+            'user' => DatabaseHelper::getUser()[0]
+        ]);
     }
 
     /**
