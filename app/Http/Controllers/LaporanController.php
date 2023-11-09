@@ -166,7 +166,8 @@ class LaporanController extends Controller
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
                             ->where('user_id', auth()->user()->id)
-                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id);
+                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id)
+                            ->where('void', false);
     
     if (request()->id == 'all') {
         $transaksi = $transaksi->get();
@@ -193,7 +194,8 @@ class LaporanController extends Controller
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
                             ->where('user_id', auth()->user()->id)
-                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id);
+                            ->where('jenis_transaksi_id', request()->jenis_transaksi_id)
+                            ->where('void', false);
     
         if (request()->id == 'all') {
             $transaksi = $transaksi->get();

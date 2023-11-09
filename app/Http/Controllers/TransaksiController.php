@@ -33,7 +33,7 @@ class TransaksiController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(15),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
-            'user' => DatabaseHelper::getUser()[0]
+            'user' => DatabaseHelper::getUser()[0],
         ]);
     }
 
@@ -400,5 +400,33 @@ class TransaksiController extends Controller
     public function api6()
     {
         return Kategori_transaksi::where('jenis_transaksi_id', request()->id)->orWhere('user_id', auth()->user()->id)->Where('default', true)->get();
+    }
+
+    public function getTransaksiByDate()
+    {
+        $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
+                            ->where('user_id', auth()->user()->id)
+                            ->where('void', false);
+    
+        if (request()->id == 'all') {
+            $transaksi = $transaksi->get();
+        } else {
+            $transaksi = $transaksi->whereMonth('created_at', request()->id)->get();
+        }
+
+        return $transaksi;
+        // $transaksiFinal = [];
+        // foreach($transaksi as $item) {
+        //     $transaksiFinal[] = [
+        //         'no_transaksi' => $item->no_transaksi,
+        //         'tanggal' => $item->tanggal,
+        //         'kategori' => $item->kategori_transaksi->nama,                
+        //         'supplier' => $item->suppliers_or_customers->nama_bisnis ?? '--',
+        //         'deskripsi' => $item->deskripsi ?? '--',
+        //         'jumlah' => number_format($item->jumlah, 0 ,'.', ',')
+        //     ];
+        // }
+
+        // return $transaksiFinal;
     }
 }

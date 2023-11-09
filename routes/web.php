@@ -10,6 +10,7 @@ use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\printController;
 use App\Http\Controllers\SuppliersorCustomersController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -109,8 +110,16 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         Route::get('/detail_transaksi', 'show');
 
+        Route::get('/get_transaksi_by_month_year', 'getTransaksiByDate');
+
     });
 
+    Route::controller(printController::class)->group(function()
+    {
+        Route::get('/pdf_detail_transaksi', 'dwonlodTransaksi');
+
+        Route::get('/pdf_transaksi_month', 'dwonlodTransaksiByMonth');
+    });
 
     Route::controller(KategoriTransaksiController::class)->group(function() 
     {
