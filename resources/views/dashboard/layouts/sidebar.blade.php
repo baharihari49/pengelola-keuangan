@@ -116,7 +116,7 @@
                     <span id="text-sidebar" class="ml-3">Feedback Center</span>
                 </a>
             </li>
-            {{-- <li>
+            <li>
                 <a id="icon-sidebar" href="/log-viewer" target="_blank"
                     class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('log-viewer') ? 'bg-gray-100' : '' }}">
                     <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -124,9 +124,7 @@
                       </svg>
                     <span id="text-sidebar" class="ml-3">Log Viewer</span>
                 </a>
-            </li> --}}
-
-            <p>Test</p>
+            </li>
 
         </ul>
     </div>

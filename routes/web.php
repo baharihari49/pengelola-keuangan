@@ -112,6 +112,8 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         Route::get('/get_transaksi_by_month_year', 'getTransaksiByDate');
 
+        Route::get('/transaksi_xlsx', 'transaksiExcel');
+
     });
 
     Route::controller(printController::class)->group(function()

@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportTransaksi;
 
 class TransaksiController extends Controller
 {
@@ -35,6 +37,11 @@ class TransaksiController extends Controller
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
             'user' => DatabaseHelper::getUser()[0],
         ]);
+    }
+
+    public function transaksiExcel()
+    {
+        return Excel::download(new ExportTransaksi, 'transaksi.xlsx');
     }
 
     /**

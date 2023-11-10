@@ -162,7 +162,7 @@
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
                         </li>
                         <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
-                            <a
+                            <a href="/transaksi_xlsx"
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export to excel</a>
                         </li>
                     </ul>
