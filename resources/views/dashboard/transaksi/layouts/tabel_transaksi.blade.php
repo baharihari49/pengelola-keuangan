@@ -182,12 +182,12 @@
                     class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="periodeDropdownButton">
-                        <li onclick="acttionPeriode(this)" id="filterKategori" data-id-2="1" data-id="all">
+                        <li id="filterPeriode" data-id-2="1" data-id="all">
                             <a
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Semua</a>
                         </li>
                         @foreach ($dataBulan as $item)
-                        <li onclick="acttionPeriode(this)" id="filterKategori" data-id-2="1"
+                        <li id="filterPeriode" data-id-2="1"
                             data-id="{{$item->id_bulan}}">
                             <a
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{$item->bulan_transaksi}}</a>
