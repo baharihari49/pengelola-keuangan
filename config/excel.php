@@ -1,6 +1,7 @@
 <?php
 
 use Maatwebsite\Excel\Excel;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 return [
     'exports' => [
