@@ -236,8 +236,8 @@ class DatabaseHelper
     {
         return Transaksi::where('user_id', auth()->user()->id)
                             ->where('void', false)
-                            ->selectRaw('DATE_FORMAT(created_at, "%M") as bulan_transaksi')
-                            ->selectRaw('DATE_FORMAT(created_at, "%m") as id_bulan')
+                            ->selectRaw('DATE_FORMAT(tanggal, "%M") as bulan_transaksi')
+                            ->selectRaw('DATE_FORMAT(tanggal, "%m") as id_bulan')
                             ->distinct()
                             ->get();
 

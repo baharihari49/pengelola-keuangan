@@ -121,6 +121,12 @@ Route::middleware(['auth', 'check.user'])->group(function()
         Route::get('/pdf_detail_transaksi', 'dwonlodTransaksi');
 
         Route::get('/pdf_transaksi_month', 'dwonlodTransaksiByMonth');
+
+        Route::get('/pdf_laporan_pemasukan', 'dwonlodTransaksiPemasukan');
+
+        Route::get('/pdf_laporan_pengeluaran', 'dwonlodTransaksiPengeluaran');
+
+        Route::get('pdf_laba_rugi', 'dwonlodLabaRugi');
     });
 
     Route::controller(KategoriTransaksiController::class)->group(function() 
@@ -227,6 +233,11 @@ Route::middleware(['auth', 'check.user'])->group(function()
         Route::get('/get_pemasukan_by_month', 'getTransaksiByMonth');
 
         Route::get('/laba_rugi', 'showLaporanLabaRugi');
+
+        Route::get('/pemasukan_xlsx', 'pemasukanExcel');
+
+        Route::get('/pengeluaran_xlsx', 'pengeluaranExcel');
+
     });
 
     Route::controller(SuppliersorCustomersController::class)->group(function()
@@ -262,3 +273,15 @@ Route::get('/panduan', function() {
     return view('dashboard.panduan.index');
 });
 
+Route::get('/get_month', function() {
+    $transaksi = Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
+    ->where('user_id', auth()->user()->id)
+    ->where('void', false);
+    if(request()->id == 'all') {
+        $transaksi;
+    }else{
+        $transaksi->whereMonth('tanggal', request()->id);
+    }
+
+    return $transaksi->get();
+});

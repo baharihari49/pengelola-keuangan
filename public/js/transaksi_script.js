@@ -188,17 +188,35 @@
     })
 
     const linkPrint = document.getElementById('linkPrint')
+    const linkExcel = document.getElementById('linkExcel')
 
     const filterPeriode = Array.from(document.querySelectorAll('#filterPeriode'))
 
-    filterPeriode.forEach(item => {
+    // filterPeriode.forEach((item, index) => {
+    //    item.addEventListener('click', function() {
+    //     const dataId = item.getAttribute('data-id')
+    //     console.log(dataId);
+    //     if(dataId == 0) {
+    //         linkPrint.setAttribute('href', `/pdf_transaksi_month/?id=all`)
+    //         linkExcel.setAttribute('href', `/transaksi_xlsx/?id=all`)
+    //     }else {
+            // linkPrint.setAttribute('href', `/pdf_transaksi_month/?id=${dataId}`)
+            // linkExcel.setAttribute('href', `/transaksi_xlsx/?id=${dataId}`)
+    //     }
+    //    })
+    // })
+
+    filterPeriode.forEach((item, index) => {
         item.addEventListener('click', function() {
+            const dataId = item.getAttribute('data-id')
+            linkPrint.setAttribute('href', `/pdf_transaksi_month/?id=${dataId}`)
+            linkExcel.setAttribute('href', `/transaksi_xlsx/?id=${dataId}`)
             tabelRow.forEach(tr => {
                     while(tr.firstChild) {
                         tr.removeChild(tr.firstChild)
                     }
                 })
-        fetch(`/get_transaksi_by_month_year/?id=${item.getAttribute('data-id')}`)
+        fetch(`/get_transaksi_by_month_year/?id=${dataId}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -234,9 +252,10 @@
                                             </a >
                                 </div>
                             </td>`
-                            const date =  new Date(res.tanggal)
-                            const month = date.getMonth() + 1
-                            linkPrint.setAttribute('href', `/pdf_transaksi_month/?id=${month}`)
+                            // const date =  new Date(res.tanggal)
+                            // const month = date.getMonth() + 1
+                            // linkPrint.setAttribute('href', `/pdf_transaksi_month/?id=${month}`)
+                            // linkExcel.setAttribute('href', `/transaksi_xlsx/?id=${month}`)
                             tabelRow[index].innerHTML = element
                             const modalDetailTransaksi = document.querySelectorAll('#modalDetailTransaksi')
                             updateProductButton.forEach(upb => {

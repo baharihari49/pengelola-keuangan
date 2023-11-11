@@ -3,6 +3,9 @@
         <th scope="col">Tanggal</th>
         <th scope="col">No transaksi</th>
         <th scope="col">Jenis Transaksi</th>
+        <th>Kategori Transaksi</th>
+        <th>Supplier/Costumer</th>
+        <th>Deskripsi</th>
         <th scope="col" align="right">Jumlah</th>
     </tr>
         @foreach ($transaksi as $index => $t)
@@ -22,6 +25,9 @@
                     --
                     @endif
                 </td>
+                <td>{{$t->kategori_transaksi->nama}}</td>
+                <td>{{$t->suppliers_or_customers->nama_bisnis ?? '--'}}</td>
+                <td>{{$t->deskripsi ?? '--'}}</td>
                 <td align="right">Rp
                     {{ number_format($t->jumlah, 0, ',', '.') }}</td>
             </div>

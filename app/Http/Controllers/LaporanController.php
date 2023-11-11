@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportPemasukan;
+use App\Exports\ExportPengeluaran;
 use App\Helper\DatabaseHelper;
 use App\Models\Kategori_transaksi;
 use App\Models\Laporan;
@@ -9,6 +11,8 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LDAP\Result;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class LaporanController extends Controller
 {
@@ -162,6 +166,16 @@ class LaporanController extends Controller
         ]);
     }
 
+    public function pemasukanExcel()
+    {
+        return Excel::download(new ExportPemasukan, 'laporan pemasukan.xlsx');
+    }
+
+    public function pengeluaranExcel()
+    {
+        return Excel::download(new ExportPengeluaran, 'laporan pengeluaran.xlsx');
+    }
+
     public function getTransaksiByKategori()
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
@@ -200,7 +214,7 @@ class LaporanController extends Controller
         if (request()->id == 'all') {
             $transaksi = $transaksi->get();
         } else {
-            $transaksi = $transaksi->whereMonth('created_at', request()->id)->get();
+            $transaksi = $transaksi->whereMonth('tanggal', request()->id)->get();
         }
         $transaksiFinal = [];
         foreach($transaksi as $item) {

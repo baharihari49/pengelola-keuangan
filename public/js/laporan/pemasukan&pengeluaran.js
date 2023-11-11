@@ -57,9 +57,20 @@ function acttionFilter(target) {
 
     
 }
+const linkPrint = document.getElementById('linkPrint')
+const linkExcel = document.getElementById('linkExcel')
+const linkPrintPengeluaran = document.getElementById('linkPrintPengeluaran')
+const linkExcelPengeluaran = document.getElementById('linkExcelPengeluaran')
 
 function acttionPeriode(target) {
-    console.log(target);
+   if(linkPrint != null) {
+    linkPrint.setAttribute('href', `/pdf_laporan_pemasukan/?id=${target.getAttribute('data-id')}`)
+    linkExcel.setAttribute('href', `/pemasukan_xlsx/?id=${target.getAttribute('data-id')}`)
+   }
+    if(linkPrintPengeluaran != null) {
+        linkPrintPengeluaran.setAttribute('href', `/pdf_laporan_pengeluaran/?id=${target.getAttribute('data-id')}`)
+        linkExcelPengeluaran.setAttribute('href', `/pengeluaran_xlsx/?id=${target.getAttribute('data-id')}`)
+    }
     tabelRowPem.forEach(tr => {
         while(tr.firstChild) {
             tr.removeChild(tr.firstChild)
@@ -68,7 +79,6 @@ function acttionPeriode(target) {
     fetch('/get_pemasukan_by_month/?id=' + target.getAttribute('data-id') + '&jenis_transaksi_id=' + target.getAttribute('data-id-2'))
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             data.forEach((item, index) => {
                 let element = `
                                 <th scope="row"

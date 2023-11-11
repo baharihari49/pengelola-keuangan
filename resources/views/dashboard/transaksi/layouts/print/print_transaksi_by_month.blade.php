@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Data Transaksi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -29,9 +29,9 @@
                     <th scope="col" class="px-4 py-3 border">Tanggal</th>
                     <th scope="col" class="px-4 py-3 border">No transaksi</th>
                     <th scope="col" class="px-4 py-3 border">Jenis Transaksi</th>
-                    {{-- <th scope="col" class="px-4 py-3 border">Kategori</th>
+                    <th scope="col" class="px-4 py-3 border">Kategori</th>
                             <th scope="col" class="px-4 py-3 border">Customer/Supplier</th>
-                            <th scope="col" class="px-4 py-3 border">Deskripsi</th> --}}
+                            <th scope="col" class="px-4 py-3 border">Deskripsi</th>
                     <th scope="col" class="px-4 py-3 border" align="right">Jumlah</th>
                 </tr>
             </thead>
@@ -55,6 +55,9 @@
                         --
                         @endif
                     </td>
+                    <td id="tabel-date" class="px-4 py-3 border">{{$t->kategori_transaksi->nama}}</td>
+                    <td id="tabel-date" class="px-4 py-3 border">{{$t->suppliers_or_customers->nama_bisnis ?? '--'}}</td>
+                    <td id="tabel-date" class="px-4 py-3 border">{{$t->deskripsi ?? '--'}}</td>
                     <td id="tabel-date" class="px-4 py-3 border text-right">Rp
                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                 </tr>

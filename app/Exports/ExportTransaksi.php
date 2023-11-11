@@ -13,34 +13,30 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class ExportTransaksi implements FromView, WithStyles
+class ExportTransaksi implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function view(): View
     {
+        $transaksi = Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
+                                ->where('user_id', Auth::id())
+                                ->where('void', false)
+                                ->orderBy('created_at', 'desc');
+        
+        if(request()->id == 'all') {
+            $transaksi->get();
+        }else{
+            $transaksi->whereMonth('tanggal', request()->id)->get();
+        }
+                                
+
         return view('dashboard.transaksi.layouts.tabel_xlsx', [
             'jenis_transaksi' => Jenis_transaksi::all(),
-            'transaksi' => Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-                ->where('user_id', Auth::id())
-                ->where('void', false)
-                ->orderBy('created_at', 'desc')
-                ->get(),
+            'transaksi' => $transaksi->get(),
             'dataBulan' => DatabaseHelper::getMonthTransaki(),
             'user' => DatabaseHelper::getUser()[0],
         ]);
     }
-
-    public function styles(Worksheet $sheet)
-    {
-        $sheet->getStyle('A1:D1')->applyFromArray([
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-            ],
-        ]);
-    }
-    
 }

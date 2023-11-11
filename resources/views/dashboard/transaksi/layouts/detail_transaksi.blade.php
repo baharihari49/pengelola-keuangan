@@ -32,7 +32,7 @@
                 </tr>
                 <tr class="">
                     <td class="py-3">{{($data[0]->jenis_transaksi_id == 1) ? 'Customer' : 'Supplier'}}</td>
-                    <td> : {{$data[0]->supplier_or_customer->nama_bisnis ?? '--'}}</td>
+                    <td> : {{$data[0]->suppliers_or_customers->nama_bisnis ?? '--'}}</td>
                 </tr>
                 <tr class="">
                     <td class="py-3">Dibuat oleh</td>

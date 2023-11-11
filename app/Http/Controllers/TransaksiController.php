@@ -413,12 +413,13 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::with(['jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers'])
                             ->where('user_id', auth()->user()->id)
-                            ->where('void', false);
+                            ->where('void', false)
+                            ->orderBy('created_at', 'desc');
     
-        if (request()->id == 'all') {
+        if (request()->id == '0') {
             $transaksi = $transaksi->get();
         } else {
-            $transaksi = $transaksi->whereMonth('created_at', request()->id)->get();
+            $transaksi = $transaksi->whereMonth('tanggal', request()->id)->get();
         }
 
         return $transaksi;
