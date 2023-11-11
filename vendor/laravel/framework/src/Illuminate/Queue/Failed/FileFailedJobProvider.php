@@ -6,7 +6,7 @@ use Closure;
 use DateTimeInterface;
 use Illuminate\Support\Facades\Date;
 
-class FileFailedJobProvider implements CountableFailedJobProvider, FailedJobProviderInterface, PrunableFailedJobProvider
+class FileFailedJobProvider implements FailedJobProviderInterface, PrunableFailedJobProvider
 {
     /**
      * The file path where the failed job file should be stored.
@@ -201,23 +201,5 @@ class FileFailedJobProvider implements CountableFailedJobProvider, FailedJobProv
             $this->path,
             json_encode($jobs, JSON_PRETTY_PRINT)
         );
-    }
-
-    /**
-     * Count the failed jobs.
-     *
-     * @param  string|null  $connection
-     * @param  string|null  $queue
-     * @return int
-     */
-    public function count($connection = null, $queue = null)
-    {
-        if (($connection ?? $queue) === null) {
-            return count($this->read());
-        }
-
-        return collect($this->read())
-            ->filter(fn ($job) => $job->connection === ($connection ?? $job->connection) && $job->queue === ($queue ?? $job->queue))
-            ->count();
     }
 }

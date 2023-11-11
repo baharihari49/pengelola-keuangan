@@ -81,7 +81,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         $visibility ??= new PortableVisibilityConverter();
         $this->visibility = $visibility;
         $this->rootLocation = $location;
-        $this->mimeTypeDetector = $mimeTypeDetector ?? new FallbackMimeTypeDetector(new FinfoMimeTypeDetector());
+        $this->mimeTypeDetector = $mimeTypeDetector ?: new FallbackMimeTypeDetector(new FinfoMimeTypeDetector());
 
         if ( ! $lazyRootCreation) {
             $this->ensureRootDirectoryExists();
@@ -248,11 +248,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @rename($sourcePath, $destinationPath)) {
-            throw UnableToMoveFile::because(error_get_last()['message'] ?? 'unknown reason', $source, $destination);
-        }
-
-        if ($visibility = $config->get(Config::OPTION_VISIBILITY)) {
-            $this->setVisibility($destination, (string) $visibility);
+            throw UnableToMoveFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 
@@ -267,11 +263,7 @@ class LocalFilesystemAdapter implements FilesystemAdapter, ChecksumProvider
         );
 
         if ( ! @copy($sourcePath, $destinationPath)) {
-            throw UnableToCopyFile::because(error_get_last()['message'] ?? 'unknown', $source, $destination);
-        }
-
-        if ($visibility = $config->get(Config::OPTION_VISIBILITY)) {
-            $this->setVisibility($destination, (string) $visibility);
+            throw UnableToCopyFile::fromLocationTo($sourcePath, $destinationPath);
         }
     }
 
