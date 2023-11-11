@@ -13,7 +13,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^3.0.1",
         "opcodesio/log-viewer": "^3.1",
         "qcod/laravel-imageup": "^1.2"
     },
@@ -38,7 +38,7 @@
         "files": [
             "app/Helper/DatabaseHelper.php"
         ]
-        
+
     },
     "autoload-dev": {
         "psr-4": {
