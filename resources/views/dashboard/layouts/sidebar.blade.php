@@ -126,6 +126,22 @@
                 </a>
             </li>
 
+            @can('lihat user')
+            <hr class="my-5">
+            <ul>
+                <li>
+                    <a id="icon-sidebar" href="/user"
+                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('supplier_costumer') ? 'bg-gray-100' : '' }}">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                          </svg>
+                        <span id="text-sidebar" class="ml-3">Users</span>
+                    </a>
+                </li>
+            </ul>
+            @endcan
+
+
         </ul>
     </div>
 </aside>

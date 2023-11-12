@@ -19,6 +19,14 @@ class UserController extends Controller
         return view('user.register.index');
     }
 
+
+    public function showUser()
+    {
+        return view('dashboard.admin.user.index', [
+            'user' => User::all()
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

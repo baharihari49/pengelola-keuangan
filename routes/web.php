@@ -58,8 +58,17 @@ Route::middleware(['guest'])->group(function()
 Route::post('/logout', [LoginController::class, 'logout']);
 
 
+
+
 Route::middleware(['auth'])->group(function()
 {
+
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::controller(UserController::class)->group(function() {
+            Route::get('/user', 'showUser');
+        });
+    });
+    
    Route::controller(UserController::class)->group(function()
    {
     Route::get('/profile','show');
