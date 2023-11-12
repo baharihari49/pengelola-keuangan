@@ -238,6 +238,8 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         Route::get('/pengeluaran_xlsx', 'pengeluaranExcel');
 
+        Route::get('laba_rugi_xlsx', 'labaRugiExcel');
+
     });
 
     Route::controller(SuppliersorCustomersController::class)->group(function()

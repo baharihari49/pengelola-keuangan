@@ -285,26 +285,38 @@ class DatabaseHelper
 
     public static function getTransaksiPemasukanGroupByKategori()
     {
-        return Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+        $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
-                        ->where('transaksis.jenis_transaksi_id', 1)
-                        ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-                        ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')
-                        ->get();
+                        ->where('transaksis.jenis_transaksi_id', 1);
 
+        if(request()->id == 'all') {
+            $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+        }else{
+            $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
+        }
 
+        return $transaksi->get();
     }
 
     public static function getTransaksiPengeluaranGroupByKategori()
     {
-        return Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+          $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
-                        ->where('transaksis.jenis_transaksi_id', 2)
-                        ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-                        ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')
-                        ->get();
+                        ->where('transaksis.jenis_transaksi_id', 2);
+                       
+        if(request()->id == 'all') {
+            $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+        }else{
+            $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
+        }
+
+        return $transaksi->get();
 
 
     }

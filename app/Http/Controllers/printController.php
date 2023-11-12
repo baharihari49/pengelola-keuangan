@@ -121,15 +121,21 @@ class printController extends Controller
 
     public function dwonlodLabaRugi()
     {
+        $transaksi = Transaksi::where('user_id', auth()->user()->id)
+                            ->where('void', false);
+        $namaBulan = null;
+        if(request()->id != 'all'){
+            $transaksi->whereMonth('tanggal', request()->id);
+            $bulanAngka = request()->id;
+            $tanggal = Carbon::create(null, $bulanAngka, 1);
+        
+            $namaBulan = $tanggal->isoFormat('MMMM');
+        }
+    
+        $transaksi = $transaksi->get(); // Eksekusi query dan dapatkan hasilnya
         $pdf = Pdf::loadView('dashboard.laporan.labarugi.layouts.print.index', [
-            'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 1)
-                                    ->where('void', false)
-                                    ->sum('jumlah'),
-            'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 2)
-                                    ->where('void', false)
-                                    ->sum('jumlah'),
+            'pemasukan' => $transaksi->where('jenis_transaksi_id', 1)->sum('jumlah'),
+            'pengeluaran' =>$transaksi->where('jenis_transaksi_id', 2)->sum('jumlah'),
             'pemasukanByKategori' => DatabaseHelper::getTransaksiPemasukanGroupByKategori(),
             'pengeluaranByKategori' => DatabaseHelper::getTransaksiPengeluaranGroupByKategori(),
             'user' => DatabaseHelper::getUser()[0]

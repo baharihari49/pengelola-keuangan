@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportLabaRugi;
 use App\Exports\ExportPemasukan;
 use App\Exports\ExportPengeluaran;
 use App\Helper\DatabaseHelper;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LDAP\Result;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
 
 
 class LaporanController extends Controller
@@ -151,19 +153,29 @@ class LaporanController extends Controller
 
     public function showLaporanLabaRugi() 
     {
-        return view('dashboard.laporan.labarugi.index', [
-            'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 1)
-                                    ->where('void', false)
-                                    ->sum('jumlah'),
-            'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 2)
-                                    ->where('void', false)
-                                    ->sum('jumlah'),
-            'pemasukanByKategori' => DatabaseHelper::getTransaksiPemasukanGroupByKategori(),
-            'pengeluaranByKategori' => DatabaseHelper::getTransaksiPengeluaranGroupByKategori(),
-            'user' => DatabaseHelper::getUser()[0]
-        ]);
+    $transaksi = Transaksi::where('user_id', auth()->user()->id)
+                            ->where('void', false);
+    $namaBulan = null;
+    if(request()->id != 'all'){
+        $transaksi->whereMonth('tanggal', request()->id);
+        $bulanAngka = request()->id;
+        $tanggal = Carbon::create(null, $bulanAngka, 1);
+    
+        $namaBulan = $tanggal->isoFormat('MMMM');
+    }
+    
+    $transaksi = $transaksi->get(); // Eksekusi query dan dapatkan hasilnya
+    
+    return view('dashboard.laporan.labarugi.index', [
+        'pemasukan' => $transaksi->where('jenis_transaksi_id', 1)->sum('jumlah'),
+        'pengeluaran' => $transaksi->where('jenis_transaksi_id', 2)->sum('jumlah'),
+        'pemasukanByKategori' => DatabaseHelper::getTransaksiPemasukanGroupByKategori(),
+        'pengeluaranByKategori' => DatabaseHelper::getTransaksiPengeluaranGroupByKategori(),
+        'user' => DatabaseHelper::getUser()[0],
+        'dataBulan' => DatabaseHelper::getMonthTransaki(),
+        'bulan' => $namaBulan,
+    ]);
+    
     }
 
     public function pemasukanExcel()
@@ -174,6 +186,11 @@ class LaporanController extends Controller
     public function pengeluaranExcel()
     {
         return Excel::download(new ExportPengeluaran, 'laporan pengeluaran.xlsx');
+    }
+
+    public function labaRugiExcel()
+    {
+        return Excel::download(new ExportLabaRugi, 'Laporan Laba Rugi.xlsx');
     }
 
     public function getTransaksiByKategori()
