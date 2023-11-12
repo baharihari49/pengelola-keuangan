@@ -57,17 +57,17 @@ function acttionFilter(target) {
 
     
 }
-const linkPrint = document.getElementById('linkPrint')
-const linkExcel = document.getElementById('linkExcel')
-const linkPrintPengeluaran = document.getElementById('linkPrintPengeluaran')
-const linkExcelPengeluaran = document.getElementById('linkExcelPengeluaran')
 
 function acttionPeriode(target) {
-   if(linkPrint != null) {
+    const linkPrint = document.getElementById('linkPrint')
+    const linkExcel = document.getElementById('linkExcel')
+    const linkPrintPengeluaran = document.getElementById('linkPrintPengeluaran')
+    const linkExcelPengeluaran = document.getElementById('linkExcelPengeluaran')
+   if(linkPrint != null || linkExcel != null) {
     linkPrint.setAttribute('href', `/pdf_laporan_pemasukan/?id=${target.getAttribute('data-id')}`)
     linkExcel.setAttribute('href', `/pemasukan_xlsx/?id=${target.getAttribute('data-id')}`)
    }
-    if(linkPrintPengeluaran != null) {
+    if(linkPrintPengeluaran != null || linkExcelPengeluaran != null) {
         linkPrintPengeluaran.setAttribute('href', `/pdf_laporan_pengeluaran/?id=${target.getAttribute('data-id')}`)
         linkExcelPengeluaran.setAttribute('href', `/pengeluaran_xlsx/?id=${target.getAttribute('data-id')}`)
     }
