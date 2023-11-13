@@ -27,6 +27,24 @@ class UserController extends Controller
         ]);
     }
 
+    public function giveRole()
+    {
+        $user = User::find(request()->id);
+
+        $user->assignRole('admin');
+
+        return redirect('/user');
+    }
+
+    public function removeRole()
+    {
+        $user = User::find(request()->id);
+
+        $user->removeRole('admin');
+
+        return redirect('/user');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

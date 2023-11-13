@@ -66,6 +66,8 @@ Route::middleware(['auth'])->group(function()
     Route::group(['middleware' => ['role:admin']], function () {
         Route::controller(UserController::class)->group(function() {
             Route::get('/user', 'showUser');
+            Route::get('/give_role', 'giveRole');
+            Route::get('remove_role', 'removeRole');
         });
     });
     

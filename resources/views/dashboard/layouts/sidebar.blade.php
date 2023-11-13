@@ -126,7 +126,7 @@
                 </a>
             </li>
 
-            @can('lihat user')
+            @role('admin')
             <hr class="my-5">
             <ul>
                 <li>
@@ -139,7 +139,7 @@
                     </a>
                 </li>
             </ul>
-            @endcan
+            @endrole
 
 
         </ul>
