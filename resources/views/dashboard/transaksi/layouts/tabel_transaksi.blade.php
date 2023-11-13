@@ -69,6 +69,10 @@
                     </div>
                     <p class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Transaksi anda berhasil
                         {{ session()->has('sucsess') ? 'dibuat' : 'diubah' }}</p>
+                        <button data-modal-toggle="defaultModal" onclick="hiddenModal()" type="button"
+                        class="py-2 px-3 text-sm font-medium text-center border-2 rounded-lg text-gray-800 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-900 hover:text-white hover:border-none">
+                        + Transaksi Lagi
+                    </button>
                     <button onclick="hiddenModal()" type="button"
                         class="py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-900">
                         Continue
