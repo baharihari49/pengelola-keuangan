@@ -135,7 +135,12 @@
                        @foreach ($user as $item)
                        <tr class="border-b dark:border-gray-700">
                         <th scope="row"
-                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->username}}</th>
+                            class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <div class="flex gap-2 items-center">
+                                <img class="w-10 h-10 rounded-full" src="{{ isset($item->foto) && file_exists(public_path('storage/' . $item->foto)) ? asset('storage/' . $item->foto) : asset('./image/profile_picture/no_image.jpg') }}" alt="Rounded avatar">
+                                {{$item->username}}
+                            </div>
+                        </th>
                             <td class="px-4 py-3">
                                 @if($roles = $item->getRoleNames())
                                     {{ $roles[0] ?? 'user' }}
