@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -43,6 +44,65 @@ class UserController extends Controller
         $user->removeRole('admin');
 
         return redirect('/user');
+    }
+
+    public function createUserByAdmin()
+    {
+        $validate = request()->validate([
+            'username' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'user_role' => 'required',
+            'password' =>'required',
+        ], [
+            'username.required' => 'Kolom username wajib diisi.',
+            'username.unique' => 'Username sudah digunakan.',
+            'email.required' => 'Kolom email wajib diisi.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Kolom password wajib diisi.',
+        ]);
+        
+        if($validate['password'] === request()->confirm_password){
+            $validate['password'] = bcrypt($validate['password']);
+            
+            
+            $user = User::create($validate);
+            
+            if($validate['user_role'] == 'admin') {
+                $user->assignRole('admin');
+            }
+
+            return redirect('/user');
+        }
+
+    }
+
+    public function deleteUserByAdmin()
+    {
+        $credentials = request()->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        
+        // Menyimpan ID pengguna saat ini sebelum mencoba otentikasi
+        $currentUserId = auth()->id();
+        
+        if (Auth::attempt($credentials)) {
+            // Nonaktifkan otentikasi sementara
+            auth()->logout();
+        
+            // Hapus pengguna
+            User::destroy(request()->id);
+        
+            // Jika pengguna saat ini tidak sama dengan pengguna yang dihapus, login kembali
+            if ($currentUserId != request()->id) {
+                auth()->loginUsingId($currentUserId);
+            }
+        
+            return redirect('/user');
+        } else {
+            return redirect('/user')->with('password_error', 'Password yang Anda masukkan salah');
+        }
+        
     }
 
     /**
@@ -148,7 +208,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-         
+        
+
     }
 
     public function deleteImage() 

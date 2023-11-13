@@ -21,6 +21,7 @@ use App\Models\Kategori_transaksi;
 use App\Models\SupplierorCustomers;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Row;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 
 /*
@@ -68,6 +69,8 @@ Route::middleware(['auth'])->group(function()
             Route::get('/user', 'showUser');
             Route::get('/give_role', 'giveRole');
             Route::get('remove_role', 'removeRole');
+            Route::post('/create_user', 'createUserByAdmin');
+            Route::delete('/delete_user', 'deleteUserByAdmin');
         });
     });
     
