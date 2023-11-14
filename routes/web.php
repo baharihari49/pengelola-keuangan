@@ -5,6 +5,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackCenterController;
+use App\Http\Controllers\informasiBisnisController;
 use App\Http\Controllers\JenisTransaksiController;
 use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
@@ -72,6 +73,11 @@ Route::middleware(['auth'])->group(function()
             Route::post('/create_user', 'createUserByAdmin');
             Route::delete('/delete_user', 'deleteUserByAdmin');
         });
+    });
+
+    Route::controller(informasiBisnisController::class)->group(function() 
+    {
+        Route::post('store_info_bisnis', 'store');
     });
     
    Route::controller(UserController::class)->group(function()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\informasiBisnis;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
@@ -148,7 +149,8 @@ class UserController extends Controller
     {
         $user = User::where('id', auth()->user()->id)->get();
         return view('user.profile.index', [
-            'user' => $user[0]
+            'user' => $user[0],
+            'info_bisnis' => informasiBisnis::where('user_id', auth()->user()->id)->get(),
         ]);
     }
 

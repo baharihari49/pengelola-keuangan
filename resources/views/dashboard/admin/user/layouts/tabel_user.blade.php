@@ -149,6 +149,7 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-4 py-3">user</th>
+                            <th scope="col" class="px-4 py-3">email</th>
                             <th scope="col" class="px-4 py-3">user role</th>
                             <th scope="col" class="px-4 py-3">tanggal registrasi</th>
                             <th scope="col" class="px-4 py-3">
@@ -216,6 +217,7 @@
                                     {{$item->username}}
                                 </div>
                             </th>
+                            <td class="px-4 py-3">{{$item->email}}</td>
                             <td class="px-4 py-3">
                                 @if($roles = $item->getRoleNames())
                                 {{ $roles[0] ?? 'user' }}
