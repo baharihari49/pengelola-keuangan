@@ -10,7 +10,6 @@ class informasiBisnisController extends Controller
 {
     public function store()
     {
-
         $validate = request()->validate([
             'nama_bisnis' => 'required',
             'alamat' => 'required',
@@ -19,9 +18,7 @@ class informasiBisnisController extends Controller
             'website' => 'max:255',
             'email' => 'required',
             'no_handphone' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|',
         ]);
-
         $validate['user_id'] = auth()->user()->id;
 
         if(request()->file('logo')){
