@@ -17,6 +17,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Anggaran;
 use App\Models\Dashboard;
+use App\Models\informasiBisnis;
 use App\Models\Kategori_anggaran;
 use App\Models\Kategori_transaksi;
 use App\Models\SupplierorCustomers;
@@ -291,19 +292,6 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
 
 
-Route::get('/panduan', function() {
-    return view('dashboard.panduan.index');
-});
-
-Route::get('/get_month', function() {
-    $transaksi = Transaksi::with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-    ->where('user_id', auth()->user()->id)
-    ->where('void', false);
-    if(request()->id == 'all') {
-        $transaksi;
-    }else{
-        $transaksi->whereMonth('tanggal', request()->id);
-    }
-
-    return $transaksi->get();
+Route::get('/info_bisni', function() {
+    return informasiBisnis::all();
 });
