@@ -9,32 +9,36 @@ use Illuminate\Support\Facades\Storage;
 class informasiBisnisController extends Controller
 {
     public function store()
-    {
-        $validate = request()->validate([
-            'nama_bisnis' => 'required',
-            'alamat' => 'required',
-            'jabatan' => 'required',
-            'no_tax' => 'max:255',
-            'website' => 'max:255',
-            'email' => 'required',
-            'no_handphone' => 'required',
-        ]);
-        $validate['user_id'] = auth()->user()->id;
+{
+    $validate = request()->validate([
+        'nama_bisnis' => 'required',
+        'alamat' => 'required',
+        'jabatan' => 'required',
+        'no_tax' => 'max:255',
+        'website' => 'max:255',
+        'email' => 'required',
+        'no_handphone' => 'required',
+    ]);
+    
+    $validate['user_id'] = auth()->user()->id;
 
-        if(request()->file('logo')){
-            if(request()->oldLogo) {
-                Storage::delete(request()->oldLogo);
-            }
-            $validate['logo'] = request()->file('logo')->store('logo_bisnis');
+    if(request()->file('logo')){
+        if(request()->oldLogo) {
+            // Pastikan oldLogo berisi path lengkap ke file
+            Storage::delete(request()->oldLogo);
         }
-
-        if(informasiBisnis::where('user_id', auth()->user()->id)->get() != null){
-            informasiBisnis::where('user_id', auth()->user()->id)->update($validate);
-        }else{
-            informasiBisnis::create($validate);
-        }
-
-
-        return redirect('/profile');
+        $validate['logo'] = request()->file('logo')->store('logo_bisnis');
     }
+
+    $infoBisnis = informasiBisnis::where('user_id', auth()->user()->id)->first();
+
+    if($infoBisnis){
+        $infoBisnis->update($validate);
+    }else{
+        informasiBisnis::create($validate);
+    }
+
+    return redirect('/profile');
+}
+
 }

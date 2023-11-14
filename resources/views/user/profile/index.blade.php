@@ -148,7 +148,7 @@
         <!-- Logo & No Handphone -->
         <div class="grid md:grid-cols-2 md:gap-6 items-end">
             <div>
-                <img id="avatar" class="w-20 h-20 rounded mb-3" src="{{ isset($info_bisnis[0]) ? 'storage/' . $info_bisnis[0]->logo : 'image/logo/placeholder_logo.png' }}"
+                <img id="avatar" class="w-20 h-20 rounded mb-3" src="{{ isset($info_bisnis[0]->logo) ? 'storage/' . $info_bisnis[0]->logo : 'image/logo/placeholder_logo.png' }}"
                         alt="Logo">
                 <input type="hidden" name="oldLogo" value="{{ isset($info_bisnis[0]) ? $info_bisnis[0]->logo : ''}}">
                 
