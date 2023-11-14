@@ -79,6 +79,7 @@ Route::middleware(['auth'])->group(function()
     Route::controller(informasiBisnisController::class)->group(function() 
     {
         Route::post('store_info_bisnis', 'store');
+        Route::delete('/delete_logo', 'deleteLogo');
     });
     
    Route::controller(UserController::class)->group(function()
