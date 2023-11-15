@@ -67,9 +67,9 @@ class TransaksiController extends Controller
         ]);
 
 
-        
+
         $validate['user_id'] = auth()->user()->id;
-        
+
         // Ambil ID terakhir dari tabel Transaksi
         $lastTransaction = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->count();
 
@@ -101,7 +101,7 @@ class TransaksiController extends Controller
                         ->selectRaw('SUM(jumlah) as total_jumlah')
                         ->groupBy('kategori_transaksi_id')
                         ->get();
-                        
+
         if(count($data_transaksi) > 0){
             $total_jumlah = $data_transaksi[0]->total_jumlah += intval($validate['jumlah']);
         }else(
@@ -178,7 +178,7 @@ class TransaksiController extends Controller
         $validate['user_id'] = auth()->user()->id;
 
         $validate['anggaran'] = request()->anggaran;
- 
+
         $lastTransaction = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->count();
 
         if ($lastTransaction) {
@@ -200,11 +200,11 @@ class TransaksiController extends Controller
         Transaksi::where('user_id', auth()->user()->id)
                     ->where('uuid', request()->uuid)
                     ->create($validate);
-        
+
 
         return redirect('/transaksi');
 
-        
+
 
         // if(empty($data_anggaran[0]['jumlah'])) {
         //     Transaksi::where('user_id', auth()->user()->id)
@@ -221,7 +221,7 @@ class TransaksiController extends Controller
         // }
 
 
-        
+
     }
 
     /**
@@ -246,7 +246,7 @@ class TransaksiController extends Controller
     }
 
     public function api2() {
-        $records = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+        $records = Transaksi::with('jenis_transaksi', 'kategori_transaksi', 'suppliers_or_customers')
                             ->where('transaksis.user_id', auth()->user()->id)
                             ->where('void', false);
 
@@ -254,18 +254,25 @@ class TransaksiController extends Controller
             $records->where('transaksis.jenis_transaksi_id', request()->id); // Menggunakan alias 'transaksis' untuk jenis_transaksi_id
         }
 
-        $records = $records->orderBy('created_at', 'desc');
-
-        $records = $records->select('kategori_transaksis.nama', 'transaksis.*')
-                 ->get();
+        $records = $records->orderBy('created_at', 'desc')->get();
 
 
-        
-        return $records;                    
+        // $recordsFinal [] = [
+        //     'tanggal' => $records->tanggal,
+        //     'no_transaksi' => $records->no_transaksi,
+        //     'jenis_transaksi_id' => $records->jenis_transaksi_id,
+        //     'kategori_transaksi' => $records->kategori_transaksi->nama,
+        //     'supplier_or_customer' => $records->suppliers_or_customers->nama_bisnis ?? '--',
+        //     'deskripsi' => $records->deskripsi,
+        //     'jumlah' => $records->jumlah,
+        // ];
+
+
+        return $records;
     }
 
 
-    public function api3() 
+    public function api3()
     {
         $transaksi = Transaksi::where('user_id', auth()->user()->id)
                                 ->where('void', false);
@@ -305,9 +312,9 @@ class TransaksiController extends Controller
         }
 
         return $result;
-    } 
+    }
 
-    public function api4() 
+    public function api4()
     {
 
         $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
@@ -317,22 +324,22 @@ class TransaksiController extends Controller
                 ->distinct()
                 ->orderBy('tanggal', 'desc') // Mengatur urutan menjadi ascending
                 ->paginate((isset(request()->paginate) ? request()->paginate : 7));
-    
+
         // return $dataTanggal;
 
         // Mengonversi data ke dalam bentuk array
         $dataTanggalArray = $dataTanggal->toArray();
-        
+
         // Membalikkan urutan array menggunakan array_reverse
         $dataTanggalReversed = array_reverse($dataTanggalArray['data']);
 
         // return $dataTanggalReversed;
-        
+
         // Mengembalikan data yang telah diurutkan dari bawah ke atas
         $dataTanggal['data'] = $dataTanggalReversed;
 
         // return $dataTanggal;
-        
+
         $dataTanggal = $dataTanggal['data'];
 
         // return $dataTanggal;
@@ -342,7 +349,7 @@ class TransaksiController extends Controller
                             ->where('jenis_transaksi_id', request()->id)
                             ->where('void', false)
                             ->select(
-                                DB::raw('DATE(created_at) as tanggal'), 
+                                DB::raw('DATE(created_at) as tanggal'),
                                 DB::raw('SUM(jumlah) as jumlah'),
                                 'transaksis.jenis_transaksi_id'
                             )
@@ -368,11 +375,11 @@ class TransaksiController extends Controller
 
         // Hasil akhir akan berisi data yang Anda inginkan
 
-                        
 
-        return $hasilAkhir;                    
 
-        
+        return $hasilAkhir;
+
+
     }
 
     public function api5()
@@ -415,7 +422,7 @@ class TransaksiController extends Controller
                             ->where('user_id', auth()->user()->id)
                             ->where('void', false)
                             ->orderBy('created_at', 'desc');
-    
+
         if (request()->id == '0') {
             $transaksi = $transaksi->get();
         } else {
@@ -428,7 +435,7 @@ class TransaksiController extends Controller
         //     $transaksiFinal[] = [
         //         'no_transaksi' => $item->no_transaksi,
         //         'tanggal' => $item->tanggal,
-        //         'kategori' => $item->kategori_transaksi->nama,                
+        //         'kategori' => $item->kategori_transaksi->nama,
         //         'supplier' => $item->suppliers_or_customers->nama_bisnis ?? '--',
         //         'deskripsi' => $item->deskripsi ?? '--',
         //         'jumlah' => number_format($item->jumlah, 0 ,'.', ',')

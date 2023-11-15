@@ -123,7 +123,7 @@
                                     required>
                                 <button type="submit"
                                     class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    <svg class="filterTabel w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -146,17 +146,68 @@
                         </svg>
                         Tambah Transaksi
                     </button>
-                
-                <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                    class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    type="button">
-                    <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path clip-rule="evenodd" fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                    Actions
-                </button>
+
+
+                    <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover"
+                            class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                class="h-4 w-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Tabel
+                            <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                            </svg>
+                        </button>
+
+                    <!-- Dropdown menu -->
+                    <div id="dropdownBgHover" class="z-10 hidden w-48 bg-white rounded-lg shadow dark:bg-gray-700">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownBgHoverButton">
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input id="checkbox-item-4" type="checkbox" value="kategori"
+                                        class="filterTabel w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-4"
+                                        class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Kategori Transaksi</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input id="checkbox-item-5" type="checkbox" value="supplier"
+                                        class="filterTabel w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-5"
+                                        class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Supplier/Customer</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <input id="checkbox-item-6" type="checkbox" value="deskripsi"
+                                        class="filterTabel w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-6"
+                                        class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Deskripsi</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+                    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        type="button">
+                        <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                        </svg>
+                        Actions
+                    </button>
                 <div id="actionsDropdown"
                     class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -223,9 +274,9 @@
                             <th scope="col" class="px-4 py-3">Tanggal</th>
                             <th scope="col" class="px-4 py-3">No transaksi</th>
                             <th scope="col" class="px-4 py-3">Jenis Transaksi</th>
-                            {{-- <th scope="col" class="px-4 py-3">Kategori</th>
-                            <th scope="col" class="px-4 py-3">Customer/Supplier</th>
-                            <th scope="col" class="px-4 py-3">Deskripsi</th> --}}
+                            <th scope="col" id="tabel-heading-kategori" class="px-4 py-3 hidden">Kategori</th>
+                            <th scope="col" id="tabel-heading-supplier" class="px-4 py-3 hidden">Customer/Supplier</th>
+                            <th scope="col" id="tabel-heading-deskripsi" class="px-4 py-3 hidden">Deskripsi</th>
                             <th scope="col" class="px-4 py-3" align="right">Jumlah</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only"></span>
@@ -270,11 +321,11 @@
                                             --
                                         @endif
                                     </td>
-                                    {{-- <td id="tabel-date" class="px-4 py-3">{{ $t->kategori_transaksi->nama ?? '--' }}
+                                    <td id="tabel-kategori" class="px-4 py-3 hidden">{{ $t->kategori_transaksi->nama ?? '--' }}
                                     </td>
-                                    <td id="tabel-date" class="px-4 py-3">
+                                    <td id="tabel-suppllier" class="px-4 py-3 hidden">
                                         {{ $t->suppliers_or_customers->nama_bisnis ?? '--' }}</td>
-                                    <td id="tabel-date" class="px-4 py-3 max-w-sm">{{ $t->deskripsi ?? '--' }}</td> --}}
+                                    <td id="tabel-deskripsi" class="px-4 py-3 max-w-sm hidden">{{ $t->deskripsi ?? '--' }}</td>
                                     <td id="tabel-date" class="px-4 py-3 text-right">Rp
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end">
@@ -341,9 +392,9 @@
 
     })
 
-    
 
-    
+
+
 
     // const addTransaksi = document.getElementById('addTransaksi')
     // addTransaksi.addEventListener('click', async function () {
