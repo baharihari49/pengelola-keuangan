@@ -141,7 +141,22 @@
                             <td class="px-4 py-3">{{$item->kategori}}</td>
                             <td class="px-4 py-3">{{$item->created_at}}</td>
                             <td class="px-4 py-3">{{$item->users_id->username}}</td>
-                            <td class="px-4 py-3">{{$item->progres}}</td>
+                            <td class="px-4 py-3"><p class=" w-fit rounded-full text-xs
+                                @switch($item->progres)
+                                @case('draft')
+                                    px-2 py-1 bg-yellow-200 text-yellow-800 border-yellow-300
+                                    @break
+                                @case('on going')
+                                    px-2 py-1 bg-green-200 text-green-800 border-green-300
+                                    @break
+                                @case('done')
+                                    px-2 py-1 bg-blue-200 text-blue-800 border-blue-300
+                                    @break
+                                @default
+                                    px-2 py-1 bg-gray-200 text-gray-800 border-gray-300
+
+                            @endswitch
+                                ">{{$item->progres}}</p></td>
                             <td class="px-4 py-3 flex items-center justify-center text-blue-600">
                                 <a href="/feedback_detail/?id={{$item->id}}">
                                     Detail

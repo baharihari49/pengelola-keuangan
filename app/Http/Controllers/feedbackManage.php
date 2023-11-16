@@ -34,7 +34,7 @@ class feedbackManage extends Controller
     {
         feedbackCenter::where('id', request()->id)->update(['progres' => 'on going', 'progres_by' => auth()->user()->id]);
 
-        return redirect('/feedback_manage');
+        return redirect('/feedback_detail/?id=' . request()->id);
     }
 
 
@@ -42,13 +42,13 @@ class feedbackManage extends Controller
     {
         feedbackCenter::where('id', request()->id)->update(['progres' => 'done', 'progres_by' => auth()->user()->id]);
 
-        return redirect('/feedback_manage');
+        return redirect('/feedback_detail/?id=' . request()->id);
     }
 
     public function cancel()
     {
         feedbackCenter::where('id', request()->id)->update(['progres' => 'cancel', 'progres_by' => auth()->user()->id]);
 
-        return redirect('/feedback_manage');
+        return redirect('/feedback_detail/?id=' . request()->id);
     }
 }
