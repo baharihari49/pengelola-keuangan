@@ -5,6 +5,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackCenterController;
+use App\Http\Controllers\feedbackManage;
 use App\Http\Controllers\informasiBisnisController;
 use App\Http\Controllers\JenisTransaksiController;
 use App\Http\Controllers\KategoriAnggaranController;
@@ -74,14 +75,20 @@ Route::middleware(['auth'])->group(function()
             Route::post('/create_user', 'createUserByAdmin');
             Route::delete('/delete_user', 'deleteUserByAdmin');
         });
+
+        Route::controller(feedbackManage::class)->group(function()
+        {
+            Route::get('/feedback_manage', 'index');
+            Route::get('/feedback_detail', 'detail');
+        });
     });
 
-    Route::controller(informasiBisnisController::class)->group(function() 
+    Route::controller(informasiBisnisController::class)->group(function()
     {
         Route::post('store_info_bisnis', 'store');
         Route::delete('/delete_logo', 'deleteLogo');
     });
-    
+
    Route::controller(UserController::class)->group(function()
    {
     Route::get('/profile','show');
@@ -109,7 +116,7 @@ Route::middleware(['auth', 'check.user'])->group(function()
     });
 
 
-    Route::controller(TransaksiController::class)->group(function() 
+    Route::controller(TransaksiController::class)->group(function()
     {
 
         Route::get('/transaksi','index');
@@ -117,15 +124,15 @@ Route::middleware(['auth', 'check.user'])->group(function()
         Route::post('transaksi', 'store');
 
         Route::put('/transaksi', 'update');
-        
+
         Route::delete('/transaksi', 'destroy');
 
         Route::get('/get_transaksi_by_jenis_transaksi_id', 'api2');
-        
+
         Route::get('/get_transaksi_by_search', 'api3');
-        
+
         Route::get('/get_transaksi_by_jenis_transaksi_id_line_chart', 'api4');
-        
+
         Route::get('/get_transaksi_by_days', 'api5');
 
         Route::get('/get_transaksi', 'api');
@@ -151,23 +158,23 @@ Route::middleware(['auth', 'check.user'])->group(function()
         Route::get('pdf_laba_rugi', 'dwonlodLabaRugi');
     });
 
-    Route::controller(KategoriTransaksiController::class)->group(function() 
+    Route::controller(KategoriTransaksiController::class)->group(function()
     {
 
         Route::get('/kategori_transaksi', 'index');
 
         Route::post('/kategori_transaksi', 'store');
-        
+
         Route::put('/kategori_transaksi', 'update');
-        
+
         Route::get('/get_kategori_transaksi_by_jenis_transaksi_id', 'api');
-        
+
         Route::get('/get_kategori_transaksi_by_id', 'api2');
-        
+
         Route::get('/get_kategori_transaksi_by_jenis_transaksi_id_not_show', 'api4');
-        
+
         Route::get('/get_kategori_transaksi_by_search', 'api5');
-        
+
         Route::get('/get_kategori_transaksi_by_jenis_transaksi_select', 'api6');
 
         Route::delete('/kategori_transaksi', 'destroy');
@@ -178,19 +185,19 @@ Route::middleware(['auth', 'check.user'])->group(function()
     });
 
 
-    Route::controller(AnggaranController::class)->group(function() 
+    Route::controller(AnggaranController::class)->group(function()
     {
 
         Route::get('/anggaran', 'index');
 
         Route::post('/anggaran', 'store');
-        
+
         Route::delete('/anggaran', 'destroy');
-        
+
         Route::put('/anggaran', 'update');
-        
+
         Route::get('/get_anggaran_by_id', 'api');
-        
+
         Route::get('/get_all_anggaran', function() {
             $records = Anggaran::join('kategori_transaksis', 'anggarans.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                 ->where('anggarans.user_id', auth()->user()->id)
@@ -215,9 +222,9 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
         });
 
-        
+
         Route::get('/budgeting', 'budgeting');
-        
+
         Route::get('/get_anggaran_by_kategori_transaksi', 'api2');
 
     });
@@ -267,7 +274,7 @@ Route::middleware(['auth', 'check.user'])->group(function()
     Route::controller(SuppliersorCustomersController::class)->group(function()
     {
         Route::get('/supplier_costumer', 'index');
-        
+
         Route::get('/get_suplier_by_jenis_transaksi_id', 'showSupOrCus');
 
         Route::get('/hapus_seeder', 'hapusSeeder');
@@ -282,13 +289,13 @@ Route::middleware(['auth', 'check.user'])->group(function()
 
     });
 
-    Route::controller(FeedbackCenterController::class)->group(function() 
+    Route::controller(FeedbackCenterController::class)->group(function()
     {
         Route::get('/feedback', 'index');
 
         Route::post('/feedback', 'store');
     });
-    
+
 });
 
 

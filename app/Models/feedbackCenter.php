@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class feedbackCenter extends Model
 {
@@ -20,8 +21,13 @@ class feedbackCenter extends Model
         'lampiran'
     ];
 
-    public function progres_by () : BelongsTo
+    public function progres_by() : BelongsTo
     {
-        return $this->belongsTo(User::class, 'progres_by', 'id');    
+        return $this->belongsTo(User::class, 'progres_by', 'id');
+    }
+
+    public function users_id() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

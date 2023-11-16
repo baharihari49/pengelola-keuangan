@@ -113,7 +113,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M5.5 6.5h.01m4.49 0h.01m4.49 0h.01M18 1H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
                     </svg>
-                    <span id="text-sidebar" class="ml-3">Feedback Center</span>
+                    <span id="text-sidebar" class="ml-3">Kirim Umpan Balik</span>
                 </a>
             </li>
             <li>
@@ -136,6 +136,16 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
                           </svg>
                         <span id="text-sidebar" class="ml-3">Users</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a id="icon-sidebar" href="/feedback_manage"
+                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ request()->is('supplier_costumer') ? 'bg-gray-100' : '' }}">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 16.5c0-1-8-2.7-9-2V1.8c1-1 9 .707 9 1.706M10 16.5V3.506M10 16.5c0-1 8-2.7 9-2V1.8c-1-1-9 .707-9 1.706"/>
+                          </svg>
+                        <span id="text-sidebar" class="ml-3">Feedback Manage</span>
                     </a>
                 </li>
             </ul>

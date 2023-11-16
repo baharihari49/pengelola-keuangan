@@ -29,63 +29,7 @@
     const rowTotalTransaksi = document.getElementById('baris-total-transaksi')
 
 
-    // fitur filter tabel
 
-    const filterTabel = Array.from(document.querySelectorAll('.filterTabel'))
-    const tdKategori = Array.from(document.querySelectorAll('#tabel-kategori'))
-    const thKategori = document.querySelector('#tabel-heading-kategori')
-    const tdSupplier = Array.from(document.querySelectorAll('#tabel-suppllier'))
-    const thSupplier = document.querySelector('#tabel-heading-supplier')
-    const tdDeskripsi = Array.from(document.querySelectorAll('#tabel-deskripsi'))
-    const thDeskripsi = document.querySelector('#tabel-heading-deskripsi')
-
-    filterTabel.forEach((item, index) => {
-        item.addEventListener('click', function() {
-            if(item.checked) {
-                if(item.value == 'kategori') {
-                    tdKategori.forEach((tdk,i) => {
-                        tdKategori[i].classList.remove('hidden')
-                    })
-                    thKategori.classList.remove('hidden')
-                }
-
-                if(item.value == 'supplier'){
-                    tdSupplier.forEach(tds => {
-                        tds.classList.remove('hidden')
-                    })
-                    thSupplier.classList.remove('hidden')
-                }
-
-                if(item.value =='deskripsi'){
-                    tdDeskripsi.forEach(tdd => {
-                        tdd.classList.remove('hidden')
-                    })
-                    thDeskripsi.classList.remove('hidden')
-                }
-            }else{
-                if(item.value == 'kategori') {
-                    tdKategori.forEach(tdk => {
-                        tdk.classList.add('hidden')
-                    })
-                    thKategori.classList.add('hidden')
-                }
-
-                if(item.value == 'supplier'){
-                    tdSupplier.forEach(tds => {
-                        tds.classList.add('hidden')
-                    })
-                    thSupplier.classList.add('hidden')
-                }
-
-                if(item.value == 'deskripsi'){
-                    tdDeskripsi.forEach(tds => {
-                        tds.classList.add('hidden')
-                    })
-                    thDeskripsi.classList.add('hidden')
-                }
-            }
-        })
-    })
 
     // filterTabel.forEach((item, index) => {
     //     item.addEventListener('click', function() {
