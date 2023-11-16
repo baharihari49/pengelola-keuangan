@@ -13,20 +13,42 @@ class feedbackManage extends Controller
     {
         return view('dashboard.admin.feedback.index', [
             'user' => User::where('id', auth()->user()->id)->get()[0],
-            'data' => feedbackCenter::with('users_id', 'progres_by')->paginate(15),
+            'data' => feedbackCenter::with('users_id', 'progres_dev_by')->paginate(15),
         ]);
     }
 
     public function detail()
     {
         // return  feedbackCenter::where('id', request()->id)
-        // ->with('users_id', 'progres_by')
+        // ->with('users_id', 'progres_dev_by')
         // ->get();
         return view('dashboard.admin.feedback.layouts.detail_feedback',[
             'user' => User::where('id', auth()->user()->id),
             'data' => feedbackCenter::where('id', request()->id)
-                                    ->with('users_id', 'progres_by')
+                                    ->with('users_id', 'progres_dev_by')
                                     ->get()
         ]);
+    }
+
+    public function onGoing()
+    {
+        feedbackCenter::where('id', request()->id)->update(['progres' => 'on going', 'progres_by' => auth()->user()->id]);
+
+        return redirect('/feedback_manage');
+    }
+
+
+    public function done()
+    {
+        feedbackCenter::where('id', request()->id)->update(['progres' => 'done', 'progres_by' => auth()->user()->id]);
+
+        return redirect('/feedback_manage');
+    }
+
+    public function cancel()
+    {
+        feedbackCenter::where('id', request()->id)->update(['progres' => 'cancel', 'progres_by' => auth()->user()->id]);
+
+        return redirect('/feedback_manage');
     }
 }

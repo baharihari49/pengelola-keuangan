@@ -18,10 +18,11 @@ class feedbackCenter extends Model
         'info_tambahan',
         'progres',
         'user_id',
-        'lampiran'
+        'lampiran',
+        'excerpt'
     ];
 
-    public function progres_by() : BelongsTo
+    public function progres_dev_by() : BelongsTo
     {
         return $this->belongsTo(User::class, 'progres_by', 'id');
     }

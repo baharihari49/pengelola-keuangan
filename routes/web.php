@@ -80,6 +80,9 @@ Route::middleware(['auth'])->group(function()
         {
             Route::get('/feedback_manage', 'index');
             Route::get('/feedback_detail', 'detail');
+            Route::post('/on_going', 'onGoing');
+            Route::post('/done', 'done');
+            Route::post('/cancel_done', 'cancel');
         });
     });
 

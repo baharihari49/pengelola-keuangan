@@ -6,6 +6,7 @@ use App\Http\Requests\StorefeedbackCenterRequest;
 use App\Http\Requests\UpdatefeedbackCenterRequest;
 use App\Models\feedbackCenter;
 use App\Helper\DatabaseHelper;
+use Illuminate\Support\Str;
 class FeedbackCenterController extends Controller
 {
     /**
@@ -43,6 +44,10 @@ class FeedbackCenterController extends Controller
         $validate['no_feedback'] = 'OCTNS-FDB-000' . ($count_feedback + 1) . '-' . DatabaseHelper::getYear();
 
         $validate['user_id'] = auth()->user()->id;
+
+        $deskripsi = strip_tags(request()->deskripsi);
+        $validate['excerpt'] = mb_strlen($deskripsi) > 10 ? mb_substr($deskripsi, 0, 50) . '...' : $deskripsi;
+
 
         if(request()->hasFile('lampiran') && $validate['lampiran']->isValid()) {
             $validate['lampiran'] = request()->file('lampiran')->storeAs('lampiran-feedback-images', uniqid() . '-' . request()->file('lampiran')->getClientOriginalName());
