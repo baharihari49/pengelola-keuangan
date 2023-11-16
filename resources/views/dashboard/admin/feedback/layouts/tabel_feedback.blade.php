@@ -1,4 +1,4 @@
-<section class="bg-gray-50 dark:bg-gray-900 mb-32">
+<section class="bg-gray-50 dark:bg-gray-900 mb-">
     <div class="mx-auto">
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-visible">
