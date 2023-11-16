@@ -74,7 +74,7 @@
                 <input type="hidden" name="id" value="{{$data[0]->id}}">
                 <button type="submit" class="py-2 px-5 ml-12 bg-green-600 rounded-xl text-white font-medium text-sm">Mulai Kerjakan</button>
             </form>
-            @elseif ($data[0]->progres == 'on going' && $data[0]->user_id == auth()->user()->id)
+            @elseif ($data[0]->progres == 'on going' && $data[0]->progres_by == auth()->user()->id)
             <div class="flex items-center gap-3 w-fit">
                 <form action="/cancel_done" method="POST">
                 @method('PUT')
