@@ -68,28 +68,32 @@
 
             <hr class="w-full mt-8 mb-5">
             @if ($data[0]->progres == 'draft')
-            <form action="/on_going/?id={{$data[0]->id}}" method="POST">
+            <form action="/on_going" method="POST">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="id" value="{{$data[0]->id}}">
                 <button type="submit" class="py-2 px-5 ml-12 bg-green-600 rounded-xl text-white font-medium text-sm">Mulai Kerjakan</button>
             </form>
             @elseif ($data[0]->progres == 'on going' && $data[0]->user_id == auth()->user()->id)
             <div class="flex items-center gap-3 w-fit">
-                <form action="/cancel_done/?id={{$data[0]->id}}" method="POST">
+                <form action="/cancel_done" method="POST">
                 @method('PUT')
                 @csrf
+                    <input type="hidden" name="id" value="{{$data[0]->id}}">
                     <button type="submit" class="py-2 px-5 ml-12 bg-red-600 rounded-xl text-white font-medium text-sm">Batal mengerjakan</button>
                 </form>
-                <form action="/done/?id={{$data[0]->id}}" method="POST">
+                <form action="/done" method="POST">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="id" value="{{$data[0]->id}}">
                     <button type="submit" class="py-2 px-5 bg-blue-600 rounded-xl text-white font-medium text-sm">Tandai Telah Selesai</button>
                 </form>
             </div>
             @elseif($data[0]->progres == 'cancel')
-                <form action="/on_going/?id={{$data[0]->id}}" method="POST">
+                <form action="/on_going" method="POST">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="id" value="{{$data[0]->id}}">
                     <button type="submit" class="py-2 px-5 ml-12 bg-green-600 rounded-xl text-white font-medium text-sm">Mulai Kerjakan</button>
                 </form>
             @elseif($data[0]->progres == 'done')
