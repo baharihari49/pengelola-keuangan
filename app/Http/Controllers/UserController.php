@@ -39,6 +39,8 @@ class UserController extends Controller
                 break;
             case 'dsc':
                 $user = User::orderBy('username', 'desc')->paginate(15);
+            case 'tanggal':
+                $user = User::orderBy('created_at', 'asc')->paginate(15);
             default:
                 $user = User::paginate(15);
                 break;

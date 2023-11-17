@@ -88,11 +88,16 @@
                                     class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Z-A</button>
                                    </form>
                                 </li>
+                                <li>
+                                    <form action="/user" method="POST">
+                                     @csrf
+                                     <input type="hidden" value="tanggal" name="id">
+                                     <button type="submit"
+                                     class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tanggal</button>
+                                    </form>
+                                 </li>
                             </ul>
-                            <div class="py-1">
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Tanggal</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
