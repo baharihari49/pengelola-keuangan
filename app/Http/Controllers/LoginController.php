@@ -44,4 +44,9 @@ class LoginController extends Controller
 
         return redirect('/login');
     }
+
+    public function confirmEmail()
+    {
+        return view('user.email_konfirmasi.index');
+    }
 }

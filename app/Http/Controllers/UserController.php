@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -155,9 +156,12 @@ class UserController extends Controller
         if($validate['password'] === request('confirm-password')){
             $validate['password'] = bcrypt($validate['password']);
 
-            User::create($validate);
+            $user = User::create($validate);
 
-            return redirect('/');
+            event(new Registered($user));
+
+            Auth::login($user);
+            return redirect('/email/verify');
         }
 
 

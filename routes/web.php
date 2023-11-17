@@ -26,6 +26,8 @@ use App\Models\Transaksi;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 use SebastianBergmann\CodeUnit\FunctionUnit;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,25 @@ use SebastianBergmann\CodeUnit\FunctionUnit;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/email/verify', function () {
+    return view('user.email_konfirmasi.index');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+
 
 Route::middleware(['guest'])->group(function()
 {
@@ -57,14 +78,18 @@ Route::middleware(['guest'])->group(function()
 
             Route::post('/login', 'authenticate');
 
+            Route::get('/confirm_email', 'confirmEmail');
+
         });
-});
-Route::post('/logout', [LoginController::class, 'logout']);
+
+    });
+    Route::post('/logout', [LoginController::class, 'logout']);
 
 
 
 
-Route::middleware(['auth'])->group(function()
+
+Route::middleware(['auth', 'verified'])->group(function()
 {
 
     Route::group(['middleware' => ['role:admin']], function () {
@@ -105,7 +130,7 @@ Route::middleware(['auth'])->group(function()
    });
 });
 
-Route::middleware(['auth', 'check.user'])->group(function()
+Route::middleware(['auth', 'verified' ,'check.user'])->group(function()
 {
     Route::controller(DashboardController::class)->group(function()
     {
