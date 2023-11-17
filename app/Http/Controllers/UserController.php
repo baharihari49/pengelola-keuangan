@@ -24,8 +24,27 @@ class UserController extends Controller
 
     public function showUser()
     {
+        $user = User::paginate(15);
         return view('dashboard.admin.user.index', [
-            'user' => User::all()
+            'user' => $user
+        ]);
+    }
+
+
+    public function actionShowUser()
+    {
+        switch (request()->id) {
+            case 'asc':
+                $user = User::orderBy('username', 'asc')->paginate(15);
+                break;
+            case 'dsc':
+                $user = User::orderBy('username', 'desc')->paginate(15);
+            default:
+                $user = User::paginate(15);
+                break;
+        }
+        return view('dashboard.admin.user.index', [
+            'user' => $user
         ]);
     }
 
@@ -61,13 +80,13 @@ class UserController extends Controller
             'email.unique' => 'Email sudah digunakan.',
             'password.required' => 'Kolom password wajib diisi.',
         ]);
-        
+
         if($validate['password'] === request()->confirm_password){
             $validate['password'] = bcrypt($validate['password']);
-            
-            
+
+
             $user = User::create($validate);
-            
+
             if($validate['user_role'] == 'admin') {
                 $user->assignRole('admin');
             }
@@ -83,27 +102,27 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        
+
         // Menyimpan ID pengguna saat ini sebelum mencoba otentikasi
         $currentUserId = auth()->id();
-        
+
         if (Auth::attempt($credentials)) {
             // Nonaktifkan otentikasi sementara
             auth()->logout();
-        
+
             // Hapus pengguna
             User::destroy(request()->id);
-        
+
             // Jika pengguna saat ini tidak sama dengan pengguna yang dihapus, login kembali
             if ($currentUserId != request()->id) {
                 auth()->loginUsingId($currentUserId);
             }
-        
+
             return redirect('/user');
         } else {
             return redirect('/user')->with('password_error', 'Password yang Anda masukkan salah');
         }
-        
+
     }
 
     /**
@@ -111,7 +130,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -130,16 +149,16 @@ class UserController extends Controller
             'email.unique' => 'Email sudah digunakan.',
             'password.required' => 'Kolom password wajib diisi.',
         ]);
-        
+
         if($validate['password'] === request('confirm-password')){
             $validate['password'] = bcrypt($validate['password']);
-            
+
             User::create($validate);
 
             return redirect('/');
         }
-        
-        
+
+
     }
 
     /**
@@ -167,7 +186,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-       
+
 
         $validate = $request->validate([
             'nama' => 'required',
@@ -187,22 +206,22 @@ class UserController extends Controller
         return redirect('/profile');
     }
 
-    public function storeImage() 
+    public function storeImage()
     {
         $validate = request()->validate([
             'foto' => 'image|file|max:2048'
         ]);
-        
+
         if (request()->hasFile('profile_image')) {
             if (request()->oldImage) {
                 Storage::delete(request()->oldImage);
             }
             $validate['foto'] = request()->file('profile_image')->storeAs('profile-images', uniqid() . '-' . request()->file('profile_image')->getClientOriginalName());
         }
-        
+
         User::where('id', auth()->user()->id)->update($validate);
         return redirect('/profile');
-        
+
     }
 
     /**
@@ -210,11 +229,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        
+
 
     }
 
-    public function deleteImage() 
+    public function deleteImage()
     {
         Storage::delete(request()->image);
 
