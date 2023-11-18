@@ -18,7 +18,7 @@
                 <form class="text-center pb-2" action="/email/verification-notification" method="POST">
                     @csrf
                     <input type="hidden">
-                    <button class="text-sm text-blue-500">Kirim ulang</button>
+                    <span class="text-sm text-gray-500">Belum menerima email? <button class="text-sm text-blue-500">Kirim ulang</button></span>
                 </form>
             </div>
         </div>
