@@ -1,28 +1,29 @@
 <section class="bg-gray-50 dark:bg-gray-900">
     @if (session()->has('password_error'))
-    <div id="toast-danger"
-        class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
-        role="alert">
-        <div
-            class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
-            </svg>
-            <span class="sr-only">Error icon</span>
+        <div id="toast-danger"
+            class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+            role="alert">
+            <div
+                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
+                </svg>
+                <span class="sr-only">Error icon</span>
+            </div>
+            <div class="ms-3 text-sm font-normal">{{ session('password_error') }}</div>
+            <button type="button"
+                class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-danger" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
         </div>
-        <div class="ms-3 text-sm font-normal">{{session('password_error')}}</div>
-        <button type="button"
-            class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-            data-dismiss-target="#toast-danger" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-        </button>
-    </div>
     @endif
     <div class="mx-auto">
         <!-- Start coding here -->
@@ -77,25 +78,25 @@
                                         @csrf
                                         <input type="hidden" value="asc" name="id">
                                         <button type="submit"
-                                        class="block w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">A-Z</button>
+                                            class="block w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">A-Z</button>
                                     </form>
-                                </li>
-                                <li>
-                                   <form action="/user" method="POST">
-                                    @csrf
-                                    <input type="hidden" value="dsc" name="id">
-                                    <button type="submit"
-                                    class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Z-A</button>
-                                   </form>
                                 </li>
                                 <li>
                                     <form action="/user" method="POST">
-                                     @csrf
-                                     <input type="hidden" value="tanggal" name="id">
-                                     <button type="submit"
-                                     class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tanggal</button>
+                                        @csrf
+                                        <input type="hidden" value="dsc" name="id">
+                                        <button type="submit"
+                                            class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Z-A</button>
                                     </form>
-                                 </li>
+                                </li>
+                                <li>
+                                    <form action="/user" method="POST">
+                                        @csrf
+                                        <input type="hidden" value="tanggal" name="id">
+                                        <button type="submit"
+                                            class="block  w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tanggal</button>
+                                    </form>
+                                </li>
                             </ul>
 
                         </div>
@@ -117,118 +118,119 @@
                     </thead>
                     <tbody>
                         @foreach ($user as $item)
-                        <div id="confirm-delete-modal-{{$item->id}}" tabindex="-1" aria-hidden="true"
-                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <!-- Modal header -->
-                                    <div
-                                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                            Confirm delete user
-                                        </h3>
-                                        <button type="button"
-                                            class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                            data-modal-hide="confirm-delete-modal-{{$item->id}}">
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                            </svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
-                                    </div>
-                                    <!-- Modal body -->
-                                    <div class="p-4 md:p-5">
-                                        <form class="space-y-4" action="/delete_user" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input name="id" type="hidden" value="{{$item->id}}">
-                                            <input name="email" type="hidden" value="{{$item->email}}">
-                                            <div class="mb-4">
-                                                <label for="password"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
-                                                    password</label>
-                                                <input type="password" name="password" id="password"
-                                                    placeholder="••••••••"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                    required>
-                                            </div>
-                                            <button type="submit"
-                                                class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete
-                                                User ({{$item->username}})
+                            <div id="confirm-delete-modal-{{ $item->id }}" tabindex="-1" aria-hidden="true"
+                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-md max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <!-- Modal header -->
+                                        <div
+                                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                Confirm delete user
+                                            </h3>
+                                            <button type="button"
+                                                class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                data-modal-hide="confirm-delete-modal-{{ $item->id }}">
+                                                <svg class="w-3 h-3" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
                                             </button>
-                                        </form>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-4 md:p-5">
+                                            <form class="space-y-4" action="/delete_user" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input name="id" type="hidden" value="{{ $item->id }}">
+                                                <input name="email" type="hidden" value="{{ $item->email }}">
+                                                <div class="mb-4">
+                                                    <label for="password"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                                                        password</label>
+                                                    <input type="password" name="password" id="password"
+                                                        placeholder="••••••••"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                                        required>
+                                                </div>
+                                                <button type="submit"
+                                                    class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete
+                                                    User ({{ $item->username }})
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <tr class="border-b dark:border-gray-700">
-                            <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <div class="flex gap-2 items-center">
-                                    <img class="w-10 h-10 rounded-full"
-                                        src="{{ isset($item->foto) && file_exists(public_path('storage/' . $item->foto)) ? asset('storage/' . $item->foto) : asset('./image/profile_picture/no_image.jpg') }}"
-                                        alt="Rounded avatar">
-                                    {{$item->username}}
-                                </div>
-                            </th>
-                            <td class="px-4 py-3">{{$item->email}}</td>
-                            <td class="px-4 py-3">
-                                @if($roles = $item->getRoleNames())
-                                {{ $roles[0] ?? 'user' }}
-                                @else
-                                No Role
-                                @endif
-                            </td>
-
-                            <td class="px-4 py-3">{{$item->created_at}}</td>
-                            <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="" data-dropdown-toggle="user-id{{$item->id}}"
-                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                                    type="button">
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                    </svg>
-                                </button>
-                                <div id="user-id{{$item->id}}"
-                                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="">
-                                        <li>
-                                            @if($item->hasRole('admin'))
-                                            <!-- Jika pengguna adalah admin, tampilkan tautan "Hapus Super Admin" -->
-                                            <a href="/remove_role/?id={{$item->id}}"
-                                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hapus
-                                                Super admin</a>
-                                            @else
-                                            <!-- Jika pengguna bukan admin, tampilkan tautan "Jadikan Super Admin" -->
-                                            <a href="/give_role/?id={{$item->id}}"
-                                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jadikan
-                                                Super admin</a>
-                                            @endif
-                                        </li>
-
-                                    </ul>
-                                    <div class="py-1">
-                                        <button data-modal-target="confirm-delete-modal-{{$item->id}}"
-                                            data-modal-toggle="confirm-delete-modal-{{$item->id}}"
-                                            class="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
-                                            {{$item->username}}</button>
+                            <tr class="border-b dark:border-gray-700">
+                                <th scope="row"
+                                    class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <div class="flex gap-2 items-center">
+                                        <img class="w-10 h-10 rounded-full"
+                                            src="{{ $item->foto ?? 'https://res.cloudinary.com/du0tz73ma/image/upload/v1700278579/default-profile_y2huqf.jpg' }}"
+                                            alt="Rounded avatar">
+                                        {{ $item->username }}
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </th>
+                                <td class="px-4 py-3">{{ $item->email }}</td>
+                                <td class="px-4 py-3">
+                                    @if ($roles = $item->getRoleNames())
+                                        {{ $roles[0] ?? 'user' }}
+                                    @else
+                                        No Role
+                                    @endif
+                                </td>
+
+                                <td class="px-4 py-3">{{ $item->created_at }}</td>
+                                <td class="px-4 py-3 flex items-center justify-end">
+                                    <button id="" data-dropdown-toggle="user-id{{ $item->id }}"
+                                        class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                        type="button">
+                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                            viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        </svg>
+                                    </button>
+                                    <div id="user-id{{ $item->id }}"
+                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="">
+                                            <li>
+                                                @if ($item->hasRole('admin'))
+                                                    <!-- Jika pengguna adalah admin, tampilkan tautan "Hapus Super Admin" -->
+                                                    <a href="/remove_role/?id={{ $item->id }}"
+                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hapus
+                                                        Super admin</a>
+                                                @else
+                                                    <!-- Jika pengguna bukan admin, tampilkan tautan "Jadikan Super Admin" -->
+                                                    <a href="/give_role/?id={{ $item->id }}"
+                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jadikan
+                                                        Super admin</a>
+                                                @endif
+                                            </li>
+
+                                        </ul>
+                                        <div class="py-1">
+                                            <button data-modal-target="confirm-delete-modal-{{ $item->id }}"
+                                                data-modal-toggle="confirm-delete-modal-{{ $item->id }}"
+                                                class="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                                {{ $item->username }}</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
                 aria-label="Table navigation">
-                {{$user->links()}}
+                {{ $user->links() }}
             </nav>
         </div>
     </div>

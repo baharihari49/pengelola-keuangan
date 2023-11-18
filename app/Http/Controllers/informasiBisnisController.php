@@ -21,27 +21,27 @@ class informasiBisnisController extends Controller
             'no_handphone' => 'required',
             'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Menambahkan validasi untuk gambar
         ]);
-        
+
         $validate['user_id'] = auth()->user()->id;
-        
-        if(request()->file('logo')){
-            if(request()->oldLogo) {
+
+        if (request()->file('logo')) {
+            if (request()->oldLogo) {
                 // Pastikan oldLogo berisi path lengkap ke file
                 Storage::delete(request()->oldLogo);
             }
-            $validate['logo'] = request()->file('logo')->store('logo_bisnis');
+            // $validate['logo'] = request()->file('logo')->store('logo_bisnis');
+            $validate['logo'] = cloudinary()->upload(request()->file('logo')->getRealPath())->getSecurePath();
         }
-        
+
         $infoBisnis = informasiBisnis::where('user_id', auth()->user()->id)->first();
-        
-        if($infoBisnis){
+
+        if ($infoBisnis) {
             $infoBisnis->update($validate);
-        }else{
+        } else {
             informasiBisnis::create($validate);
         }
-        
+
         return redirect('/profile');
-    
     }
 
     public function deleteLogo()
@@ -54,5 +54,4 @@ class informasiBisnisController extends Controller
 
         return redirect('/profile');
     }
-
 }

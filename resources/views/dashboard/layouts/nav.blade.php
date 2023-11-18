@@ -24,10 +24,10 @@
 
             <div class="flex ms-1 lg:ms-8">
                 <figure class="flex items-end gap-2">
-                    @if(file_exists(public_path('./image/logo/octans_logo.png')))
-                    <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
+                    @if (file_exists(public_path('./image/logo/octans_logo.png')))
+                        <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
                     @else
-                    <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
+                        <img class="h-10 md:h-12" src="{{ asset('./image/logo/octans_logo.png') }}" alt="">
                     @endif
                     <p class="font-bold text-2xl">octans</p>
                 </figure>
@@ -40,9 +40,9 @@
                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                 <span class="sr-only">Open user menu</span>
                 <img id="avatarButton" type="button" style="object-fit: cover;" data-dropdown-toggle="userDropdown"
-     data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer"
-     src="{{ isset($user->foto) && file_exists(public_path('storage/' . $user->foto)) ? asset('storage/' . $user->foto) : asset('./image/profile_picture/no_image.jpg') }}"
-     alt="User dropdown">
+                    data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer"
+                    src="{{ $user->foto ?? 'https://res.cloudinary.com/du0tz73ma/image/upload/v1700278579/default-profile_y2huqf.jpg' }}"
+                    alt="User dropdown">
 
             </button>
             <!-- Dropdown menu -->
