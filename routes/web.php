@@ -1,6 +1,7 @@
 <?php
 
 use App\Helper\DatabaseHelper;
+use App\Http\Controllers\aksesLevelController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AutentikasiController;
 use App\Http\Controllers\DashboardController;
@@ -109,6 +110,14 @@ Route::middleware(['auth', 'verified'])->group(function()
             Route::put('/on_going', 'onGoing');
             Route::put('/done', 'done');
             Route::put('/cancel_done', 'cancel');
+        });
+
+        Route::controller(aksesLevelController::class)->group(function()
+        {
+            Route::get('/akses_level', 'index');
+            Route::post('/store_akses_level', 'store');
+            Route::put('/update_akses_level', 'update');
+            Route::delete('/delete_akses_level', 'delete');
         });
     });
 

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -76,7 +75,7 @@ class UserController extends Controller
             'username' => 'required|unique:users',
             'email' => 'required|unique:users',
             'user_role' => 'required',
-            'password' => 'required',
+            'password' =>'required',
         ], [
             'username.required' => 'Kolom username wajib diisi.',
             'username.unique' => 'Username sudah digunakan.',
@@ -85,18 +84,19 @@ class UserController extends Controller
             'password.required' => 'Kolom password wajib diisi.',
         ]);
 
-        if ($validate['password'] === request()->confirm_password) {
+        if($validate['password'] === request()->confirm_password){
             $validate['password'] = bcrypt($validate['password']);
 
 
             $user = User::create($validate);
 
-            if ($validate['user_role'] == 'admin') {
+            if($validate['user_role'] == 'admin') {
                 $user->assignRole('admin');
             }
 
             return redirect('/user');
         }
+
     }
 
     public function deleteUserByAdmin()
@@ -125,6 +125,7 @@ class UserController extends Controller
         } else {
             return redirect('/user')->with('password_error', 'Password yang Anda masukkan salah');
         }
+
     }
 
     /**
@@ -132,6 +133,7 @@ class UserController extends Controller
      */
     public function create()
     {
+
     }
 
     /**
@@ -142,7 +144,7 @@ class UserController extends Controller
         $validate = $request->validate([
             'username' => 'required|unique:users',
             'email' => 'required|unique:users',
-            'password' => 'required',
+            'password' =>'required',
         ], [
             'username.required' => 'Kolom username wajib diisi.',
             'username.unique' => 'Username sudah digunakan.',
@@ -151,7 +153,7 @@ class UserController extends Controller
             'password.required' => 'Kolom password wajib diisi.',
         ]);
 
-        if ($validate['password'] === request('confirm-password')) {
+        if($validate['password'] === request('confirm-password')){
             $validate['password'] = bcrypt($validate['password']);
 
             $user = User::create($validate);
@@ -161,6 +163,8 @@ class UserController extends Controller
             Auth::login($user);
             return redirect('/email/verify');
         }
+
+
     }
 
     /**
@@ -227,6 +231,7 @@ class UserController extends Controller
 
         User::where('id', auth()->user()->id)->update($validate);
         return redirect('/profile');
+
     }
 
     /**
@@ -243,5 +248,6 @@ class UserController extends Controller
         DB::table('users')
             ->where('id', auth()->user()->id)
             ->update(['foto' => null]);
+
     }
 }
