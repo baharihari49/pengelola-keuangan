@@ -126,7 +126,7 @@
                 </a>
             </li>
 
-            @role('admin')
+            @role('Super Admin')
             <hr class="my-5">
             <ul>
                 <li>
