@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -31,5 +32,12 @@ class aksesLevelController extends Controller
     {
         Role::destroy(request()->name);
         return redirect('/akses_level');
+    }
+
+    public function editAksesLevel()
+    {
+        return view('dashboard.admin.aksesLevel.layouts.editAksesLevel.index', [
+            'user' => User::where('id', auth()->user()->id)->get()[0]
+        ]);
     }
 }

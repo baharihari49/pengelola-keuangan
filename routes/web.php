@@ -118,6 +118,7 @@ Route::middleware(['auth', 'verified'])->group(function()
             Route::post('/store_akses_level', 'store');
             Route::put('/update_akses_level', 'update');
             Route::delete('/delete_akses_level', 'delete');
+            Route::get('/edit_akses_level', 'editAksesLevel');
         });
     });
 
