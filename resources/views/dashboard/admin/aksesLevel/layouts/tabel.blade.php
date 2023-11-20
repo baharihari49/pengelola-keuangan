@@ -137,7 +137,7 @@
                         @foreach ($data as $item)
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->name}}</th>
+                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">{{$item->name}}</th>
                             {{-- <td class="px-4 py-3">PC</td> --}}
                             <td class="px-4 py-3 space-x-4 flex items-center justify-end">
                                <a href="/edit_akses_level/?id={{$item->id}}">
