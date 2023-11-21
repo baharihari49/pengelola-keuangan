@@ -51,25 +51,25 @@ class AnggaranController extends Controller
             'jumlah' => 'required',
             'kategori_transaksi_id' => 'required',
         ];
-    
+
         $kategoriAnggaranId = $request->input('kategori_anggaran_id');
-    
+
         // Check if 'kategori_anggaran_id' is empty or contains "Select category"
         if (empty($kategoriAnggaranId) || $kategoriAnggaranId === "Select category") {
             $kategoriAnggaranId = 0; // Set default value to 0
         } else {
             $validateRules['kategori_anggaran_id'] = 'required|integer';
         }
-    
+
         $validate = $request->validate($validateRules);
         $validate['kategori_anggaran_id'] = $kategoriAnggaranId;
         $validate['user_id'] = auth()->user()->id;
-    
+
         Anggaran::create($validate);
-    
+
         return redirect('/anggaran');
     }
-    
+
 
 
     /**
@@ -102,7 +102,7 @@ class AnggaranController extends Controller
 
         $validate['user_id'] = auth()->user()->id;
 
-        
+
         Anggaran::where('id', request()->id)
                 ->update($validate);
 
@@ -135,7 +135,7 @@ class AnggaranController extends Controller
                             ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah')
                             ->get();
 
-        return $records;              
+        return $records;
 
     }
 
@@ -159,7 +159,7 @@ class AnggaranController extends Controller
 
     //     $anggaran = Anggaran::all();
 
-       
+
     //     $result_budgeting = [];
 
     //     foreach($results as $r) {
