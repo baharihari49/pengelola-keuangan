@@ -44,15 +44,27 @@
                     </div>
                 </div>
                 <div class="space-x-1">
+                    @if (auth()->user()->can('ubah supplier'))
                     <button id="btnUpdateSup" disabled type="submit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         Update
                     </button>
+                    @else
+                    <button id="" disabled type="submit" class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Update
+                    </button>
+                    @endif
                     {{-- <form action="supplier_costumer_delete" method="POST">
                         @csrf
                         @method('DELETE') --}}
+                        @if (auth()->user()->can('hapus supplier'))
                         <button onclick="deleteSupCos(this)" id="btnDeleteSup" data-id="" type="button" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                             Hapus
-                        {{-- </button> --}}
+                        </button>
+                        @else
+                        <button disabled onclick="deleteSupCos(this)" id="btnDeleteSup" data-id="" type="button" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                            Hapus
+                        </button>
+                        @endif
                     </form>
                 </div>
             </form>
@@ -83,6 +95,5 @@
     function disabledBtn(target) {
         btnUpdateSup.disabled = false
         console.log(target);
-    } 
+    }
     </script>
-    

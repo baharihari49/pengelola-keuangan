@@ -5,7 +5,7 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-bold">Kebutuhan</h5>
-                 @foreach($dataBudgeting as $item) 
+                 @foreach($dataBudgeting as $item)
                  @if ($item['nama'] === 'kebutuhan')
                     <button data-budget="kebutuhan" class="btnEditBudget">
                         <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true"
@@ -54,12 +54,21 @@
                 @endforeach
 
                 @if (!$hasKebutuhan)
-                <div id="btn_modal" data-budget="kebutuhan"
+                @if (auth()->user()->can('tambah anggaran'))
+                    <div id="btn_modal" data-budget="kebutuhan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
                         <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
+                @else
+                    <div data-budget="kebutuhan"
+                    class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
+                    </div>
+                </div>
+                @endif
                 @endif
             </div>
         </div>
@@ -68,7 +77,7 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-semibold">Keinginan</h5>
-                @foreach($dataBudgeting as $item) 
+                @foreach($dataBudgeting as $item)
                  @if ($item['nama'] === 'keinginan')
                     <button data-budget="keinginan" class="btnEditBudget">
                         <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true"
@@ -116,12 +125,21 @@
                 @endforeach
 
                 @if (!$hasKeinginan)
-                <div id="btn_modal" data-budget="keinginan"
+                @if (auth()->user()->can('tambah anggaran'))
+                    <div id="btn_modal" data-budget="keinginan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
                         <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
+                @else
+                    <div data-budget="keinginan"
+                    class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
+                    </div>
+                </div>
+                @endif
                 @endif
             </div>
         </div>
@@ -130,7 +148,7 @@
         <div>
             <div class="flex justify-between items-center">
                 <h5 class="text-base xl:text-xl font-semibold">Tabungan</h5>
-                @foreach($dataBudgeting as $item) 
+                @foreach($dataBudgeting as $item)
                  @if ($item['nama'] === 'tabungan')
                     <button data-budget="tabungan" class="btnEditBudget">
                         <svg class="w-5 h-5 text-gray-500 dark:text-white" aria-hidden="true"
@@ -179,12 +197,21 @@
                 @endforeach
 
                 @if (!$hasTabungan)
-                <div id="btn_modal" data-budget="tabungan"
+                @if (auth()->user()->can('tambah anggaran'))
+                    <div id="btn_modal" data-budget="tabungan"
                     class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
                     <div class="p-6">
                         <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
                     </div>
                 </div>
+                @else
+                    <div data-budget="tabungan"
+                    class="h-[85%] w-full hover:bg-gray-100 flex items-center justify-center">
+                    <div class="p-6">
+                        <span class="text-sm text-gray-600">Klik untuk menambahkan budgeting</span>
+                    </div>
+                </div>
+                @endif
                 @endif
             </div>
         </div>

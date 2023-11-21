@@ -137,7 +137,10 @@
                 </div>
                 <div
                     class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" id="addTransaksi" data-modal-toggle="defaultModal"
+
+
+                    @if(auth()->user()->can('tambah transaksi'))
+                        <button type="button" id="addTransaksi" data-modal-toggle="defaultModal"
                         class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -145,8 +148,18 @@
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
                         Tambah Transaksi
+                        </button>
+                    @else
+                    <button disabled type="button" id="addTransaksi" data-modal-toggle="defaultModal"
+                    class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path clip-rule="evenodd" fill-rule="evenodd"
+                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                    </svg>
+                    Tambah Transaksi
                     </button>
-
+                    @endif
 
                     <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -206,6 +219,7 @@
                     class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="actionsDropdownButton">
+                        @if (auth()->user()->can('cetak transaksi'))
                         <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
                             <a id="linkPrint" href="/pdf_transaksi_month/?id=all"
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
@@ -214,6 +228,24 @@
                             <a id="linkExcel" href="/transaksi_xlsx/?id=all"
                                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export to excel</a>
                         </li>
+                        @else
+                        <li class="hidden" onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                            <a aria-disabled="true" id="linkPrint" href="#"
+                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
+                        </li>
+                        <li class="hidden" onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                            <a id="linkExcel" href="#"
+                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export to excel</a>
+                        </li>
+                        <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                            <a aria-disabled="true" href="#"
+                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
+                        </li>
+                        <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                            <a href="#"
+                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export to excel</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
 
@@ -324,6 +356,7 @@
                                         {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                                     <td class="px-4 py-3 flex items-center justify-end">
                                         <div class="flex gap-5 mr-5">
+                                            @if (auth()->user()->can('ubah transaksi'))
                                             <button class="p-3 border bg-red-600 text-white rounded-xl"
                                                 style="border-radius: 50%;" data-uuid="{{ $t->uuid }}"
                                                 id="updateProductButton" title="Void Transaksi">
@@ -333,6 +366,17 @@
                                                         d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384v38.6C310.1 219.5 256 287.4 256 368c0 59.1 29.1 111.3 73.7 143.3c-3.2 .5-6.4 .7-9.7 .7H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zm48 96a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z" />
                                                 </svg>
                                             </button>
+                                            @else
+                                                <button disabled class="p-3 border bg-red-600 text-white rounded-xl"
+                                                style="border-radius: 50%;" data-uuid="{{ $t->uuid }}"
+                                                id="updateProductButton" title="Void Transaksi">
+                                                <svg style="fill: #ffff" xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                                    <path
+                                                        d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384v38.6C310.1 219.5 256 287.4 256 368c0 59.1 29.1 111.3 73.7 143.3c-3.2 .5-6.4 .7-9.7 .7H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zm48 96a144 144 0 1 1 0 288 144 144 0 1 1 0-288zm59.3 107.3c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L432 345.4l-36.7-36.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6L409.4 368l-36.7 36.7c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0L432 390.6l36.7 36.7c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L454.6 368l36.7-36.7z" />
+                                                </svg>
+                                            </button>
+                                            @endif
                                             <a href="/detail_transaksi/?uuid={{$t->uuid}}" class="p-3 border bg-blue-600 text-white rounded-xl"
                                                 style="border-radius: 50%;"
                                                 id="detailProductModal" title="Detail Transaksi">

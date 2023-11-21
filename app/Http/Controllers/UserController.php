@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Registered;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -26,8 +27,10 @@ class UserController extends Controller
     public function showUser()
     {
         $user = User::paginate(15);
+        $role = Role::all();
         return view('dashboard.admin.user.index', [
-            'user' => $user
+            'user' => $user,
+            'role' => $role
         ]);
     }
 
@@ -55,7 +58,7 @@ class UserController extends Controller
     {
         $user = User::find(request()->id);
 
-        $user->assignRole('admin');
+        $user->assignRole(request()->user_role);
 
         return redirect('/user');
     }
@@ -90,9 +93,11 @@ class UserController extends Controller
 
             $user = User::create($validate);
 
-            if($validate['user_role'] == 'admin') {
-                $user->assignRole('admin');
-            }
+            $user->assignRole(request()->user_role);
+
+            // if($validate['user_role'] == 'admin') {
+            //     $user->assignRole('admin');
+            // }
 
             return redirect('/user');
         }

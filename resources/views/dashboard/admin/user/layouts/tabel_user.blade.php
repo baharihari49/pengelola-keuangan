@@ -1,3 +1,4 @@
+@include('dashboard.admin.user.layouts.edit_role')
 <section class="bg-gray-50 dark:bg-gray-900">
     @if (session()->has('password_error'))
         <div id="toast-danger"
@@ -178,7 +179,7 @@
                                     </div>
                                 </th>
                                 <td class="px-4 py-3">{{ $item->email }}</td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 capitalize">
                                     @if ($roles = $item->getRoleNames())
                                         {{ $roles[0] ?? 'user' }}
                                     @else
@@ -201,19 +202,9 @@
                                         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="">
                                             <li>
-                                                @if ($item->hasRole('admin'))
-                                                    <!-- Jika pengguna adalah admin, tampilkan tautan "Hapus Super Admin" -->
-                                                    <a href="/remove_role/?id={{ $item->id }}"
-                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hapus
-                                                        Super admin</a>
-                                                @else
-                                                    <!-- Jika pengguna bukan admin, tampilkan tautan "Jadikan Super Admin" -->
-                                                    <a href="/give_role/?id={{ $item->id }}"
-                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jadikan
-                                                        Super admin</a>
-                                                @endif
+                                                <button data-modal-target="edit-role-modal-{{ $item->id }}"
+                                                    data-modal-toggle="edit-role-modal-{{ $item->id }}" class="w-full text-left py-2 px-4 hover:bg-gray-100">Edit Role</button>
                                             </li>
-
                                         </ul>
                                         <div class="py-1">
                                             <button data-modal-target="confirm-delete-modal-{{ $item->id }}"

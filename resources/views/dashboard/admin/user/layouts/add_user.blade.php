@@ -30,12 +30,13 @@
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="youremail@gmail.com" required="">
                     </div>
-                      <div class="col-span-2">
-                          <label for="user role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Role</label>
-                          <select id="user role" name="user_role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                      <div class="col-span-2 capitalize">
+                          <label for="user role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">User Role</label>
+                          <select id="user role" name="user_role" class="bg-gray-50 border border-gray-300 capitalize text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                               <option selected="">Select User Role</option>
-                              <option value="admin">Admin</option>
-                              <option value="user">User</option>
+                              @foreach ($role as $item)
+                              <option class="capitalize" value="{{$item->name}}">{{$item->name}}</option>
+                              @endforeach
                           </select>
                       </div>
                       <div class="col-span-2">
@@ -54,5 +55,4 @@
               </form>
           </div>
       </div>
-  </div> 
-  
+  </div>

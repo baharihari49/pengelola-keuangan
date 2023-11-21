@@ -93,11 +93,11 @@ Route::middleware(['guest'])->group(function()
 Route::middleware(['auth', 'verified'])->group(function()
 {
 
-    Route::group(['middleware' => ['role:Super Admin']], function () {
+    Route::group(['middleware' => ['role:super admin']], function () {
         Route::controller(UserController::class)->group(function() {
             Route::get('/user', 'showUser');
             Route::post('/user', 'actionShowUser');
-            Route::get('/give_role', 'giveRole');
+            Route::post('/give_role', 'giveRole');
             Route::get('remove_role', 'removeRole');
             Route::post('/create_user', 'createUserByAdmin');
             Route::delete('/delete_user', 'deleteUserByAdmin');

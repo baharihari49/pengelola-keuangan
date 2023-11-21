@@ -39,6 +39,7 @@
                             class="hidden z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="actionsDropdownButton">
+                                @if (auth()->user()->can('cetak pemasukan'))
                                 <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
                                     <a id="linkPrint" href="/pdf_laporan_pemasukan/?id=all"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
@@ -48,6 +49,26 @@
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export
                                         to excel</a>
                                 </li>
+                                @else
+                                <li class="hidden" onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                                    <a id="linkPrint" href="/pdf_laporan_pemasukan/?id=all"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
+                                </li>
+                                <li class="hidden" onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                                    <a id="linkExcel" href="/pemasukan_xlsx/?id=all"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export
+                                        to excel</a>
+                                </li>
+                                <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                                    <a id="" href="#"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Print</a>
+                                </li>
+                                <li onclick="" id="filterKategori" data-id-2="1" data-id="all">
+                                    <a id="" href="#"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Export
+                                        to excel</a>
+                                </li>
+                                @endif
                             </ul>
                         </div>
                         <button id="kategoriDropdownButton" data-dropdown-toggle="kategoriDropdown"
