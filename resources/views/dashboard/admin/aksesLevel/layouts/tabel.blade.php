@@ -146,7 +146,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($data as $item) --}}
+                        @foreach ($data as $item)
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row"
                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">{{$item->name}}</th>
