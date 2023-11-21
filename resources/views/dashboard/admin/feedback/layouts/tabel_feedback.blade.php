@@ -158,9 +158,15 @@
                             @endswitch
                                 ">{{$item->progres}}</p></td>
                             <td class="px-4 py-3 flex items-center justify-center text-blue-600">
+                               @if (auth()->user()->can('ubah feedback'))
                                 <a href="/feedback_detail/?id={{$item->id}}">
                                     Detail
                                 </a>
+                               @else
+                                <a href="#">
+                                    Detail
+                                </a>
+                               @endif
                             </td>
                         </tr>
                         @endforeach

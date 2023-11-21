@@ -1,4 +1,4 @@
-<section class="bg-white rounded-md shadow-md p-5">
+<section class="bg-white rounded-md shadow-md p-5 mt-32">
     <div>
         <p class="text-xl font-semibold">Role : {{$data->name}}</p>
     </div>
