@@ -14,7 +14,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('app:reset-anggaran')
         //          ->dailyAt('23:16');
+
+        $schedule->command('app:reset-payment-status')
+                 ->dailyAt('23:59');
     }
+
 
     /**
      * Register the commands for the application.

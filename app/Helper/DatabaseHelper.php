@@ -31,7 +31,7 @@ class DatabaseHelper
                                             // ->whereMonth('created_at', DatabaseHelper::getMonth())
                                             ->get();
 
-        return $jumlahBudgeting;                                    
+        return $jumlahBudgeting;
     }
 
     public static function getPersentaseBudgeting()
@@ -41,7 +41,7 @@ class DatabaseHelper
                                                 ->where('void', false)
                                                 ->whereMonth('created_at', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
-                                                
+
         $records = DB::table('kategori_anggarans')
                     ->where('anggarans.user_id', auth()->user()->id)
                     ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
@@ -56,7 +56,7 @@ class DatabaseHelper
                     )
                     ->groupBy('kategori_anggarans.id', 'kategori_anggarans.value')
                     ->get();
-                        
+
 
 
         $getKategoriAnggaran = Kategori_anggaran::where('user_id', auth()->user()->id)->get();
@@ -69,8 +69,8 @@ class DatabaseHelper
                     $jumlahPendapatanTransaksi = intval($jumlahPendapatanTransaksi);
                     $gkaValue = intval($gka->value);
 
-                    $persentase = ($jumlahPendapatanTransaksi && $gkaValue) 
-                        ? (intval($record->total_jumlah) / ($jumlahPendapatanTransaksi * $gkaValue / 100)) * 100 
+                    $persentase = ($jumlahPendapatanTransaksi && $gkaValue)
+                        ? (intval($record->total_jumlah) / ($jumlahPendapatanTransaksi * $gkaValue / 100)) * 100
                         : 0;
 
                     $persentaseBudgeting[] = [
@@ -83,7 +83,7 @@ class DatabaseHelper
         }
 
 
-        return isset($persentaseBudgeting) ? $persentaseBudgeting : [];               
+        return isset($persentaseBudgeting) ? $persentaseBudgeting : [];
     }
 
     public static function getPersentaseAnggaran()
@@ -116,7 +116,7 @@ class DatabaseHelper
         });
 
         return $anggaranDenganPersentase;
-        
+
     }
 
     public static function getJumlahTransaksiBudgeting($param)
@@ -138,10 +138,10 @@ class DatabaseHelper
 
                                         // return $jumlahTransaksiKebutuhan;
             $groupedData = [];
-                                
+
             foreach ($jumlahTransaksiKebutuhan as $item) {
                 $kategori = $item["kategori_anggaran"];
-                                
+
                                             // Jika kategori_anggaran belum ada dalam array groupedData, inisialisasi dengan nilai awal
                 if (!isset($groupedData[$kategori])) {
                     $groupedData[$kategori] = [
@@ -151,14 +151,14 @@ class DatabaseHelper
                         "selisih" => 0,
                     ];
                 }
-                                
+
                 // Menjumlahkan nilai jumlah_anggaran dan jumlah_transaksi
                 $groupedData[$kategori]["jumlah_anggaran"] += $item["jumlah_anggaran"];
                 $groupedData[$kategori]["jumlah_transaksi"] += intval($item["jumlah_transaksi"]);
-                                
+
                 // Menghitung selisih
                 $groupedData[$kategori]["selisih"] = $groupedData[$kategori]["jumlah_anggaran"] - $groupedData[$kategori]["jumlah_transaksi"];
-            };                                    
+            };
             return array_values($groupedData);
     }
 
@@ -207,7 +207,7 @@ class DatabaseHelper
 
         // Mengatur zona waktu "Asia/Jakarta"
         $tanggalSaatIni->setTimezone('Asia/Jakarta');
-        
+
         // Format tanggal sesuai dengan kebutuhan Anda
         $tanggalSaatIniFormatted = $tanggalSaatIni->format('Y-m-d H:i:s');
 
@@ -223,7 +223,7 @@ class DatabaseHelper
 
         // Mengatur zona waktu "Asia/Jakarta"
         $tanggalSaatIni->setTimezone('Asia/Jakarta');
-        
+
         // Format tanggal sesuai dengan kebutuhan Anda
         $tanggalSaatIniFormatted = $tanggalSaatIni->format('Y-m-d H:i:s');
 
@@ -243,7 +243,7 @@ class DatabaseHelper
 
     }
 
-    public static function getDate() 
+    public static function getDate()
     {
         App::setLocale('id');
 
@@ -254,7 +254,7 @@ class DatabaseHelper
         return $formattedDate;
     }
 
-    public static function getTime() 
+    public static function getTime()
     {App::setLocale('id');
 
         $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
@@ -307,7 +307,7 @@ class DatabaseHelper
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
                         ->where('transaksis.jenis_transaksi_id', 2);
-                       
+
         if(request()->id == 'all') {
             $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
             ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
@@ -319,5 +319,23 @@ class DatabaseHelper
         return $transaksi->get();
 
 
+    }
+
+    public static function getNextMonth()
+    {
+        App::setLocale('id');
+
+        $date = Carbon::now();
+        $nextMonth = $date->addMonth(); // Mengambil tanggal dan waktu saat ini
+        return $nextMonth->format('Y-m-d H:i:s');
+    }
+
+    public static function getNowMonth()
+    {
+        App::setLocale('id');
+
+        $date = Carbon::now();
+        // $nextMonth = $date->addMonth(); // Mengambil tanggal dan waktu saat ini
+        return $date->format('Y-m-d H:i:s');
     }
 }

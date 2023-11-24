@@ -123,6 +123,7 @@
                             <th scope="col" class="px-4 py-3">user</th>
                             <th scope="col" class="px-4 py-3">email</th>
                             <th scope="col" class="px-4 py-3">user role</th>
+                            <th scope="col" class="px-4 py-3">payment</th>
                             <th scope="col" class="px-4 py-3">tanggal registrasi</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">Actions</span>
@@ -198,7 +199,7 @@
                                         No Role
                                     @endif
                                 </td>
-
+                                <td class="px-4 py-3">{{ $item->payment->status ?? 'Free' }}</td>
                                 <td class="px-4 py-3">{{ $item->created_at }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="" data-dropdown-toggle="user-id{{ $item->id }}"

@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function showUser()
     {
-        $user = User::paginate(15);
+        $user = User::with('payment')->paginate(15);
         $role = Role::all();
         return view('dashboard.admin.user.index', [
             'user' => $user,

@@ -13,6 +13,7 @@ use App\Http\Controllers\KategoriAnggaranController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\paymentController;
 use App\Http\Controllers\printController;
 use App\Http\Controllers\SuppliersorCustomersController;
 use App\Http\Controllers\TransaksiController;
@@ -29,6 +30,7 @@ use Maatwebsite\Excel\Row;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Models\Payment;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,19 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('test', function() {
+    $now = DatabaseHelper::getNowMonth();
+    $payments = Payment::where('langganan_berakhir', '<' , $now)->update(['status' => 'expired']);
+
+        // foreach($payments as $item) {
+        //     $item->update(['status' => 'expired']);
+        // }
+
+    return Payment::all();
+});
+
+Route::post('/create_payment/change_status', [paymentController::class, 'changeStatus']);
+
 Route::get('/email/verify', function () {
     return view('user.email_konfirmasi.index');
 })->middleware('auth')->name('verification.notice');
@@ -48,7 +63,7 @@ Route::get('/email/verify', function () {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/');
+    return redirect('/create_payment');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -92,6 +107,8 @@ Route::middleware(['guest'])->group(function()
 
 Route::middleware(['auth', 'verified'])->group(function()
 {
+    Route::post('/create_payment', [paymentController::class, 'store']);
+    Route::get('/create_payment', [paymentController::class, 'index']);
 
     Route::group(['middleware' => ['role:super admin']], function () {
         Route::controller(UserController::class)->group(function() {
@@ -141,7 +158,7 @@ Route::middleware(['auth', 'verified'])->group(function()
    });
 });
 
-Route::middleware(['auth', 'verified' ,'check.user'])->group(function()
+Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(function()
 {
     Route::controller(DashboardController::class)->group(function()
     {
@@ -161,7 +178,7 @@ Route::middleware(['auth', 'verified' ,'check.user'])->group(function()
 
         Route::get('/transaksi','index');
 
-        Route::post('transaksi', 'store');
+        Route::post('/transaksi', 'store');
 
         Route::put('/transaksi', 'update');
 

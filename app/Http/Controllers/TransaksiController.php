@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportTransaksi;
+use App\Models\User;
 
 class TransaksiController extends Controller
 {
@@ -117,18 +118,46 @@ class TransaksiController extends Controller
             $validate['suppliers_or_customers_id'] = 0;
         }
 
-        if(empty($data_anggaran[0]['jumlah'])){
-            $validate['anggaran'] = false;
-            Transaksi::create($validate);
-            Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
-            return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
-        }else if($total_jumlah <= $data_anggaran[0]['jumlah']){
-            $validate['anggaran'] = true;
-            Transaksi::create($validate);
-            Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
-            return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
-        }else{
-            return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
+        $user = User::where('id', auth()->user()->id)->first();
+
+        if($user->payment_id != null && $user->payment != null){
+           if($user->payment->status == 'pending') {
+                if(Transaksi::where('user_id', auth()->user()->id)->count() > 5) {
+                    return redirect('/transaksi');
+                }else{
+                    if(empty($data_anggaran[0]['jumlah'])){
+                        $validate['anggaran'] = false;
+                        Transaksi::create($validate);
+                        Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                        return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                    }else if($total_jumlah <= $data_anggaran[0]['jumlah']){
+                        $validate['anggaran'] = true;
+                        Transaksi::create($validate);
+                        Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                        return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                    }else{
+                        return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
+                    }
+            }
+           }
+        }else if($user->payment_id == null){
+            if(Transaksi::where('user_id', auth()->user()->id)->count() > 5) {
+                return redirect('/transaksi');
+            }else{
+                if(empty($data_anggaran[0]['jumlah'])){
+                    $validate['anggaran'] = false;
+                    Transaksi::create($validate);
+                    Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                    return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                }else if($total_jumlah <= $data_anggaran[0]['jumlah']){
+                    $validate['anggaran'] = true;
+                    Transaksi::create($validate);
+                    Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                    return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                }else{
+                    return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
+                }
+            }
         }
 
     }
