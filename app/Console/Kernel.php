@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         //          ->dailyAt('23:16');
 
         $schedule->command('app:reset-payment-status')
-                 ->dailyAt('15:30');
+                 ->dailyAt('15:45');
     }
 
 
