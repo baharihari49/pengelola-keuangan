@@ -14,6 +14,7 @@
         <div class="py-8 px-4 mx-auto max-w-screen-xl h-screen flex items-center lg:py-16 lg:px-6">
             <div class="space-y-8 lg:flex w-fit justify-between mx-auto sm:gap-6 xl:gap-10 lg:space-y-0">
                 <!-- Pricing Card -->
+                @if (session()->has('free'))
                 <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                     <h3 class="mb-4 text-2xl font-semibold">Pemula</h3>
                     <p class="font-light mx-auto max-w-xs text-gray-500 sm:text-lg dark:text-gray-400">Best option for personal use & for your next project.</p>
@@ -52,6 +53,7 @@
                     </ul>
                     <a href="/" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900">Coba Gratis 30 Hari</a>
                 </div>
+                @endif
                 <!-- Pricing Card -->
                 <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
                     <h3 class="mb-4 text-2xl font-semibold">Mikro, Kecil, dan Menengah</h3>
