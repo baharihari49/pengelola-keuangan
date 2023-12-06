@@ -50,7 +50,7 @@ class FeedbackCenterController extends Controller
 
 
         if(request()->hasFile('lampiran') && $validate['lampiran']->isValid()) {
-            $validate['lampiran'] = request()->file('lampiran')->storeAs('lampiran-feedback-images', uniqid() . '-' . request()->file('lampiran')->getClientOriginalName());
+            $validate['lampiran'] = cloudinary()->upload(request()->file('lampiran')->getRealPath())->getSecurePath();
         }
 
         feedbackCenter::create($validate);

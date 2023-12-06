@@ -13,5 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'create_payment/change_status',
+        'test_payment',
+        'get_balance',
+        'disbursement',
+        'agents',
+        'signature',
+        'disbursement/bank-account-inquiry'
     ];
 }

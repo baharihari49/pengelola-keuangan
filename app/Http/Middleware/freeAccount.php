@@ -18,7 +18,7 @@ class freeAccount
     {
         $user = User::where('id', auth()->user()->id)->first();
 
-        if($user->payment_id == null){
+        if($user->payment_id != null && $user->payment->status == 'pending'){
             session()->flash('free', 'berlangganan sekarang');
         }else if($user->payment->status == 'expired'){
             session()->flash('expired', 'berlangganan sekarang');

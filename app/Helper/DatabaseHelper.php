@@ -10,6 +10,7 @@ use App\Models\Kategori_anggaran;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
+use GuzzleHttp;
 
 class DatabaseHelper
 {
@@ -18,7 +19,7 @@ class DatabaseHelper
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
                                                 ->where('void', false)
-                                                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                                ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
 
 
@@ -28,7 +29,7 @@ class DatabaseHelper
                                                 DB::raw("($jumlahPendapatanTransaksi * value / 100) AS jumlah")
                                             )
                                             ->where('user_id', auth()->user()->id)
-                                            // ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                            // ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                             ->get();
 
         return $jumlahBudgeting;
@@ -39,7 +40,7 @@ class DatabaseHelper
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
                                                 ->where('jenis_transaksi_id', 1)
                                                 ->where('void', false)
-                                                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                                                ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
 
         $records = DB::table('kategori_anggarans')
@@ -48,7 +49,7 @@ class DatabaseHelper
                     ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
                     ->where('transaksis.user_id', auth()->user()->id)
                     ->where('transaksis.void', false)
-                    ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
+                    ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
                     ->select(
                         'kategori_anggarans.id AS id_kategori_anggaran',
                         'kategori_anggarans.value',
@@ -92,7 +93,7 @@ class DatabaseHelper
                                 ->where('transaksis.user_id', auth()->user()->id)
                                 ->where('transaksis.void', false)
                                 ->where('anggarans.user_id', auth()->user()->id)
-                                ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
+                                ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
                                 ->select(
                                     'anggarans.kategori_transaksi_id',
                                     DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
@@ -126,7 +127,7 @@ class DatabaseHelper
                                         ->where('anggarans.user_id', auth()->user()->id)
                                         ->where('transaksis.user_id', auth()->user()->id)
                                         ->where('void', false)
-                                        ->whereMonth('transaksis.created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+                                        ->whereMonth('transaksis.tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
                                         ->where('kategori_anggarans.nama', $param)
                                         ->select(
                                             'kategori_anggarans.nama as kategori_anggaran',
@@ -167,7 +168,7 @@ class DatabaseHelper
         $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
 
 
-        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('created_at', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->where('jenis_transaksi_id', 2)->sum('jumlah');
+        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->where('jenis_transaksi_id', 2)->sum('jumlah');
 
         return [
             'jumlah_anggaran' => $jumlahAnggaran,
@@ -180,8 +181,8 @@ class DatabaseHelper
     {
         $userId = auth()->user()->id;
 
-        $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
-        $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('created_at', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
+        $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
+        $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
 
         $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'tabungan')->value('value');
 
@@ -338,4 +339,36 @@ class DatabaseHelper
         // $nextMonth = $date->addMonth(); // Mengambil tanggal dan waktu saat ini
         return $date->format('Y-m-d H:i:s');
     }
+
+    public static function getSignature($payload)
+    {
+        $client = new GuzzleHttp\Client();
+        $base_url = env('BASE_URL');
+        $secret_key = env('SECRETKEY_FLIP');
+
+        function getPrivateKey()
+        {
+            $private_key = env('PRIVATKEY_FLIP');
+
+            return $private_key;
+        }
+
+        function generateSignature($payload = [])
+            {
+                openssl_sign(
+                    json_encode($payload),
+                    $generatedSignature,
+                    openssl_pkey_get_private(getPrivateKey()),
+                    'sha256WithRSAEncryption'
+                );
+
+                return base64_encode($generatedSignature);
+            }
+
+        $signature = generateSignature($payload);
+        // $signature_acc_inq = generateSignature($payload_acc_inq);
+
+        return $signature;
+    }
+
 }

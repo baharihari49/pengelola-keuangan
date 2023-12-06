@@ -47,7 +47,7 @@
                 <div class="flex items-center gap-2 mb-3">
                     <figure>
                         <img class="w-10 h-10 rounded-full"
-                            src="{{ isset($data[0]->users_id->foto) && file_exists($data[0]->users_id->foto) ?? asset($data[0]->users_id->foto) : 'https://res.cloudinary.com/du0tz73ma/image/upload/v1700278579/default-profile_y2huqf.jpg' }}"
+                            src=" {{$data[0]->users_id->foto ?? 'https://res.cloudinary.com/du0tz73ma/image/upload/v1700278579/default-profile_y2huqf.jpg' }}"
                             alt="Rounded avatar">
                     </figure>
                     <div>
@@ -63,8 +63,8 @@
                 <p class="ml-12 mb-3 text-gray-800 font-medium text-lg">Lampiran</p>
                 @if (isset($data[0]->lampiran))
                     <div class="ml-12 relative">
-                        <img class="w-32 h-32" src="/storage/{{ $data[0]->lampiran }}" alt="lampiran">
-                        <a target="blank" href="/storage/{{ $data[0]->lampiran }}"
+                        <img class="h-32" src="{{ $data[0]->lampiran }}" alt="lampiran">
+                        <a target="blank" href="{{ $data[0]->lampiran }}"
                             class="w-32 h-32 text-dark-500 flex items-center justify-center absolute opacity-0 hover:opacity-50 rounded-md top-0 bg-gray-300">
                             Lihat
                         </a>

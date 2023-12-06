@@ -139,6 +139,20 @@ class TransaksiController extends Controller
                         return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
                     }
             }
+           }else if($user->payment->status == 'successful'){
+                if(empty($data_anggaran[0]['jumlah'])){
+                    $validate['anggaran'] = false;
+                    Transaksi::create($validate);
+                    Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                    return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                }else if($total_jumlah <= $data_anggaran[0]['jumlah']){
+                    $validate['anggaran'] = true;
+                    Transaksi::create($validate);
+                    Kategori_transaksi::where('id', $validate['kategori_transaksi_id'])->update(['show' => false]);
+                    return redirect('/transaksi')->with('sucsess', 'Data berhasil ditambahkan');
+                }else{
+                    return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
+                }
            }
         }else if($user->payment_id == null){
             if(Transaksi::where('user_id', auth()->user()->id)->count() > 5) {
@@ -349,7 +363,7 @@ class TransaksiController extends Controller
         $dataTanggal = Transaksi::where('user_id', auth()->user()->id)
                 ->where('void', false)
                 ->select(DB::raw('DATE(created_at) as tanggal'))
-                ->whereMonth('created_at', DatabaseHelper::getMonth())
+                ->whereMonth('tanggal', DatabaseHelper::getMonth())
                 ->distinct()
                 ->orderBy('tanggal', 'desc') // Mengatur urutan menjadi ascending
                 ->paginate((isset(request()->paginate) ? request()->paginate : 7));

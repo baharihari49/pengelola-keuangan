@@ -211,7 +211,8 @@ class UserController extends Controller
             if ($request->oldImage) {
                 Storage::delete($request->oldImage);
             }
-            $validate['foto'] = request()->file('profile-image')->store('profile-images');
+             // upload ke server cloud [CDN]
+             $validate['foto'] = cloudinary()->upload(request()->file('profile_image')->getRealPath())->getSecurePath();
         }
         User::where('id', auth()->user()->id)->update($validate);
         return redirect('/profile');

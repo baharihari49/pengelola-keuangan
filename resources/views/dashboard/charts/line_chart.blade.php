@@ -3,7 +3,7 @@
     <div>
         <h5 class="leading-none text-xl lg:text-3xl font-bold text-gray-900 dark:text-white pb-2">Rp
             {{
-                number_format($pendapatan, 0, ',', '.')
+                number_format($pendapatan_bulan_ini, 0, ',', '.')
             }}
         </h5>
         <p class="text-sm lg:text-base font-normal text-gray-500 dark:text-gray-400">Pendapatan bulan ini</p>

@@ -43,6 +43,22 @@ use App\Models\Payment;
 |
 */
 
+Route::post('test_payment', [paymentController::class, 'testPayment']);
+Route::get('get_balance', [paymentController::class, 'getBalance']);
+Route::post('disbursement', [paymentController::class, 'createDisbrusment']);
+// Route::get('createKey', [paymentController::class, 'generatePrivateKey']);
+Route::post('agents', [paymentController::class, 'makeAgents']);
+Route::post('signature', [paymentController::class, 'generatePrivateKey']);
+Route::get('get-disbursement', [paymentController::class, 'getDisbrusementById']);
+Route::get('get-disbursement-by-idempotency', [paymentController::class, 'getDisbrusementByIdempotency']);
+Route::get('get-all-disbrusement', [paymentController::class, 'getAllDisbrusment']);
+Route::get('disbursement/city-list', [paymentController::class, 'cityList']);
+Route::get('disbursement/country-list', [paymentController::class, 'countryList']);
+Route::get('disbursement/city-country-list', [paymentController::class, 'cityAndCountryList']);
+Route::post('disbursement/bank-account-inquiry', [paymentController::class, 'bankAccountInquiry']);
+
+
+
 Route::get('test', function() {
     $now = DatabaseHelper::getNowMonth();
     $payments = Payment::where('langganan_berakhir', '<' , $now)->update(['status' => 'expired']);

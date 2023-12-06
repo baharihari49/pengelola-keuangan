@@ -23,7 +23,7 @@ class feedbackManage extends Controller
         // ->with('users_id', 'progres_dev_by')
         // ->get();
         return view('dashboard.admin.feedback.layouts.detail_feedback',[
-            'user' => User::where('id', auth()->user()->id),
+            'user' => User::where('id', auth()->user()->id)->first(),
             'data' => feedbackCenter::where('id', request()->id)
                                     ->with('users_id', 'progres_dev_by')
                                     ->get()

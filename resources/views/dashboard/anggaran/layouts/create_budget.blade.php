@@ -28,7 +28,7 @@
                 <div class="flex gap-2">
                         <button type="submit" class="text-white mt-2 w-full text-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Simpan</button>
                 </div>
-                      
+
                 </form>
                 <form id="fromDelete" method="POST" action="/budgeting_delete">
                     @csrf
@@ -37,7 +37,7 @@
                      class="text-white mt-2 w-full text-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Hapus
                     </button>
                 </form>
-            </div>    
+            </div>
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@
                             <div class="flex gap-2 w-full">
                                 <button type="submit" class="text-white mt-2 w-full text-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Simpan</button>
                             </div>
-                            
+
                             </form>
                             <form id="fromDelete" method="POST" action="/budgeting_delete">
                                 @csrf
@@ -84,7 +84,7 @@
                                 </button>
                             </form>
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
 </div>
