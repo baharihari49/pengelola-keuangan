@@ -30,17 +30,18 @@ class paymentController extends Controller
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
         $payloads = [
-            "title" => request()->title,
+            "title" => 'bayar octans',
             "amount" => 10000,
             "type" => "SINGLE",
             "expired_date" => "2023-12-30 15:50",
             "redirect_url" => "", // Ganti dengan URL yang valid
             "is_address_required" => 0,
             "is_phone_number_required" => 0,
-            'step' => 2,
+            'step' => 3,
             'sender_name' => 'bahari',
             'sender_email' => 'baharihari49@gmail.com',
-            // 'sender_bank' => 'ovo',
+            "sender_bank"=> "dana",
+            "sender_bank_type"=> "wallet_account",
         ];
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
@@ -55,7 +56,7 @@ class paymentController extends Controller
 
         $dataResponse = json_decode($response);
 
-        return $dataResponse;
+        // return $dataResponse;
 
 
         $payment = new Payment();
@@ -64,13 +65,13 @@ class paymentController extends Controller
         $payment->amount = $request->amount;
         $payment->status = 'pending';
         $payment->external_id = $dataResponse->link_id;
-        $payment->url = $dataResponse->link_url;
+        $payment->url = $dataResponse->payment_url;
         $payment->user_id = auth()->user()->id;
 
         if($payment->save()){
             $paymenId = Payment::where('user_id', auth()->user()->id)->value('id');
             User::where('id', auth()->user()->id)->update(['payment_id' => $paymenId]);
-            return redirect('https://'.$dataResponse->link_url);
+            return redirect($dataResponse->payment_url);
         }
 
 
