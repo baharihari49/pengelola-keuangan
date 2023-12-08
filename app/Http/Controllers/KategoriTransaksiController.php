@@ -9,6 +9,7 @@ use App\Models\Kategori_transaksi;
 use App\Models\Kategori_anggaran;
 use App\Helper\DatabaseHelper;
 use App\Models\Transaksi;
+use Clockwork\Request\Request;
 use Illuminate\Support\Facades\DB;
 
 
@@ -108,7 +109,7 @@ class KategoriTransaksiController extends Controller
         })->get();
 
         return $results;
-        
+
     }
 
     public function api2()
@@ -146,5 +147,29 @@ class KategoriTransaksiController extends Controller
         return Kategori_transaksi::where('default', true)
                                   ->orWhere('user_id', auth()->user()->id)
                                   ->get();
+    }
+
+
+    public function manageKategori()
+    {
+        return view('dashboard.admin.manageKategori.index', [
+            'jenis_transaksi' => Jenis_transaksi::all(),
+            'kategori_transaksi' => Kategori_transaksi::where('default', true)->with('jenis_transaksi')->paginate(20),
+            'user' => DatabaseHelper::getUser()[0]
+        ]);
+    }
+
+    public function storeByAdmin(Request $request)
+    {
+        $validate = request()->validate([
+            'nama' => 'required|max:255',
+            'jenis_transaksi_id' => 'required',
+        ]);
+        $validate['user_id'] = 0;
+        $validate['default'] = 1;
+
+        Kategori_transaksi::create($validate);
+
+        return redirect('/manage-kategori');
     }
 }

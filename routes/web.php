@@ -255,6 +255,10 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('/get_kategori_transaksi_all_show_by_jenis_kategori_transaksi','api3');
 
         Route::get('/get_kategori_transaksi_all', 'getAllTransaksi');
+
+        Route::get('/manage-kategori', 'manageKategori');
+
+        Route::post('/manage-kategori-store', 'storeByAdmin');
     });
 
 

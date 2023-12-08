@@ -16,6 +16,7 @@ class Kategori_transaksi extends Model
         'jenis_transaksi_id',
         'kategori_anggaran_id',
         'user_id',
+        'default',
     ];
 
     public function jenis_transaksi(): belongsTo
