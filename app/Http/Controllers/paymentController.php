@@ -56,7 +56,7 @@ class paymentController extends Controller
 
         $dataResponse = json_decode($response);
 
-        // return $dataResponse;
+        return $dataResponse;
 
 
         $payment = new Payment();
