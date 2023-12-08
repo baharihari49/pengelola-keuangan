@@ -1,5 +1,5 @@
 @include('dashboard.admin.user.layouts.edit_role')
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="bg-gray-50 dark:bg-gray-900 mt-32">
     @if (session()->has('password_error'))
         <div id="toast-danger"
             class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
