@@ -3,6 +3,8 @@ const detailNama = document.getElementById('detail-nama')
 const jenisTransaksi = document.getElementById('jenis_transaksi_id')
 const options = Array.from(document.querySelectorAll('.options'))
 const fromUpdate = document.getElementById('form-update')
+const btnFormUpdate = document.getElementById('btn-update')
+// const btnFormUpdateForUser = document.querySelector('.formUpdate')
 
 
 
@@ -16,13 +18,18 @@ const btnCloseModal = document.getElementById('btn-close-modal')
 
 const resData = function() {
     updateProductModal.classList.replace('hidden', 'flex')
-    
-    document.body.appendChild(newElement)  
+
+    document.body.appendChild(newElement)
     let xhr = new XMLHttpRequest()
     xhr.onload = function () {
         if(this.status === 200) {
             let respone = JSON.parse(xhr.responseText)
             respone.forEach(res => {
+                console.log(res);
+                if(res.default == 1){
+                    btnFormUpdate.disabled = true
+                    btnFormUpdate.classList.toggle('formUpdate')
+                }
                 detailNama.value = res.nama
                 btnDelete.setAttribute('data-id', res.id)
                 fromUpdate.setAttribute('action', '/kategori_transaksi/?id=' + res.id)
@@ -39,6 +46,8 @@ const resData = function() {
     xhr.open('GET', '/get_kategori_transaksi_by_id/?id=' + this.getAttribute('data-id'), true);
     xhr.send()
 }
+
+
 
 
 btnUpdate.forEach(btnUpdate => {
@@ -153,3 +162,8 @@ simpleSearch.addEventListener('keyup', function() {
 })
 
 // FItur Live Search End
+
+
+// btnFormUpdateForUser.addEventListener('click', function(){
+//     alert('anda tidak dapat mengubah kategori default')
+// })
