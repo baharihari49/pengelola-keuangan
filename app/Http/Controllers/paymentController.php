@@ -37,11 +37,11 @@ class paymentController extends Controller
             "redirect_url" => "", // Ganti dengan URL yang valid
             "is_address_required" => 0,
             "is_phone_number_required" => 0,
-            'step' => 3,
-            'sender_name' => 'bahari',
-            'sender_email' => 'baharihari49@gmail.com',
-            "sender_bank"=> "dana",
-            "sender_bank_type"=> "wallet_account",
+            'step' => 1,
+            // 'sender_name' => 'bahari',
+            // 'sender_email' => 'baharihari49@gmail.com',
+            // "sender_bank"=> "dana",
+            // "sender_bank_type"=> "wallet_account",
         ];
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
@@ -420,5 +420,10 @@ class paymentController extends Controller
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }
+    }
+
+    public function chosePaymentMethode()
+    {
+        return view('user.payments.chosePayment.index');
     }
 }

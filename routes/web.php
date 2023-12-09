@@ -43,19 +43,7 @@ use App\Models\Payment;
 |
 */
 
-Route::post('test_payment', [paymentController::class, 'testPayment']);
-Route::get('get_balance', [paymentController::class, 'getBalance']);
-Route::post('disbursement', [paymentController::class, 'createDisbrusment']);
-// Route::get('createKey', [paymentController::class, 'generatePrivateKey']);
-Route::post('agents', [paymentController::class, 'makeAgents']);
-Route::post('signature', [paymentController::class, 'generatePrivateKey']);
-Route::get('get-disbursement', [paymentController::class, 'getDisbrusementById']);
-Route::get('get-disbursement-by-idempotency', [paymentController::class, 'getDisbrusementByIdempotency']);
-Route::get('get-all-disbrusement', [paymentController::class, 'getAllDisbrusment']);
-Route::get('disbursement/city-list', [paymentController::class, 'cityList']);
-Route::get('disbursement/country-list', [paymentController::class, 'countryList']);
-Route::get('disbursement/city-country-list', [paymentController::class, 'cityAndCountryList']);
-Route::post('disbursement/bank-account-inquiry', [paymentController::class, 'bankAccountInquiry']);
+
 
 
 
@@ -372,6 +360,28 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
 
         Route::post('/feedback', 'store');
     });
+
+    Route::controller(paymentController::class)->group(function()
+    {
+        Route::post('test_payment', 'testPayment');
+        Route::get('get_balance', 'getBalance');
+        Route::post('disbursement', 'createDisbrusment');
+        // Route::get('createKey', 'generatePrivateKey');
+        Route::post('agents', 'makeAgents');
+        Route::post('signature', 'generatePrivateKey');
+        Route::get('get-disbursement', 'getDisbrusementById');
+        Route::get('get-disbursement-by-idempotency', 'getDisbrusementByIdempotency');
+        Route::get('get-all-disbrusement', 'getAllDisbrusment');
+        Route::get('disbursement/city-list', 'cityList');
+        Route::get('disbursement/country-list', 'countryList');
+        Route::get('disbursement/city-country-list', 'cityAndCountryList');
+        Route::post('disbursement/bank-account-inquiry', 'bankAccountInquiry');
+
+        Route::get('/chose-payment-methode', 'chosePaymentMethode');
+
+    });
+
+
 
 });
 
