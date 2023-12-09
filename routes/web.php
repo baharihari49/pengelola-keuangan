@@ -379,6 +379,9 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
 
         Route::get('/chose-payment-methode', 'chosePaymentMethode');
 
+        Route::get('/payment-manage', 'paymentManage');
+        Route::post('/payment-manage', 'paymentByExternalId');
+
     });
 
 

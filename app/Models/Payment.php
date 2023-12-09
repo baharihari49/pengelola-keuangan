@@ -21,9 +21,9 @@ class Payment extends Model
         'langganan_berakhir',
     ];
 
-    // public function user_id(): BelongsTo // Perbaiki BelongsTo
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function user(): BelongsTo // Perbaiki BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

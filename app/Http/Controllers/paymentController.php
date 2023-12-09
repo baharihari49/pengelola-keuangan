@@ -426,4 +426,29 @@ class paymentController extends Controller
     {
         return view('user.payments.chosePayment.index');
     }
+
+    public function paymentManage()
+    {
+        $payment = Payment::with('user');
+
+        if(request()->has('status')){
+            $payment->where('status', request()->status)->paginate(15);
+        }else{
+            $payment->paginate(15);
+        }
+
+        // return $payment->paginate(15);
+
+        return view('user.payments.paymentManage.index', [
+            'data' => $payment->paginate(15)
+        ]);
+    }
+
+    public function paymentByExternalId()
+    {
+        $payment = Payment::with('user')->where('external_id', request()->search)->get();
+        return view('user.payments.paymentManage.index', [
+            'data' => $payment
+        ]);
+    }
 }
