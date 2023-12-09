@@ -5,17 +5,17 @@
         <a href="#" class="flex items-center mb-8 text-2xl font-semibold text-gray-900 dark:text-white">
             <img class="h-20 mr-2" src="./image/logo/octans.png" alt="logo">
         </a>
-        <div class="grid grid-cols-3 gap-5 container px-32">
-            <div class="border col-span-2 bg-white shadow-md rounded-md p-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 container px-3 lg:px-32">
+            <div class="border lg:col-span-2 bg-white shadow-md rounded-md p-10">
                 <h3 class="text-center font-semibold text-2xl mb-10">Pilih Metode Pembayaran</h3>
                 <div class="flex gap-3 justify-center">
-                    <div class="border rounded-md flex items-center px-5 text-blue-500 font-semibold text-2xl"><p>Virtual Account</p></div>
+                    <div class="border rounded-md flex items-center px-5 text-blue-500 font-semibold text-xl text-center lg:text-2xl"><p>Virtual Account</p></div>
                     <div class="border rounded-md p-5">
                         <img class="w-28" src="image/logo/logo_qris.png" alt="logo qris">
                     </div>
                 </div>
             </div>
-            <div class="border bg-white rounded-md shadow-md col-span-1 p-5">
+            <div class="border bg-white w-full rounded-md shadow-md lg:col-span-1 p-5">
                 <h3 class="text-center text-lg">Ringkasan Orderan</h3>
                 <hr class="my-2">
 
@@ -32,7 +32,7 @@
                     </tr>
                     <tr class="border-t-2">
                         <td class="text-gray-800 font-medium pt-1">Total</td>
-                        <td class="text-right text-blue-500 pt-1 font-medium text-lg">Rp55.074</td>
+                        <td class="text-right text-blue-500 pt-1 font-medium text-lg">Rp55.0</td>
                     </tr>
                 </table>
             </div>
