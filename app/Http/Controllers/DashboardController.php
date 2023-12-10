@@ -137,7 +137,7 @@ class DashboardController extends Controller
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
                         ->select(
-                            DB::raw('SUM(CASE WHEN jenis_transaksis.id IN (1, 4) THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id IN (2, 5) THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
+                            DB::raw('SUM(CASE WHEN jenis_transaksis.id IN (1, 4) THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id IN (2, 5) THEN transaksis.jumlah ELSE 0 END) AS saldo')
                         )
                         ->get();
 
