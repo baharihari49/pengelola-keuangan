@@ -42,7 +42,7 @@ class DashboardController extends Controller
             ->whereIn('transaksis.jenis_transaksi_id', [3, 4])
             ->groupBy('kategori_transaksi_id', 'kategori_transaksis.nama')
             ->orderByDesc('total_jumlah')
-            ->limit(7);
+            ->limit(7)->get();
 
 
 
@@ -69,7 +69,7 @@ class DashboardController extends Controller
                 ->where('void', false)
                 ->whereDate('tanggal', '>=', Carbon::now()->subDays(7)->format('Y-m-d'))
                 ->whereDate('tanggal', '<=', Carbon::now()->format('Y-m-d'))
-                ->limit(7),
+                ->limit(7)->get(),
             'anggarans' => DatabaseHelper::getPersentaseAnggaran(),
             'topPengeluaran' => $topPengeluaran,
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),

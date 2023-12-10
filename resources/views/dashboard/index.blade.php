@@ -307,7 +307,8 @@
         <div
             class="bg-white shadow-md relative p-0 rounded-lg lg:col-span-1 border-gray-300 dark:border-gray-600 max-h-max xl:h">
             <div class="py-2">
-                <p class="font-semibold text-lg lg:text-xl p-2 text-gray-700">Transaksi minggu ini</p>
+                <p class="font-semibold text-lg lg:text-xl p-2 text-gray-700">Transaksi minggu ini
+                </p>
                 @include('dashboard.transaksi_terkini')
                 <div
                     class="grid grid-cols-1 bottom-0 left-0 w-full absolute items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5 p-4 md:p-6 pt-0 md:pt-0">

@@ -186,7 +186,7 @@ class DatabaseHelper
         // $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
 
         $jumlahPendapatan = $transaksi->whereIn('jenis_transaksi_id', [1, 2])->sum('jumlah');
-        $jumlahTabungan = $transaksi->where('jenis_transaksi_id', 3)->sum('jumlah');
+        $jumlahTabungan = $transaksi->where('jenis_transaksi_id', 5)->sum('jumlah');
 
         $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'Tabungan')->value('value');
 

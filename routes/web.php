@@ -358,9 +358,5 @@ Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(fun
 
 
 Route::get('/info_bisni', function () {
-    return Transaksi::where('user_id', auth()->user()->id)
-        ->where('void', false)
-        ->whereDate('tanggal', '>=', Carbon::now()->subDays(7)->format('Y-m-d'))
-        ->whereDate('tanggal', '<=', Carbon::now()->format('Y-m-d'))
-        ->limit(7);
+    return DatabaseHelper::getJumlahBudgeting();
 });
