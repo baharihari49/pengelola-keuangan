@@ -22,12 +22,13 @@ class DashboardController extends Controller
     public function index()
     {
         $saldo = Transaksi::join('jenis_transaksis', 'transaksis.jenis_transaksi_id', '=', 'jenis_transaksis.id')
-                        ->where('transaksis.user_id', auth()->user()->id)
-                        ->where('transaksis.void', false)
-                        ->select(
-                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
-                        )
-                        ->get();
+                            ->where('transaksis.user_id', auth()->user()->id)
+                            ->where('transaksis.void', false)
+                            ->select(
+                                DB::raw('SUM(CASE WHEN jenis_transaksis.id IN (1, 4) THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id IN (2, 5) THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
+                            )
+                            ->get();
+
 
 
 
@@ -38,7 +39,7 @@ class DashboardController extends Controller
                                     ->where('transaksis.user_id', auth()->user()->id)
                                     ->where('void', false)
                                     ->whereMonth('transaksis.created_at', DatabaseHelper::getMonth())
-                                    ->where('transaksis.jenis_transaksi_id', 2)
+                                    ->whereIn('transaksis.jenis_transaksi_id', [2,5])
                                     ->groupBy('kategori_transaksi_id', 'kategori_transaksis.nama')
                                     ->orderByDesc('total_jumlah')
                                     ->get();
@@ -50,16 +51,16 @@ class DashboardController extends Controller
 
         return view('dashboard.index', [
             'pendapatan' => Transaksi::where('user_id', auth()->user()->id)
-                                      ->where('jenis_transaksi_id', 1)
+                                      ->whereIn('jenis_transaksi_id', [1,4])
                                       ->where('void', false)
                                       ->sum('jumlah'),
             'pendapatan_bulan_ini' => Transaksi::where('user_id', auth()->user()->id)
-                                      ->where('jenis_transaksi_id', 1)
+                                      ->whereIn('jenis_transaksi_id', [1,4])
                                       ->where('void', false)
                                       ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                       ->sum('jumlah'),
             'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 2)
+                                    ->whereIn('jenis_transaksi_id', [2,5])
                                     ->where('void', false)
                                     ->sum('jumlah'),
             'saldo' => $saldo,
@@ -136,7 +137,7 @@ class DashboardController extends Controller
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
                         ->select(
-                            DB::raw('SUM(CASE WHEN jenis_transaksis.id = 1 THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id = 2 THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
+                            DB::raw('SUM(CASE WHEN jenis_transaksis.id IN (1, 4) THEN transaksis.jumlah ELSE 0 END) - (SUM(CASE WHEN jenis_transaksis.id IN (2, 5) THEN transaksis.jumlah ELSE 0 END) + SUM(CASE WHEN jenis_transaksis.id = 3 THEN transaksis.jumlah ELSE 0 END)) AS saldo')
                         )
                         ->get();
 
@@ -154,12 +155,12 @@ class DashboardController extends Controller
     public function get_perbandingan_pemasukan_pengeluaran()
     {
         $data_jumlah_pendapatan = Transaksi::where('user_id', auth()->user()->id)
-                                            ->where('jenis_transaksi_id', 1)
+                                            ->whereIn('jenis_transaksi_id', [1,4])
                                             ->where('void', false)
                                             ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                             ->sum('jumlah');
         $data_jumlah_pengeluaran = Transaksi::where('user_id', auth()->user()->id)
-                                            ->where('jenis_transaksi_id', 2)
+                                            ->whereIn('jenis_transaksi_id', [2,5])
                                             ->where('void', false)
                                             ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                             ->sum('jumlah');

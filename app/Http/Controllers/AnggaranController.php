@@ -141,7 +141,7 @@ class AnggaranController extends Controller
 
     public function budgeting()
     {
-        return Transaksi::where('user_id', auth()->user()->id)->where('jenis_transaksi_id', 1)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('void', false)->sum("jumlah");
+        return Transaksi::where('user_id', auth()->user()->id)->whereIn('jenis_transaksi_id', [1,4])->whereMonth('tanggal', DatabaseHelper::getMonth())->where('void', false)->sum("jumlah");
     }
 
     public static function getKategoriAnggaranId()

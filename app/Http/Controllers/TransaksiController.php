@@ -155,7 +155,7 @@ class TransaksiController extends Controller
                 }
            }
         }else if($user->payment_id == null){
-            if(Transaksi::where('user_id', auth()->user()->id)->count() > 5) {
+            if(Transaksi::where('user_id', auth()->user()->id)->count() > 50) {
                 return redirect('/transaksi');
             }else{
                 if(empty($data_anggaran[0]['jumlah'])){
@@ -389,7 +389,7 @@ class TransaksiController extends Controller
 
         // Ambil data jumlah untuk setiap tanggal
         $records = Transaksi::where('user_id', auth()->user()->id)
-                            ->where('jenis_transaksi_id', request()->id)
+                            ->whereIn('jenis_transaksi_id', [request()->id, request()->id2])
                             ->where('void', false)
                             ->select(
                                 DB::raw('DATE(created_at) as tanggal'),
@@ -402,17 +402,21 @@ class TransaksiController extends Controller
         // Buat array baru untuk hasil akhir
         $hasilAkhir = [];
 
+        // return $records;
+
         // Iterasi melalui data tanggal unik
         foreach ($dataTanggal as $tanggal) {
             $tanggalData = $tanggal['tanggal'];
 
             // Temukan data jumlah yang sesuai dengan tanggal
-            $jumlahData = $records->where('tanggal', $tanggalData)->first();
+            $jumlahData = $records->where('tanggal', $tanggalData);
+
+
 
             // Buat entri baru dengan tanggal dan jumlah yang sesuai
             $hasilAkhir[] = [
                 'tanggal' => $tanggalData,
-                'jumlah' => $jumlahData ? $jumlahData->jumlah : 0, // Jika tidak ada, set jumlah menjadi 0
+                'jumlah' => $jumlahData ? $jumlahData->sum('jumlah') : 0, // Jika tidak ada, set jumlah menjadi 0
             ];
         }
 

@@ -37,7 +37,7 @@ class LaporanController extends Controller
     //                                             'transaksis.kategori_transaksi_id'
     //                                         )
     //                                         ->get();
-    
+
     //     $pengeluaranKeinginan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
     //                             ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', 'kategori_anggarans.id')
     //                             ->where('transaksis.user_id', auth()->user()->id)
@@ -63,9 +63,9 @@ class LaporanController extends Controller
     //                                 // 'transaksis.deskripsi'
     //                             )
     //                             ->groupBy('transaksis.kategori_transaksi_id')
-    //                             ->get();          
-                                
-        
+    //                             ->get();
+
+
     //     return view('dashboard.laporan.index', [
     //         'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
     //                                 ->where('jenis_transaksi_id', 1)
@@ -102,21 +102,21 @@ class LaporanController extends Controller
 
     public function showLaporanPemasukan()
     {
-       
+
         return view('dashboard.laporan.pemasukan.index', [
             'data' => Transaksi::where('user_id', auth()->user()->id)
-                                ->where('jenis_transaksi_id', 1)
+                                ->whereIn('jenis_transaksi_id',[1,4])
                                 ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                                 ->paginate(15),
             'pemasukan' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 1)
+                                    ->whereIn('jenis_transaksi_id',[1,4])
                                     ->where('void', false)
                                     ->sum('jumlah'),
             'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->where('transaksis.user_id', auth()->user()->id)
                                     ->where('void', false)
-                                    ->where('transaksis.jenis_transaksi_id', 1)
+                                    ->whereIn('transaksis.jenis_transaksi_id', [1,4])
                                     ->distinct()
                                     ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
                                     ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
@@ -130,18 +130,18 @@ class LaporanController extends Controller
     {
         return view('dashboard.laporan.pengeluaran.index', [
             'data' => Transaksi::where('user_id', auth()->user()->id)
-                                ->where('jenis_transaksi_id', 2)
+                                ->whereIn('jenis_transaksi_id', [2,5])
                                 ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                                 ->paginate(15),
             'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
-                                    ->where('jenis_transaksi_id', 2)
+                                    ->whereIn('jenis_transaksi_id', [2,5])
                                     ->where('void', false)
                                     ->sum('jumlah'),
             'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->where('transaksis.user_id', auth()->user()->id)
                                     ->where('void', false)
-                                    ->where('transaksis.jenis_transaksi_id', 2)
+                                    ->whereIn('transaksis.jenis_transaksi_id', [2,5])
                                     ->distinct()
                                     ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
                                     ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
@@ -151,7 +151,7 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function showLaporanLabaRugi() 
+    public function showLaporanLabaRugi()
     {
     $transaksi = Transaksi::where('user_id', auth()->user()->id)
                             ->where('void', false);
@@ -160,22 +160,22 @@ class LaporanController extends Controller
         $transaksi->whereMonth('tanggal', request()->id);
         $bulanAngka = request()->id;
         $tanggal = Carbon::create(null, $bulanAngka, 1);
-    
+
         $namaBulan = $tanggal->isoFormat('MMMM');
     }
-    
+
     $transaksi = $transaksi->get(); // Eksekusi query dan dapatkan hasilnya
-    
+
     return view('dashboard.laporan.labarugi.index', [
-        'pemasukan' => $transaksi->where('jenis_transaksi_id', 1)->sum('jumlah'),
-        'pengeluaran' => $transaksi->where('jenis_transaksi_id', 2)->sum('jumlah'),
+        'pemasukan' => $transaksi->whereIn('jenis_transaksi_id', [1,4])->sum('jumlah'),
+        'pengeluaran' => $transaksi->whereIn('jenis_transaksi_id', [2,5])->sum('jumlah'),
         'pemasukanByKategori' => DatabaseHelper::getTransaksiPemasukanGroupByKategori(),
         'pengeluaranByKategori' => DatabaseHelper::getTransaksiPengeluaranGroupByKategori(),
         'user' => DatabaseHelper::getUser()[0],
         'dataBulan' => DatabaseHelper::getMonthTransaki(),
         'bulan' => $namaBulan,
     ]);
-    
+
     }
 
     public function pemasukanExcel()
@@ -199,19 +199,19 @@ class LaporanController extends Controller
                             ->where('user_id', auth()->user()->id)
                             ->where('jenis_transaksi_id', request()->jenis_transaksi_id)
                             ->where('void', false);
-    
+
     if (request()->id == 'all') {
         $transaksi = $transaksi->get();
     } else {
         $transaksi = $transaksi->where('kategori_transaksi_id', request()->id)->get();
     }
-    
+
         $transaksiFinal = [];
         foreach($transaksi as $item) {
             $transaksiFinal[] = [
                 'no_transaksi' => $item->no_transaksi,
                 'tanggal' => $item->tanggal,
-                'kategori' => $item->kategori_transaksi->nama,                
+                'kategori' => $item->kategori_transaksi->nama,
                 'supplier' => $item->suppliers_or_customers->nama_bisnis ?? '--',
                 'deskripsi' => $item->deskripsi ?? '--',
                 'jumlah' => number_format($item->jumlah, 0 ,'.', ',')
@@ -227,7 +227,7 @@ class LaporanController extends Controller
                             ->where('user_id', auth()->user()->id)
                             ->where('jenis_transaksi_id', request()->jenis_transaksi_id)
                             ->where('void', false);
-    
+
         if (request()->id == 'all') {
             $transaksi = $transaksi->get();
         } else {
@@ -238,7 +238,7 @@ class LaporanController extends Controller
             $transaksiFinal[] = [
                 'no_transaksi' => $item->no_transaksi,
                 'tanggal' => $item->tanggal,
-                'kategori' => $item->kategori_transaksi->nama,                
+                'kategori' => $item->kategori_transaksi->nama,
                 'supplier' => $item->suppliers_or_customers->nama_bisnis ?? '--',
                 'deskripsi' => $item->deskripsi ?? '--',
                 'jumlah' => number_format($item->jumlah, 0 ,'.', ',')

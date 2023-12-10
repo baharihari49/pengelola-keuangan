@@ -14,12 +14,19 @@ class Jenis_transaksisSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenis_transaksis')->insert([
-            'nama' => 'Pemasukan',
+            'nama' => 'Pendapatan Tetap',
         ]);
         DB::table('jenis_transaksis')->insert([
-            'nama' => 'Pengeluaran',
-        ]);DB::table('jenis_transaksis')->insert([
+            'nama' => 'Pengeluaran Pokok',
+        ]);
+        DB::table('jenis_transaksis')->insert([
             'nama' => 'Tabungan',
+        ]);
+        DB::table('jenis_transaksis')->insert([
+            'nama' => 'Pendapatan Tidak Tetap',
+        ]);
+        DB::table('jenis_transaksis')->insert([
+            'nama' => 'Pengeluaran Tambahan',
         ]);
     }
 }

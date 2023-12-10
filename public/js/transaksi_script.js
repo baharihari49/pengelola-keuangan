@@ -306,6 +306,12 @@
                     optionTransaksi[0].selected = true;
                 } else if (res.jenis_transaksi_id == 2) {
                     optionTransaksi[1].selected = true;
+                } else if (res.jenis_transaksi_id == 3) {
+                    optionTransaksi[2].selected = true;
+                } else if (res.jenis_transaksi_id == 4) {
+                    optionTransaksi[3].selected = true;
+                } else if (res.jenis_transaksi_id == 5) {
+                    optionTransaksi[4].selected = true;
                 }
             });
 

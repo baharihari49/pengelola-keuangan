@@ -90,14 +90,14 @@
               show: false,
             },
           }
-      
+
           if (document.getElementById("labels-chart") && typeof ApexCharts !== 'undefined') {
             const chart = new ApexCharts(document.getElementById("labels-chart"), options);
             chart.render();
           }
     }
 
-    
+
     const xhr = new XMLHttpRequest();
 
 
@@ -117,12 +117,12 @@
                 }
             }
 
-            xhr2.open('GET', '/get_transaksi_by_jenis_transaksi_id_line_chart?id=2')
+            xhr2.open('GET', '/get_transaksi_by_jenis_transaksi_id_line_chart?id=2&id2=5')
             xhr2.send()
         }
     }
 
-    xhr.open('GET', '/get_transaksi_by_jenis_transaksi_id_line_chart?id=1', true)
+    xhr.open('GET', '/get_transaksi_by_jenis_transaksi_id_line_chart?id=1&id2=4', true)
     xhr.send()
 
 

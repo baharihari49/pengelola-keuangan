@@ -17,7 +17,7 @@ class DatabaseHelper
     public static function getJumlahBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-                                                ->where('jenis_transaksi_id', 1)
+                                                ->whereIn('jenis_transaksi_id', [1,4])
                                                 ->where('void', false)
                                                 ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
@@ -38,7 +38,7 @@ class DatabaseHelper
     public static function getPersentaseBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-                                                ->where('jenis_transaksi_id', 1)
+                                                ->whereIn('jenis_transaksi_id', [1,4])
                                                 ->where('void', false)
                                                 ->whereMonth('tanggal', DatabaseHelper::getMonth())
                                                 ->sum('jumlah');
@@ -168,7 +168,7 @@ class DatabaseHelper
         $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
 
 
-        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->where('jenis_transaksi_id', 2)->sum('jumlah');
+        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->whereIn('jenis_transaksi_id', [2,5])->sum('jumlah');
 
         return [
             'jumlah_anggaran' => $jumlahAnggaran,
@@ -181,10 +181,15 @@ class DatabaseHelper
     {
         $userId = auth()->user()->id;
 
-        $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 1)->sum('jumlah');
-        $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
+        $transaksi =  Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->get();
 
-        $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'tabungan')->value('value');
+        // $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->whereIn('jenis_transaksi_id', [1,4])->sum('jumlah');
+        // $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
+
+        $jumlahPendapatan = $transaksi->whereIn('jenis_transaksi_id', [1,4])->sum('jumlah');
+        $jumlahTabungan = $transaksi->where('jenis_transaksi_id', 3)->sum('jumlah');
+
+        $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'Tabungan')->value('value');
 
         // // Debugging: Cetak nilai variabel
         // var_dump($jumlahPendapatan, $jumlahTabungan, $dataTabungan);
@@ -289,7 +294,7 @@ class DatabaseHelper
         $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
-                        ->where('transaksis.jenis_transaksi_id', 1);
+                        ->whereIn('transaksis.jenis_transaksi_id', [1,4]);
 
         if(request()->id == 'all') {
             $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
@@ -307,7 +312,7 @@ class DatabaseHelper
           $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                         ->where('transaksis.user_id', auth()->user()->id)
                         ->where('void', false)
-                        ->where('transaksis.jenis_transaksi_id', 2);
+                        ->whereIn('transaksis.jenis_transaksi_id', [2,5]);
 
         if(request()->id == 'all') {
             $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))

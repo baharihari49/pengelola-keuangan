@@ -79,6 +79,8 @@ class aksesLevelController extends Controller
     {
         $role = Role::where('id', request()->id)->first();
 
+        // return request();
+
 
         // Ambil izin yang sudah ada pada role
         $existingPermissions = $role->permissions->pluck('name')->toArray();
