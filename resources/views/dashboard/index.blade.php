@@ -2,61 +2,78 @@
 
 @section('container')
     @if (session()->has('alert'))
-        <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+            role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
             <span class="sr-only">Info</span>
             <div>
-              <span class="font-medium">Mohon Lengkapi Profile Anda</span>
+                <span class="font-medium">Mohon Lengkapi Profile Anda</span>
             </div>
-          </div>
+        </div>
     @endif
 
     @if (session()->has('free'))
-    <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-        <div class="flex items-center">
-          <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-          </svg>
-          <span class="sr-only">Info</span>
-          <h3 class="text-lg font-medium">Anda menggunakan layanan uji coba</h3>
+        <div id="alert-additional-content-1"
+            class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+            role="alert">
+            <div class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-lg font-medium">Anda menggunakan layanan uji coba</h3>
+            </div>
+            <div class="mt-2 mb-4 text-sm">
+                Untuk mendapatkan keuntungan yang lebih baik silahkan berlangganan
+            </div>
+            <div class="flex">
+                <a href="/create_payment" type="button"
+                    class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Berlangganan sekarang
+                </a>
+                <button type="button"
+                    class="text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800"
+                    data-dismiss-target="#alert-additional-content-1" aria-label="Close">
+                    Nanti aja
+                </button>
+            </div>
         </div>
-        <div class="mt-2 mb-4 text-sm">
-         Untuk mendapatkan keuntungan yang lebih baik silahkan berlangganan
-        </div>
-        <div class="flex">
-          <a href="/create_payment" type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Berlangganan sekarang
-          </a>
-          <button type="button" class="text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800" data-dismiss-target="#alert-additional-content-1" aria-label="Close">
-            Nanti aja
-          </button>
-        </div>
-      </div>
     @endif
 
     @if (session()->has('expired'))
-    <div id="alert-additional-content-1" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-        <div class="flex items-center">
-          <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-          </svg>
-          <span class="sr-only">Info</span>
-          <h3 class="text-lg font-medium">Langganan Expired</h3>
+        <div id="alert-additional-content-1"
+            class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+            role="alert">
+            <div class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="text-lg font-medium">Langganan Expired</h3>
+            </div>
+            <div class="mt-2 mb-4 text-sm">
+                Untuk mendapatkan keuntungan yang lebih baik silahkan berlangganan
+            </div>
+            <div class="flex">
+                <a href="/create_payment" type="button"
+                    class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                    Berlangganan sekarang
+                </a>
+                <button type="button"
+                    class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-400 dark:hover:text-white dark:focus:ring-red-800"
+                    data-dismiss-target="#alert-additional-content-1" aria-label="Close">
+                    Nanti aja
+                </button>
+            </div>
         </div>
-        <div class="mt-2 mb-4 text-sm">
-         Untuk mendapatkan keuntungan yang lebih baik silahkan berlangganan
-        </div>
-        <div class="flex">
-          <a href="/create_payment" type="button" class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-            Berlangganan sekarang
-          </a>
-          <button type="button" class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-400 dark:hover:text-white dark:focus:ring-red-800" data-dismiss-target="#alert-additional-content-1" aria-label="Close">
-            Nanti aja
-          </button>
-        </div>
-      </div>
     @endif
 
     <div class="mb-5 p-5 bg-white rounded-md shadow-md">
@@ -86,7 +103,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pendapatan, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Pendapatan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-bold">Total Pendapatan Keseluruhan</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -108,7 +125,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pengeluaran, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Pengeluaran</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-bold">Total Pengeluaran Keseluruhan</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -163,7 +180,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-bold">Kebutuhan</h5>
+                    <h5 class="text-base xl:text-xl font-bold">Anggaran kebutuhan bulan ini</h5>
                 </div>
                 <div class="">
                     @php $hasKebutuhan = false; @endphp
@@ -203,7 +220,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Keinginan</h5>
+                    <h5 class="text-base xl:text-xl font-semibold">Anggaran keinginan bulan ini</h5>
                 </div>
                 <div class="">
                     @php $hasKeinginan = false; @endphp
@@ -243,7 +260,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Tabungan</h5>
+                    <h5 class="text-base xl:text-xl font-semibold">Perkiraan tabungan bulan ini</h5>
                 </div>
                 <div class="">
                     @php $hasTabungan = false; @endphp
@@ -290,7 +307,7 @@
         <div
             class="bg-white shadow-md relative p-0 rounded-lg lg:col-span-1 border-gray-300 dark:border-gray-600 max-h-max xl:h">
             <div class="py-2">
-                <p class="font-semibold text-lg lg:text-xl p-2 text-gray-700">Transaksi terkini</p>
+                <p class="font-semibold text-lg lg:text-xl p-2 text-gray-700">Transaksi minggu ini</p>
                 @include('dashboard.transaksi_terkini')
                 <div
                     class="grid grid-cols-1 bottom-0 left-0 w-full absolute items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5 p-4 md:p-6 pt-0 md:pt-0">
@@ -341,7 +358,7 @@
         <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
 
             <div class="bg-white shadow-md rounded-lg p-3">
-                <h5 class="font-semibold text-gray-700 text-xl mb-4 mt-2">Top Pengeluaran</h5>
+                <h5 class="font-semibold text-gray-700 text-xl mb-4 mt-2">Pengeluaran terbanyak</h5>
                 @include('dashboard.top_pengeluaran')
             </div>
 
@@ -353,9 +370,9 @@
                 @include('dashboard.charts.pie_chart_budgeting')
             </div>
 
-            <div class="bg-white shadow-md rounded-lg p-5">
+            {{-- <div class="bg-white shadow-md rounded-lg p-5">
                 @include('dashboard.charts.pie_chart_transaksi_anggaran')
-            </div>
+            </div> --}}
         </div>
         <div class="col-span-2 md:col-span-1 w-full">
             <div class="bg-white shadow-md rounded-lg p-5">

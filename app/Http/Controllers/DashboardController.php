@@ -42,7 +42,7 @@ class DashboardController extends Controller
             ->whereIn('transaksis.jenis_transaksi_id', [3, 4])
             ->groupBy('kategori_transaksi_id', 'kategori_transaksis.nama')
             ->orderByDesc('total_jumlah')
-            ->get();
+            ->limit(7);
 
 
 
@@ -68,7 +68,7 @@ class DashboardController extends Controller
             'transaksiTerkini' => Transaksi::where('user_id', auth()->user()->id)
                 ->where('void', false)
                 ->whereDate('tanggal', now()->format('Y-m-d'))
-                ->paginate(7),
+                ->limit(7),
             'anggarans' => DatabaseHelper::getPersentaseAnggaran(),
             'topPengeluaran' => $topPengeluaran,
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),

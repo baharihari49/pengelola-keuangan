@@ -13,11 +13,12 @@
                     </thead>
                     <tbody id="tabel-body">
                         @foreach ($topPengeluaran as $index => $item)
-                        <tr id="tabel-row" class="border-b dark:border-gray-700">
-                            <td class="px-4 py-3 text-red-600 font-medium">{{$index + 1}}</td>
-                            <td class="px-4 py-3 text-red-600 font-medium">{{$item['nama']}}</td>
-                            <td class="px-4 py-3 text-red-600 font-medium">Rp {{number_format($item['total_jumlah'], 0, ',', '.')}}</td>
-                        </tr>
+                            <tr id="tabel-row" class="border-b dark:border-gray-700">
+                                <td class="px-4 py-3 text-red-600 font-medium">{{ $index + 1 }}</td>
+                                <td class="px-4 py-3 text-red-600 font-medium">{{ $item['nama'] }}</td>
+                                <td class="px-4 py-3 text-red-600 font-medium">Rp
+                                    {{ number_format($item['total_jumlah'], 0, ',', '.') }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

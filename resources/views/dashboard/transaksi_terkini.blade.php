@@ -8,21 +8,29 @@
                         <tr>
                             <th scope="col" class="px-4 py-3 text-sm">Kategori</th>
                             <th scope="col" class="px-4 py-3 text-sm">Jumlah</th>
+                            <th scope="col" class="px-4 py-3 text-sm">Waktu</th>
                         </tr>
                     </thead>
                     <tbody id="tabel-body">
-                       @foreach ($transaksiTerkini as $item)
-                        <tr id="tabel-row" class="border-b dark:border-gray-700">
-                            <td style="color: {{($item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4) ? '#057A55' : (($item['jenis_transaksi_id'] == 3) ? '#1C64F2' : '#E02424')}}"
-                             class="px-4 py-3 font-medium text-sm">{{$item['kategori_transaksi']->nama ?? '--'}}</td>
+                        @foreach ($transaksiTerkini as $item)
+                            <tr id="tabel-row" class="border-b dark:border-gray-700">
+                                <td style="color: {{ $item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4 ? '#057A55' : ($item['jenis_transaksi_id'] == 3 ? '#1C64F2' : '#E02424') }}"
+                                    class="px-4 py-3 font-medium text-sm">
+                                    {{ $item['kategori_transaksi']->nama ?? '--' }}</td>
 
-                            <th scope="row"
-                            style="color: {{($item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4) ? '#057A55' : (($item['jenis_transaksi_id'] == 3) ? '#1C64F2' : '#E02424')}}"
-                            class="px-4 py-3 text-sm font-medium whitespace-nowrap dark:text-white">{{($item['jenis_transaksi_id'] == 1) ? '+ Rp ' : '- Rp ' }}{{number_format($item['jumlah'], 0, ',', '.')}}</th>
+                                <th scope="row"
+                                    style="color: {{ $item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4 ? '#057A55' : ($item['jenis_transaksi_id'] == 3 ? '#1C64F2' : '#E02424') }}"
+                                    class="px-4 py-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                    {{ $item['jenis_transaksi_id'] == 1 ? '+ Rp ' : '- Rp ' }}{{ number_format($item['jumlah'], 0, ',', '.') }}
+                                </th>
+                                <th scope="row"
+                                    style="color: {{ $item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4 ? '#057A55' : ($item['jenis_transaksi_id'] == 3 ? '#1C64F2' : '#E02424') }}"
+                                    class="px-4 py-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                    {{ $item['tanggal'] }}</th>
 
 
-                        </tr>
-                       @endforeach
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
