@@ -13,7 +13,6 @@
                     <tbody id="tabel-body">
                         @foreach ($topPengeluaran as $index => $item)
                             <tr id="tabel-row" class="border-b dark:border-gray-700">
-                                <td class="px-4 py-3 text-red-600 font-medium">{{ $index + 1 }}</td>
                                 <td class="px-4 py-3 text-red-600 font-medium">
                                     {{ substr($item['nama'], 0, 15) }}
                                 </td>
