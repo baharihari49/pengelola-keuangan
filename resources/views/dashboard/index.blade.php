@@ -105,7 +105,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pendapatan, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pendapatan Keseluruhan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pendapatan</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -127,7 +127,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pengeluaran, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pengeluaran Keseluruhan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pengeluaran</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
