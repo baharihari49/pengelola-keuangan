@@ -34,10 +34,10 @@
                         <label for="jenis_transaksi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Transaksi</label>
                         <select name="jenis_transaksi_id" id="jenis_transaks_update" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option id="opt-jenis-transaksi" value="1">Pendapatan Tetap</option>
-                            <option id="opt-jenis-transaksi" value="2">Pengeluaran Pokok</option>
-                            <option id="opt-jenis-transaksi" value="3">Tabungan</option>
-                            <option id="opt-jenis-transaksi" value="4">Pendatan Tidak Tetap</option>
+                            <option id="opt-jenis-transaksi" value="2">Pendatan Tidak Tetap</option>
+                            <option id="opt-jenis-transaksi" value="4">Pengeluaran Pokok</option>
                             <option id="opt-jenis-transaksi" value="5">Pengeluaran Tambahan</option>
+                            <option id="opt-jenis-transaksi" value="3">Tabungan</option>
                         </select>
                     </div>
                     <div>
