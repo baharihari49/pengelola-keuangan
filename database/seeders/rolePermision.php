@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -14,7 +15,6 @@ class rolePermision extends Seeder
      */
     public function run(): void
     {
-        $role = Role::create(['name' => 'super admin']);
         $permissions = [
             'lihat_transaksi',
             'tambah_transaksi',
@@ -53,9 +53,9 @@ class rolePermision extends Seeder
             'ubah_akses_level',
             'hapus_akses_level',
         ];
-
-        $permission = Permission::create($permissions);
-
-        $role->givePermissionTo($permission);
+        $role = Role::create(['name' => 'super admin']);
+        $role->givePermissionTo($permissions);
+        $user = User::where('username', 'Super Admin')->first();
+        $user->assignRole('super admin');
     }
 }
