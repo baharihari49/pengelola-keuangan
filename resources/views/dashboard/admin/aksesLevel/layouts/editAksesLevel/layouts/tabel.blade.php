@@ -1,6 +1,6 @@
 <section class="bg-white rounded-md shadow-md p-5 mb-32">
     <div>
-        <p class="text-xl font-semibold">Role : {{$data->name}}</p>
+        <p class="text-xl font-semibold">Role : {{ $data->name }}</p>
     </div>
     <hr class="mt-4 mb-6">
     <div class="flex relative mb-3">
@@ -15,7 +15,7 @@
     <div>
         <form action="/edit_permission" method="POST">
             @csrf
-            <input type="hidden" value="{{$data->id}}" name="id">
+            <input type="hidden" value="{{ $data->id }}" name="id">
             <table class="w-full">
                 <thead>
                     <th align="left" scope="col" class="px-4 py-3">Nama fitur</th>
@@ -50,7 +50,7 @@
                             <input
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 type="checkbox" name="permission[]" value="hapus transaksi" id=""
-                                 {{ in_array('hapus transaksi', $rolePermissions) ? 'checked' : '' }}>
+                                {{ in_array('hapus transaksi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             <input
@@ -64,20 +64,28 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Kategori Transaksi</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="lihat kategori transaksi" name="permission[]" id=""
-                            {{ in_array('lihat kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="lihat kategori transaksi" name="permission[]" id=""
+                                {{ in_array('lihat kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="tambah kategori transaksi" name="permission[]" id=""
-                            {{ in_array('tambah kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="tambah kategori transaksi" name="permission[]" id=""
+                                {{ in_array('tambah kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="ubah kategori transaksi" name="permission[]" id=""
-                            {{ in_array('ubah kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="ubah kategori transaksi" name="permission[]" id=""
+                                {{ in_array('ubah kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="hapus kategori transaksi" name="permission[]" id=""
-                            {{ in_array('hapus kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="hapus kategori transaksi" name="permission[]" id=""
+                                {{ in_array('hapus kategori transaksi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="cetak kategori transaksi" name="permission[]" id=""
@@ -89,20 +97,28 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Anggaran</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="lihat anggaran" name="permission[]" id=""
-                            {{ in_array('lihat anggaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="lihat anggaran" name="permission[]" id=""
+                                {{ in_array('lihat anggaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="tambah anggaran" name="permission[]" id=""
-                            {{ in_array('tambah anggaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="tambah anggaran" name="permission[]" id=""
+                                {{ in_array('tambah anggaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="ubah anggaran" name="permission[]" id=""
-                            {{ in_array('ubah anggaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="ubah anggaran" name="permission[]" id=""
+                                {{ in_array('ubah anggaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="hapus anggaran" name="permission[]" id=""
-                            {{ in_array('hapus anggaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="hapus anggaran" name="permission[]" id=""
+                                {{ in_array('hapus anggaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -113,20 +129,28 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">CRUD Supplier</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="lihat supplier" name="permission[]" id=""
-                            {{ in_array('lihat supplier', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="lihat supplier" name="permission[]" id=""
+                                {{ in_array('lihat supplier', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="tambah supplier" name="permission[]" id=""
-                            {{ in_array('tambah supplier', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="tambah supplier" name="permission[]" id=""
+                                {{ in_array('tambah supplier', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="ubah supplier" name="permission[]" id=""
-                            {{ in_array('ubah supplier', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="ubah supplier" name="permission[]" id=""
+                                {{ in_array('ubah supplier', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" value="hapus supplier" name="permission[]" id=""
-                            {{ in_array('hapus supplier', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" value="hapus supplier" name="permission[]" id=""
+                                {{ in_array('hapus supplier', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -137,8 +161,10 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Pemasukan</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat pemasukan" id=""
-                            {{ in_array('lihat pemasukan', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat pemasukan" id=""
+                                {{ in_array('lihat pemasukan', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -150,15 +176,19 @@
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="cetak pemasukan" id=""
-                            {{ in_array('cetak pemasukan', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="cetak pemasukan" id=""
+                                {{ in_array('cetak pemasukan', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
                         <td scope="col" class="px-4 py-3">Pengeluaran</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat pengeluaran" id=""
-                            {{ in_array('lihat pengeluaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat pengeluaran" id=""
+                                {{ in_array('lihat pengeluaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -170,15 +200,19 @@
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="cetak pengeluaran" id=""
-                            {{ in_array('cetak pengeluaran', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="cetak pengeluaran" id=""
+                                {{ in_array('cetak pengeluaran', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
                         <td scope="col" class="px-4 py-3">Laba Rugi</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat labarugi" id=""
-                            {{ in_array('lihat labarugi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat labarugi" id=""
+                                {{ in_array('lihat labarugi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -190,8 +224,10 @@
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="cetak labarugi" id=""
-                            {{ in_array('cetak labarugi', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="cetak labarugi" id=""
+                                {{ in_array('cetak labarugi', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                     </tr>
                 </tbody>
@@ -199,20 +235,28 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Users</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat user" id=""
-                            {{ in_array('lihat user', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat user" id=""
+                                {{ in_array('lihat user', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="tambah user" id=""
-                            {{ in_array('tambah user', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="tambah user" id=""
+                                {{ in_array('tambah user', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="ubah user" id=""
-                            {{ in_array('ubah user', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="ubah user" id=""
+                                {{ in_array('ubah user', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="hapus user" id=""
-                            {{ in_array('hapus user', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="hapus user" id=""
+                                {{ in_array('hapus user', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -221,19 +265,25 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Feedback Manage</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat feedback" id=""
-                            {{ in_array('lihat feedback', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat feedback" id=""
+                                {{ in_array('lihat feedback', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="ubah feedback" id=""
-                            {{ in_array('ubah feedback', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="ubah feedback" id=""
+                                {{ in_array('ubah feedback', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="hapus feedback" id=""
-                            {{ in_array('hapus feedback', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="hapus feedback" id=""
+                                {{ in_array('hapus feedback', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -242,20 +292,28 @@
                     <tr>
                         <td scope="col" class="px-4 py-3">Akses Level</td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="lihat akseslevel" id=""
-                            {{ in_array('lihat akseslevel', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="lihat akses level" id=""
+                                {{ in_array('lihat akses level', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="tambah akseslevel" id=""
-                            {{ in_array('tambah akseslevel', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="tambah akses level" id=""
+                                {{ in_array('tambah akses level', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="ubah akseslevel" id=""
-                            {{ in_array('ubah akseslevel', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="ubah akses level" id=""
+                                {{ in_array('ubah akses level', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
-                            <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" value="hapus akseslevel" id=""
-                            {{ in_array('hapus akseslevel', $rolePermissions) ? 'checked' : '' }}>
+                            <input
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                type="checkbox" name="permission[]" value="hapus akses level" id=""
+                                {{ in_array('hapus akses level', $rolePermissions) ? 'checked' : '' }}>
                         </td>
                         <td align="center" scope="col" class="px-4 py-3">
                             {{-- <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" name="permission[]" id=""> --}}
@@ -263,32 +321,32 @@
                     </tr>
                 </tbody>
             </table>
-           <div class="flex justify-between mt-5 px-5">
-            <a href="/akses_level">
-                <button type="button" class="py-2 px-5 rounded-md bg-gray-300 text-gray-800">Kembali</button>
-            </a>
-            <button class="py-2 px-5 rounded-md bg-blue-600 text-white">Simpan</button>
-           </div>
+            <div class="flex justify-between mt-5 px-5">
+                <a href="/akses_level">
+                    <button type="button" class="py-2 px-5 rounded-md bg-gray-300 text-gray-800">Kembali</button>
+                </a>
+                <button class="py-2 px-5 rounded-md bg-blue-600 text-white">Simpan</button>
+            </div>
         </form>
     </div>
 </section>
 
 <script>
-const btnAkses = Array.from(document.querySelectorAll('.btn_akses'))
-const tBody = Array.from(document.getElementsByTagName('tbody'))
+    const btnAkses = Array.from(document.querySelectorAll('.btn_akses'))
+    const tBody = Array.from(document.getElementsByTagName('tbody'))
 
-btnAkses.forEach(item => {
-    item.addEventListener('click', function() {
-        btnAkses.forEach(btn => btn.classList.remove('border-blue-700'))
-        item.classList.add('border-blue-700')
-        console.log(item.getAttribute('id'));
-        tBody.forEach(tb => {
-            if(item.getAttribute('id') == tb.getAttribute('id')){
-                console.log(tb.getAttribute('id'));
-                tBody.forEach(tbd => tbd.classList.add('hidden'))
-                tb.classList.remove('hidden')
-            }
+    btnAkses.forEach(item => {
+        item.addEventListener('click', function() {
+            btnAkses.forEach(btn => btn.classList.remove('border-blue-700'))
+            item.classList.add('border-blue-700')
+            console.log(item.getAttribute('id'));
+            tBody.forEach(tb => {
+                if (item.getAttribute('id') == tb.getAttribute('id')) {
+                    console.log(tb.getAttribute('id'));
+                    tBody.forEach(tbd => tbd.classList.add('hidden'))
+                    tb.classList.remove('hidden')
+                }
+            })
         })
-    })
-});
+    });
 </script>
