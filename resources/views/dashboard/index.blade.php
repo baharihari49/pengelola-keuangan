@@ -89,11 +89,10 @@
             <div class="w-full">
                 <div class="flex w-full justify-between items-center">
 
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-green-500 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                        <path d="M18 0H6a2 2 0 0 0-2 2h10a4 4 0 0 1 4 4v6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z" />
-                        <path d="M14 16H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z" />
-                        <path d="M8 13a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm0-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" />
+                    <svg class="w-5 h-5 text-green-600 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1v14h16M4 10l3-4 4 4 5-5m0 0h-3.207M16 5v3.207" />
                     </svg>
                     <div class="flex items-center xl:gap-1">
                         <p class="text-green-500 text-xs xl:text-base font-semibold">0%</p>
@@ -112,10 +111,10 @@
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
             <div class="w-full">
                 <div class="flex w-full justify-between items-center">
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-red-600 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                        <path
-                            d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+                    <svg class="w-5 h-5 text-red-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 18 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1v14h16M4 5l3 4 4-4 5 5m0 0h-3.207M16 10V6.793" />
                     </svg>
                     <div class="flex items-center xl:gap-1">
                         <p class="text-red-500 text-xs xl:text-base font-semibold">%</p>
@@ -134,12 +133,10 @@
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
             <div class="w-full">
                 <div class="flex w-full justify-between items-center">
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z" />
-                        <path
-                            d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z" />
+                    <svg class="w-5 h-5 text-blue-600 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11.905 1.316 15.633 6M18 10h-5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5m0-5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-3m-6.367-9L7.905 1.316 2.352 6h9.281Z" />
                     </svg>
                     <div class="flex items-center xl:gap-1">
                         <p class="text-green-500 text-xs xl:text-base font-semibold">0%</p>
@@ -158,9 +155,11 @@
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
             <div class="w-full">
                 <div class="flex w-full justify-between items-center">
-                    <svg class="w-5 h-5 md:w-6 md:h-6 text-violet-600 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    <svg class="w-5 h-5 text-violet-600 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="M1 10c1.5 1.5 5.25 3 9 3s7.5-1.5 9-3m-9-1h.01M2 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1ZM14 5V3a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2h8Z" />
                     </svg>
                     <div class="flex items-center xl:gap-1">
                         <p class="text-green-500 text-xs xl:text-base font-semibold">0%</p>
@@ -190,7 +189,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-bold">Anggaran kebutuhan bulan ini</h5>
+                    <h5 class="text-base xl:text-xl font-bold">Anggaran kebutuhan</h5>
                 </div>
                 <div class="">
                     @php $hasKebutuhan = false; @endphp
@@ -230,7 +229,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Anggaran keinginan bulan ini</h5>
+                    <h5 class="text-base xl:text-xl font-semibold">Anggaran keinginan</h5>
                 </div>
                 <div class="">
                     @php $hasKeinginan = false; @endphp
@@ -270,7 +269,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Perkiraan tabungan bulan ini</h5>
+                    <h5 class="text-base xl:text-xl font-semibold">Perkiraan tabungan</h5>
                 </div>
                 <div class="">
                     @php $hasTabungan = false; @endphp
@@ -377,19 +376,18 @@
                 @include('dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
             </div>
 
-            <div class="bg-white shadow-md rounded-lg p-5">
-                @include('dashboard.charts.pie_chart_budgeting')
-            </div>
-
             {{-- <div class="bg-white shadow-md rounded-lg p-5">
                 @include('dashboard.charts.pie_chart_transaksi_anggaran')
             </div> --}}
         </div>
-        <div class="col-span-2 md:col-span-1 w-full">
+        <div class="bg-white shadow-md rounded-lg p-5">
+            @include('dashboard.charts.pie_chart_budgeting')
+        </div>
+        {{-- <div class="col-span-2 md:col-span-1 w-full">
             <div class="bg-white shadow-md rounded-lg p-5">
                 @include('dashboard.charts.pie_chart_anggaran')
             </div>
-        </div>
+        </div> --}}
     </div>
 
 
