@@ -79,7 +79,12 @@ selectKategoriTransaksion.addEventListener('change', function(){
                 let element = `<th scope="row"
                                     class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${res.nama}
                                 </th>
-                                <td class="px-4 py-3">${(res.jenis_transaksi_id == 1) ? 'Pendapatan' : 'Pengeluaran'}</td>
+                                <td class="px-4 py-3">
+                                    ${res.jenis_transaksi_id == 1 ? 'Pendapatan Tetap' :
+                                    res.jenis_transaksi_id == 2 ? 'Pendapatan Tidak Tetap' :
+                                    res.jenis_transaksi_id == 3 ? 'Pengeluaran Pokok' :
+                                    res.jenis_transaksi_id == 4 ? 'Pengeluaran Tambahan' : 'Pengeluaran'}
+                                </td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <div class="flex gap-5 mr-5">
                                     <button data-id="${res.id}" id="updateProductButton">
