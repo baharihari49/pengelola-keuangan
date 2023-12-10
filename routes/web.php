@@ -31,6 +31,7 @@ use SebastianBergmann\CodeUnit\FunctionUnit;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,13 +48,13 @@ use App\Models\Payment;
 
 
 
-Route::get('test', function() {
+Route::get('test', function () {
     $now = DatabaseHelper::getNowMonth();
-    $payments = Payment::where('langganan_berakhir', '<' , $now)->update(['status' => 'expired']);
+    $payments = Payment::where('langganan_berakhir', '<', $now)->update(['status' => 'expired']);
 
-        // foreach($payments as $item) {
-        //     $item->update(['status' => 'expired']);
-        // }
+    // foreach($payments as $item) {
+    //     $item->update(['status' => 'expired']);
+    // }
 
     return Payment::all();
 });
@@ -79,43 +80,35 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 
-Route::middleware(['guest'])->group(function()
-{
-    Route::controller(UserController::class)->group(function()
-    {
-        Route::get('/register','index');
+Route::middleware(['guest'])->group(function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/register', 'index');
 
         Route::post('/register', 'store');
     });
-
 });
 
-Route::middleware(['guest'])->group(function()
-{
-    Route::controller(LoginController::class)->group(function()
-        {
-            Route::get('/login', 'login')->name('login');
+Route::middleware(['guest'])->group(function () {
+    Route::controller(LoginController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
 
-            Route::post('/login', 'authenticate');
+        Route::post('/login', 'authenticate');
 
-            Route::get('/confirm_email', 'confirmEmail');
-
-        });
-
+        Route::get('/confirm_email', 'confirmEmail');
     });
-    Route::post('/logout', [LoginController::class, 'logout']);
+});
+Route::post('/logout', [LoginController::class, 'logout']);
 
 
 
 
 
-Route::middleware(['auth', 'verified'])->group(function()
-{
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/create_payment', [paymentController::class, 'store']);
     Route::get('/create_payment', [paymentController::class, 'index']);
 
     Route::group(['middleware' => ['role:super admin']], function () {
-        Route::controller(UserController::class)->group(function() {
+        Route::controller(UserController::class)->group(function () {
             Route::get('/user', 'showUser');
             Route::post('/user', 'actionShowUser');
             Route::post('/give_role', 'giveRole');
@@ -124,8 +117,7 @@ Route::middleware(['auth', 'verified'])->group(function()
             Route::delete('/delete_user', 'deleteUserByAdmin');
         });
 
-        Route::controller(feedbackManage::class)->group(function()
-        {
+        Route::controller(feedbackManage::class)->group(function () {
             Route::get('/feedback_manage', 'index');
             Route::get('/feedback_detail', 'detail');
             Route::put('/on_going', 'onGoing');
@@ -133,8 +125,7 @@ Route::middleware(['auth', 'verified'])->group(function()
             Route::put('/cancel_done', 'cancel');
         });
 
-        Route::controller(aksesLevelController::class)->group(function()
-        {
+        Route::controller(aksesLevelController::class)->group(function () {
             Route::get('/akses_level', 'index');
             Route::post('/store_akses_level', 'store');
             Route::put('/update_akses_level', 'update');
@@ -144,28 +135,24 @@ Route::middleware(['auth', 'verified'])->group(function()
         });
     });
 
-    Route::controller(informasiBisnisController::class)->group(function()
-    {
+    Route::controller(informasiBisnisController::class)->group(function () {
         Route::post('store_info_bisnis', 'store');
         Route::delete('/delete_logo', 'deleteLogo');
     });
 
-   Route::controller(UserController::class)->group(function()
-   {
-    Route::get('/profile','show');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/profile', 'show');
 
-    Route::put('/user', 'update');
+        Route::put('/user', 'update');
 
-    Route::delete('/delete_image', 'deleteImage');
+        Route::delete('/delete_image', 'deleteImage');
 
-    Route::post('/store_image', 'storeImage');
-   });
+        Route::post('/store_image', 'storeImage');
+    });
 });
 
-Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(function()
-{
-    Route::controller(DashboardController::class)->group(function()
-    {
+Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index');
 
         Route::get('/get_persentase_transaksi_anggaran', 'get_persentase');
@@ -173,14 +160,12 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('/get_perbandingan_pemasukan_pengeluaran', 'get_perbandingan_pemasukan_pengeluaran');
 
         Route::get('/get_budgeting', 'getBudgeting');
-
     });
 
 
-    Route::controller(TransaksiController::class)->group(function()
-    {
+    Route::controller(TransaksiController::class)->group(function () {
 
-        Route::get('/transaksi','index');
+        Route::get('/transaksi', 'index');
 
         Route::post('/transaksi', 'store');
 
@@ -203,11 +188,9 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('/get_transaksi_by_month_year', 'getTransaksiByDate');
 
         Route::get('/transaksi_xlsx', 'transaksiExcel');
-
     });
 
-    Route::controller(printController::class)->group(function()
-    {
+    Route::controller(printController::class)->group(function () {
         Route::get('/pdf_detail_transaksi', 'dwonlodTransaksi');
 
         Route::get('/pdf_transaksi_month', 'dwonlodTransaksiByMonth');
@@ -219,8 +202,7 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('pdf_laba_rugi', 'dwonlodLabaRugi');
     });
 
-    Route::controller(KategoriTransaksiController::class)->group(function()
-    {
+    Route::controller(KategoriTransaksiController::class)->group(function () {
 
         Route::get('/kategori_transaksi', 'index');
 
@@ -240,7 +222,7 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
 
         Route::delete('/kategori_transaksi', 'destroy');
 
-        Route::get('/get_kategori_transaksi_all_show_by_jenis_kategori_transaksi','api3');
+        Route::get('/get_kategori_transaksi_all_show_by_jenis_kategori_transaksi', 'api3');
 
         Route::get('/get_kategori_transaksi_all', 'getAllTransaksi');
 
@@ -250,8 +232,7 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
     });
 
 
-    Route::controller(AnggaranController::class)->group(function()
-    {
+    Route::controller(AnggaranController::class)->group(function () {
 
         Route::get('/anggaran', 'index');
 
@@ -263,19 +244,19 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
 
         Route::get('/get_anggaran_by_id', 'api');
 
-        Route::get('/get_all_anggaran', function() {
+        Route::get('/get_all_anggaran', function () {
             $records = Anggaran::join('kategori_transaksis', 'anggarans.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                                ->where('anggarans.user_id', auth()->user()->id)
-                                ->select(
-                                    'kategori_transaksis.nama',
-                                    'anggarans.jumlah'
-                                )
-                                ->groupBy('anggarans.jumlah', 'kategori_transaksis.nama')
-                                ->get();
+                ->where('anggarans.user_id', auth()->user()->id)
+                ->select(
+                    'kategori_transaksis.nama',
+                    'anggarans.jumlah'
+                )
+                ->groupBy('anggarans.jumlah', 'kategori_transaksis.nama')
+                ->get();
 
             $jumlah_anggaran = [];
             $kategori_anggaran = [];
-            foreach($records as $item) {
+            foreach ($records as $item) {
                 array_push($jumlah_anggaran, $item->jumlah);
                 array_push($kategori_anggaran, $item->nama);
             };
@@ -284,19 +265,16 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
                 'anggaran' => $jumlah_anggaran,
                 'kategori_anggaran' => $kategori_anggaran,
             ];
-
         });
 
 
         Route::get('/budgeting', 'budgeting');
 
         Route::get('/get_anggaran_by_kategori_transaksi', 'api2');
-
     });
 
 
-    Route::controller(KategoriAnggaranController::class)->group(function()
-    {
+    Route::controller(KategoriAnggaranController::class)->group(function () {
         Route::post('/budgeting_post', 'store');
 
         Route::post('/budgeting_edit', 'update');
@@ -304,7 +282,6 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('/get_kategori_anggaran', 'getKategoriAnggaran');
 
         Route::delete('/budgeting_delete', 'destroy');
-
     });
 
 
@@ -313,8 +290,7 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
     Route::get('/get_jenis_transaksi', [JenisTransaksiController::class, 'api']);
 
 
-    Route::controller(LaporanController::class)->group(function()
-    {
+    Route::controller(LaporanController::class)->group(function () {
 
         Route::get('/laporan', 'index');
 
@@ -333,11 +309,9 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::get('/pengeluaran_xlsx', 'pengeluaranExcel');
 
         Route::get('laba_rugi_xlsx', 'labaRugiExcel');
-
     });
 
-    Route::controller(SuppliersorCustomersController::class)->group(function()
-    {
+    Route::controller(SuppliersorCustomersController::class)->group(function () {
         Route::get('/supplier_costumer', 'index');
 
         Route::get('/get_suplier_by_jenis_transaksi_id', 'showSupOrCus');
@@ -351,18 +325,15 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
         Route::delete('/supplier_costumer_delete', 'destroy');
 
         Route::put('/supplier_or_customer_update', 'update');
-
     });
 
-    Route::controller(FeedbackCenterController::class)->group(function()
-    {
+    Route::controller(FeedbackCenterController::class)->group(function () {
         Route::get('/feedback', 'index');
 
         Route::post('/feedback', 'store');
     });
 
-    Route::controller(paymentController::class)->group(function()
-    {
+    Route::controller(paymentController::class)->group(function () {
         Route::post('test_payment', 'testPayment');
         Route::get('get_balance', 'getBalance');
         Route::post('disbursement', 'createDisbrusment');
@@ -381,15 +352,15 @@ Route::middleware(['auth', 'verified' ,'check.user', 'free_account'])->group(fun
 
         Route::get('/payment-manage', 'paymentManage');
         Route::post('/payment-manage', 'paymentByExternalId');
-
     });
-
-
-
 });
 
 
 
-Route::get('/info_bisni', function() {
-    return informasiBisnis::all();
+Route::get('/info_bisni', function () {
+    return Transaksi::where('user_id', auth()->user()->id)
+        ->where('void', false)
+        ->whereDate('tanggal', '>=', Carbon::now()->subDays(7)->format('Y-m-d'))
+        ->whereDate('tanggal', '<=', Carbon::now()->format('Y-m-d'))
+        ->limit(7);
 });
