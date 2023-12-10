@@ -198,7 +198,7 @@ abstract class AbstractColor
         $rgbPattern = '/^rgb ?\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3})\)$/i';
 
         // parse color string in format rgba(255, 0, 0, 0.5)
-        $rgbaPattern = '/^rgba ?\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9.]{1,2})\)$/i';
+        $rgbaPattern = '/^rgba ?\(([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9]{1,3}), ?([0-9.]{1,4})\)$/i';
 
         if (preg_match($hexPattern, $value, $matches)) {
             $result = [];

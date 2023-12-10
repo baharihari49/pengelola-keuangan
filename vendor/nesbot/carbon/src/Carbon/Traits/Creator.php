@@ -735,7 +735,7 @@ trait Creator
      */
     public static function createFromIsoFormat($format, $time, $tz = null, $locale = 'en', $translator = null)
     {
-        $format = preg_replace_callback('/(?<!\\\\)(\\\\{2})*(LTS|LT|[Ll]{1,2})/', function ($match) use ($locale, $translator) {
+        $format = preg_replace_callback('/(?<!\\\\)(\\\\{2})*(LTS|LT|[Ll]{1,4})/', function ($match) use ($locale, $translator) {
             [$code] = $match;
 
             static $formats = null;

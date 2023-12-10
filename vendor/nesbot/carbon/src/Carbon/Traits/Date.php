@@ -2206,7 +2206,7 @@ trait Date
 
             $input = mb_substr($format, $i);
 
-            if (preg_match('/^(LTS|LT|l{1,2}|L{1,2})/', $input, $match)) {
+            if (preg_match('/^(LTS|LT|l{1,4}|L{1,4})/', $input, $match)) {
                 if ($formats === null) {
                     $formats = $this->getIsoFormats();
                 }
