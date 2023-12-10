@@ -15,9 +15,5 @@ class addRole extends Seeder
     public function run(): void
     {
         $role = Role::create(['name' => 'super admin']);
-
-        $user = User::where('email', 'superadmin@gmail.com')->first();
-
-        $user->assignRole('super admin');
     }
 }
