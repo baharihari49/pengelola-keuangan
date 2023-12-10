@@ -19,6 +19,6 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('admin12345')
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('Super Admin');
     }
 }
