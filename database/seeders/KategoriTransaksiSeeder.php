@@ -6,6 +6,7 @@ use App\Models\Kategori_transaksi;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class KategoriTransaksiSeeder extends Seeder
 {
     /**
@@ -23,13 +24,6 @@ class KategoriTransaksiSeeder extends Seeder
 
         DB::table('kategori_transaksis')->insert([
             'nama' => 'Tunjangan',
-            'jenis_transaksi_id' => 1,
-            'user_id' => 0,
-            'default' => 1
-        ]);
-
-        DB::table('kategori_transaksis')->insert([
-            'nama' => 'investasi',
             'jenis_transaksi_id' => 1,
             'user_id' => 0,
             'default' => 1
