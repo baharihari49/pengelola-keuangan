@@ -50,7 +50,6 @@ class addPermsission extends Seeder
         Permission::create(['name' => 'cetak laba rugi']);
 
 
-        Permission::create(['name' => 'lihat user']);
         Permission::create(['name' => 'tambah user']);
         Permission::create(['name' => 'ubah user']);
         Permission::create(['name' => 'hapus user']);
@@ -63,6 +62,5 @@ class addPermsission extends Seeder
         Permission::create(['name' => 'tambah akses level']);
         Permission::create(['name' => 'ubah akses level']);
         Permission::create(['name' => 'hapus akses level']);
-
     }
 }
