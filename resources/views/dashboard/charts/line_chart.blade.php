@@ -1,12 +1,10 @@
 {{-- <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800"> --}}
 <div class="flex justify-between p-3 md:p-6 pb-0 md:pb-0">
     <div>
-        <h5 class="leading-none text-xl lg:text-3xl font-bold text-gray-900 dark:text-white pb-2">Rp
-            {{
-                number_format($pendapatan_bulan_ini, 0, ',', '.')
-            }}
-        </h5>
         <p class="text-sm lg:text-base font-normal text-gray-500 dark:text-gray-400">Pendapatan bulan ini</p>
+        <h5 class="leading-none text-xl lg:text-3xl font-bold text-gray-900 dark:text-white pb-2">Rp
+            {{ number_format($pendapatan_bulan_ini, 0, ',', '.') }}
+        </h5>
     </div>
     <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
         %

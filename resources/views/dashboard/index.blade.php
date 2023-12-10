@@ -105,7 +105,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pendapatan, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Total Pendapatan Keseluruhan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pendapatan Keseluruhan</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -127,7 +127,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pengeluaran, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Total Pengeluaran Keseluruhan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Total Pengeluaran Keseluruhan</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -149,7 +149,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($saldo[0]->saldo, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Saldo</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Saldo</p>
             </div>
         </div>
         <div class="bg-white shadow-md border-gray-300 rounded-lg dark:border-gray-600 flex items-center p-3 xl:p-5">
@@ -173,7 +173,7 @@
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($jumlahTabungan, 0, ',', '.') }}</p>
-                <p class="text-gray-500 text-xs xl:text-sm font-bold">Tabungan</p>
+                <p class="text-gray-500 text-xs xl:text-sm font-reguler">Tabungan</p>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-bold">Anggaran kebutuhan</h5>
+                    <h5 class="text-base xl:text-xl font-reguler">Anggaran kebutuhan</h5>
                 </div>
                 <div class="">
                     @php $hasKebutuhan = false; @endphp
@@ -197,7 +197,7 @@
                         @if ($item['nama'] === 'kebutuhan')
                             @php $hasKebutuhan = true; @endphp
                             <div class="flex justify-between items-center">
-                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-600">Rp
+                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-900">Rp
                                     {{ number_format($item['jumlah'], 0, ',', '.') }}</h5>
                                 <span
                                     class="font-bold text-lg xl:text-3xl text-blue-800">{{ isset($getBudgeting[0]) && $getBudgeting[$index]->nama == 'kebutuhan' ? $getBudgeting[$index]->value : 0 }}%</span>
@@ -229,7 +229,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Anggaran keinginan</h5>
+                    <h5 class="text-base xl:text-xl font-reguler">Anggaran keinginan</h5>
                 </div>
                 <div class="">
                     @php $hasKeinginan = false; @endphp
@@ -237,7 +237,7 @@
                         @if ($item['nama'] === 'keinginan')
                             @php $hasKeinginan = true; @endphp
                             <div class="flex justify-between items-center">
-                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-600">Rp
+                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-900">Rp
                                     {{ number_format($item['jumlah'], 0, ',', '.') }}</h5>
                                 <span
                                     class="font-bold text-lg xl:text-3xl text-blue-800">{{ isset($getBudgeting[0]) && $getBudgeting[$index]->nama == 'keinginan' ? $getBudgeting[$index]->value : 0 }}%</span>
@@ -269,7 +269,7 @@
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
             <div>
                 <div class="flex justify-between items-center">
-                    <h5 class="text-base xl:text-xl font-semibold">Perkiraan tabungan</h5>
+                    <h5 class="text-base xl:text-xl font-reguler">Perkiraan tabungan</h5>
                 </div>
                 <div class="">
                     @php $hasTabungan = false; @endphp
@@ -277,7 +277,7 @@
                         @if ($item['nama'] === 'tabungan')
                             @php $hasTabungan = true; @endphp
                             <div class="flex justify-between items-center">
-                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-600">Rp
+                                <h5 class="font-bold text-lg xl:text-2xl mt-1 mb-3 text-gray-900">Rp
                                     {{ number_format($item['jumlah'], 0, ',', '.') }}</h5>
                                 <span
                                     class="font-bold text-lg xl:text-3xl text-blue-800">{{ isset($getBudgeting[0]) && $getBudgeting[$index]->nama == 'tabungan' ? $getBudgeting[$index]->value : 0 }}%</span>
@@ -316,7 +316,7 @@
         <div
             class="bg-white shadow-md relative p-0 rounded-lg lg:col-span-1 border-gray-300 dark:border-gray-600 max-h-max xl:h">
             <div class="py-2">
-                <p class="font-semibold text-lg lg:text-xl p-2 text-gray-700">Transaksi minggu ini
+                <p class="font-bold text-lg lg:text-xl p-2 text-gray-700">Transaksi minggu ini
                 </p>
                 @include('dashboard.transaksi_terkini')
                 <div
@@ -368,7 +368,7 @@
         <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
 
             <div class="bg-white shadow-md rounded-lg p-3">
-                <h5 class="font-semibold text-gray-700 text-xl mb-4 mt-2">Pengeluaran terbanyak</h5>
+                <h5 class="font-bold text-gray-700 text-xl mb-4 mt-2">Pengeluaran terbanyak</h5>
                 @include('dashboard.top_pengeluaran')
             </div>
 
