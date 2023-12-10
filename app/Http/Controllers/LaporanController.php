@@ -104,8 +104,10 @@ class LaporanController extends Controller
     {
 
         return view('dashboard.laporan.pemasukan.index', [
-            'data' => Transaksi::where('user_id', auth()->user()->id)
-                ->whereIn('jenis_transaksi_id', [1, 2])
+            'data' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                ->where('transaksis.user_id', auth()->user()->id)
+                ->whereIn('transaksis.jenis_transaksi_id', [1, 2])
+                ->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2])
                 ->where('void', false)
                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
                 ->paginate(15),
@@ -129,11 +131,13 @@ class LaporanController extends Controller
     public function showLaporanPengeluaran()
     {
         return view('dashboard.laporan.pengeluaran.index', [
-            'data' => Transaksi::where('user_id', auth()->user()->id)
-                ->whereIn('jenis_transaksi_id', [3, 4])
-                ->where('void', false)
-                ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-                ->paginate(15),
+            'data' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+                                ->where('transaksis.user_id', auth()->user()->id)
+                                ->whereIn('transaksis.jenis_transaksi_id', [3,4])
+                                ->whereIn('kategori_transaksis.jenis_transaksi_id', [3,4])
+                                ->where('void', false)
+                                ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
+                                ->paginate(15),
             'pengeluaran' => Transaksi::where('user_id', auth()->user()->id)
                 ->whereIn('jenis_transaksi_id', [3, 4])
                 ->where('void', false)

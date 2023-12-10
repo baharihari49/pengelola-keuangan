@@ -290,13 +290,13 @@ class DatabaseHelper
         $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
             ->where('transaksis.user_id', auth()->user()->id)
             ->where('void', false)
-            ->whereIn('transaksis.jenis_transaksi_id', [1, 2]);
+            ->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2]);
 
         if (request()->id == 'all') {
             $transaksi->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2])->get();
         } else {
-            $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+            $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2])
                 ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
         }
 
@@ -312,10 +312,10 @@ class DatabaseHelper
 
         if (request()->id == 'all') {
             $transaksi->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->whereIn('kategori_transaksis.jenis_transaksi_id', [3, 4])->get();
         } else {
             $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->whereIn('kategori_transaksis.jenis_transaksi_id', [3, 4]);
         }
 
         return $transaksi->get();
