@@ -31,7 +31,6 @@ class AnggaranController extends Controller
             'persentaseTabungan' => DatabaseHelper::getPersentaseTabungan(),
             'user' => DatabaseHelper::getUser()[0],
         ]);
-
     }
 
     /**
@@ -104,7 +103,7 @@ class AnggaranController extends Controller
 
 
         Anggaran::where('id', request()->id)
-                ->update($validate);
+            ->update($validate);
 
         return redirect('/anggaran');
     }
@@ -122,26 +121,26 @@ class AnggaranController extends Controller
         return Anggaran::where('id', request()->id)->get();
     }
 
-    public function api2() {
+    public function api2()
+    {
 
         $records = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                            ->whereHas('kategori_transaksi', function($query){
-                                $query->where('nama', 'like', '%' . request('nama') . '%');
-                            })
-                            ->select(
-                                'anggarans.kategori_transaksi_id',
-                                DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
-                            )
-                            ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah')
-                            ->get();
+            ->whereHas('kategori_transaksi', function ($query) {
+                $query->where('nama', 'like', '%' . request('nama') . '%');
+            })
+            ->select(
+                'anggarans.kategori_transaksi_id',
+                DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
+            )
+            ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah')
+            ->get();
 
         return $records;
-
     }
 
     public function budgeting()
     {
-        return Transaksi::where('user_id', auth()->user()->id)->whereIn('jenis_transaksi_id', [1,4])->whereMonth('tanggal', DatabaseHelper::getMonth())->where('void', false)->sum("jumlah");
+        return Transaksi::where('user_id', auth()->user()->id)->whereIn('jenis_transaksi_id', [1, 2])->whereMonth('tanggal', DatabaseHelper::getMonth())->where('void', false)->sum("jumlah");
     }
 
     public static function getKategoriAnggaranId()

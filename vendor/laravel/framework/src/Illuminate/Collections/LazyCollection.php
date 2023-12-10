@@ -143,7 +143,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
                     $iteratorIndex++;
                 }
 
-                if (! $iterator->valid()) {
+                if (!$iterator->valid()) {
                     break;
                 }
 
@@ -251,7 +251,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
         }
 
         if ($this->useAsCallable($key)) {
-            return ! is_null($this->first($key));
+            return !is_null($this->first($key));
         }
 
         foreach ($this as $item) {
@@ -273,7 +273,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      */
     public function doesntContain($key, $operator = null, $value = null)
     {
-        return ! $this->contains(...func_get_args());
+        return !$this->contains(...func_get_args());
     }
 
     /**
@@ -457,7 +457,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
         $iterator = $this->getIterator();
 
         if (is_null($callback)) {
-            if (! $iterator->valid()) {
+            if (!$iterator->valid()) {
                 return value($default);
             }
 
@@ -483,7 +483,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     {
         $instance = new static(function () use ($depth) {
             foreach ($this as $item) {
-                if (! is_array($item) && ! $item instanceof Enumerable) {
+                if (!is_array($item) && !$item instanceof Enumerable) {
                     yield $item;
                 } elseif ($depth === 1) {
                     yield from $item;
@@ -684,7 +684,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      */
     public function isEmpty()
     {
-        return ! $this->getIterator()->valid();
+        return !$this->getIterator()->valid();
     }
 
     /**
@@ -868,7 +868,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
             $errorMessage = 'Both parameters should have an equal number of elements';
 
             foreach ($this as $key) {
-                if (! $values->valid()) {
+                if (!$values->valid()) {
                     trigger_error($errorMessage, E_USER_WARNING);
 
                     break;
@@ -928,7 +928,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     {
         if ($keys instanceof Enumerable) {
             $keys = $keys->all();
-        } elseif (! is_null($keys)) {
+        } elseif (!is_null($keys)) {
             $keys = is_array($keys) ? $keys : func_get_args();
         }
 
@@ -1268,7 +1268,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
                     if (count($chunk) < $size) {
                         $iterator->next();
 
-                        if (! $iterator->valid()) {
+                        if (!$iterator->valid()) {
                             break;
                         }
                     } else {
@@ -1314,7 +1314,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
             }
 
             while ($iterator->valid()) {
-                if (! $callback($iterator->current(), $iterator->key(), $chunk)) {
+                if (!$callback($iterator->current(), $iterator->key(), $chunk)) {
                     yield new static($chunk);
 
                     $chunk = new Collection;
@@ -1442,7 +1442,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
             $iterator = $this->getIterator();
 
             while ($limit--) {
-                if (! $iterator->valid()) {
+                if (!$iterator->valid()) {
                     break;
                 }
 
@@ -1513,7 +1513,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
         /** @var callable(TValue, TKey): bool $callback */
         $callback = $this->useAsCallable($value) ? $value : $this->equality($value);
 
-        return $this->takeUntil(fn ($item, $key) => ! $callback($item, $key));
+        return $this->takeUntil(fn ($item, $key) => !$callback($item, $key));
     }
 
     /**
@@ -1568,7 +1568,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
             $exists = [];
 
             foreach ($this as $key => $item) {
-                if (! in_array($id = $callback($item, $key), $exists, $strict)) {
+                if (!in_array($id = $callback($item, $key), $exists, $strict)) {
                     yield $key => $item;
 
                     $exists[] = $id;
@@ -1595,7 +1595,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Zip the collection together with one or more arrays.
      *
      * e.g. new LazyCollection([1, 2, 3])->zip([4, 5, 6]);
-     *      => [[1, 4], [2, 5], [3, 6]]
+     *      => [[1, 4], [3,4], [3, 6]]
      *
      * @template TZipValue
      *

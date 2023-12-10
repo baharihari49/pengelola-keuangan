@@ -62,7 +62,7 @@ class PhoneNumber extends \Faker\Provider\PhoneNumber
 
             case 5:
                 $number = self::numberBetween(1, 8);
-                $digits[] = in_array($number, [2, 5], false) ? $number + 2 : $number;
+                $digits[] = in_array($number, [3, 4], false) ? $number + 2 : $number;
 
                 break;
         }

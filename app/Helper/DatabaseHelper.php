@@ -17,20 +17,20 @@ class DatabaseHelper
     public static function getJumlahBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-                                                ->whereIn('jenis_transaksi_id', [1,4])
-                                                ->where('void', false)
-                                                ->whereMonth('tanggal', DatabaseHelper::getMonth())
-                                                ->sum('jumlah');
+            ->whereIn('jenis_transaksi_id', [1, 2])
+            ->where('void', false)
+            ->whereMonth('tanggal', DatabaseHelper::getMonth())
+            ->sum('jumlah');
 
 
         $jumlahBudgeting = Kategori_anggaran::select(
-                                                'nama',
-                                                'id',
-                                                DB::raw("($jumlahPendapatanTransaksi * value / 100) AS jumlah")
-                                            )
-                                            ->where('user_id', auth()->user()->id)
-                                            // ->whereMonth('tanggal', DatabaseHelper::getMonth())
-                                            ->get();
+            'nama',
+            'id',
+            DB::raw("($jumlahPendapatanTransaksi * value / 100) AS jumlah")
+        )
+            ->where('user_id', auth()->user()->id)
+            // ->whereMonth('tanggal', DatabaseHelper::getMonth())
+            ->get();
 
         return $jumlahBudgeting;
     }
@@ -38,25 +38,25 @@ class DatabaseHelper
     public static function getPersentaseBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-                                                ->whereIn('jenis_transaksi_id', [1,4])
-                                                ->where('void', false)
-                                                ->whereMonth('tanggal', DatabaseHelper::getMonth())
-                                                ->sum('jumlah');
+            ->whereIn('jenis_transaksi_id', [1, 2])
+            ->where('void', false)
+            ->whereMonth('tanggal', DatabaseHelper::getMonth())
+            ->sum('jumlah');
 
         $records = DB::table('kategori_anggarans')
-                    ->where('anggarans.user_id', auth()->user()->id)
-                    ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
-                    ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
-                    ->where('transaksis.user_id', auth()->user()->id)
-                    ->where('transaksis.void', false)
-                    ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
-                    ->select(
-                        'kategori_anggarans.id AS id_kategori_anggaran',
-                        'kategori_anggarans.value',
-                        DB::raw('SUM(transaksis.jumlah) as total_jumlah')
-                    )
-                    ->groupBy('kategori_anggarans.id', 'kategori_anggarans.value')
-                    ->get();
+            ->where('anggarans.user_id', auth()->user()->id)
+            ->leftJoin('anggarans', 'kategori_anggarans.id', '=', 'anggarans.kategori_anggaran_id')
+            ->leftJoin('transaksis', 'anggarans.kategori_transaksi_id', '=', 'transaksis.kategori_transaksi_id')
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('transaksis.void', false)
+            ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
+            ->select(
+                'kategori_anggarans.id AS id_kategori_anggaran',
+                'kategori_anggarans.value',
+                DB::raw('SUM(transaksis.jumlah) as total_jumlah')
+            )
+            ->groupBy('kategori_anggarans.id', 'kategori_anggarans.value')
+            ->get();
 
 
 
@@ -90,16 +90,16 @@ class DatabaseHelper
     public static function getPersentaseAnggaran()
     {
         $persentaseAnggarans = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                                ->where('transaksis.user_id', auth()->user()->id)
-                                ->where('transaksis.void', false)
-                                ->where('anggarans.user_id', auth()->user()->id)
-                                ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
-                                ->select(
-                                    'anggarans.kategori_transaksi_id',
-                                    DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
-                                )
-                                ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
-                                ->get();
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('transaksis.void', false)
+            ->where('anggarans.user_id', auth()->user()->id)
+            ->whereMonth('transaksis.tanggal', DatabaseHelper::getMonth())
+            ->select(
+                'anggarans.kategori_transaksi_id',
+                DB::raw('SUM(transaksis.jumlah) / anggarans.jumlah * 100 AS persentase')
+            )
+            ->groupBy('transaksis.kategori_transaksi_id', 'anggarans.kategori_transaksi_id', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id')
+            ->get();
 
 
         $anggaran = Anggaran::where('user_id', auth()->user()->id)->get();
@@ -117,50 +117,49 @@ class DatabaseHelper
         });
 
         return $anggaranDenganPersentase;
-
     }
 
     public static function getJumlahTransaksiBudgeting($param)
     {
         $jumlahTransaksiKebutuhan = Transaksi::join('anggarans', 'transaksis.kategori_transaksi_id', '=', 'anggarans.kategori_transaksi_id')
-                                        ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
-                                        ->where('anggarans.user_id', auth()->user()->id)
-                                        ->where('transaksis.user_id', auth()->user()->id)
-                                        ->where('void', false)
-                                        ->whereMonth('transaksis.tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
-                                        ->where('kategori_anggarans.nama', $param)
-                                        ->select(
-                                            'kategori_anggarans.nama as kategori_anggaran',
-                                            'anggarans.jumlah as jumlah_anggaran',
-                                            DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi') // Menghitung jumlah transaksi
-                                        )
-                                        ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id') // Hanya mengelompokkan berdasarkan kategori_anggaran
-                                        ->get();
+            ->join('kategori_anggarans', 'anggarans.kategori_anggaran_id', '=', 'kategori_anggarans.id')
+            ->where('anggarans.user_id', auth()->user()->id)
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('void', false)
+            ->whereMonth('transaksis.tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))
+            ->where('kategori_anggarans.nama', $param)
+            ->select(
+                'kategori_anggarans.nama as kategori_anggaran',
+                'anggarans.jumlah as jumlah_anggaran',
+                DB::raw('SUM(transaksis.jumlah) as jumlah_transaksi') // Menghitung jumlah transaksi
+            )
+            ->groupBy('kategori_anggarans.nama', 'anggarans.jumlah', 'transaksis.kategori_transaksi_id') // Hanya mengelompokkan berdasarkan kategori_anggaran
+            ->get();
 
-                                        // return $jumlahTransaksiKebutuhan;
-            $groupedData = [];
+        // return $jumlahTransaksiKebutuhan;
+        $groupedData = [];
 
-            foreach ($jumlahTransaksiKebutuhan as $item) {
-                $kategori = $item["kategori_anggaran"];
+        foreach ($jumlahTransaksiKebutuhan as $item) {
+            $kategori = $item["kategori_anggaran"];
 
-                                            // Jika kategori_anggaran belum ada dalam array groupedData, inisialisasi dengan nilai awal
-                if (!isset($groupedData[$kategori])) {
-                    $groupedData[$kategori] = [
-                        "kategori_anggaran" => $kategori,
-                        "jumlah_anggaran" => 0,
-                        "jumlah_transaksi" => 0,
-                        "selisih" => 0,
-                    ];
-                }
+            // Jika kategori_anggaran belum ada dalam array groupedData, inisialisasi dengan nilai awal
+            if (!isset($groupedData[$kategori])) {
+                $groupedData[$kategori] = [
+                    "kategori_anggaran" => $kategori,
+                    "jumlah_anggaran" => 0,
+                    "jumlah_transaksi" => 0,
+                    "selisih" => 0,
+                ];
+            }
 
-                // Menjumlahkan nilai jumlah_anggaran dan jumlah_transaksi
-                $groupedData[$kategori]["jumlah_anggaran"] += $item["jumlah_anggaran"];
-                $groupedData[$kategori]["jumlah_transaksi"] += intval($item["jumlah_transaksi"]);
+            // Menjumlahkan nilai jumlah_anggaran dan jumlah_transaksi
+            $groupedData[$kategori]["jumlah_anggaran"] += $item["jumlah_anggaran"];
+            $groupedData[$kategori]["jumlah_transaksi"] += intval($item["jumlah_transaksi"]);
 
-                // Menghitung selisih
-                $groupedData[$kategori]["selisih"] = $groupedData[$kategori]["jumlah_anggaran"] - $groupedData[$kategori]["jumlah_transaksi"];
-            };
-            return array_values($groupedData);
+            // Menghitung selisih
+            $groupedData[$kategori]["selisih"] = $groupedData[$kategori]["jumlah_anggaran"] - $groupedData[$kategori]["jumlah_transaksi"];
+        };
+        return array_values($groupedData);
     }
 
     public static function getJumlahPengeluaranBudgeting()
@@ -168,7 +167,7 @@ class DatabaseHelper
         $jumlahAnggaran = Anggaran::where('user_id', auth()->user()->id)->sum('jumlah');
 
 
-        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->whereIn('jenis_transaksi_id', [2,5])->sum('jumlah');
+        $jumlahTransaksi = Transaksi::where('user_id', auth()->user()->id)->where('void', false)->whereMonth('tanggal', (isset(request()->month) ? request()->month : DatabaseHelper::getMonth()))->whereIn('jenis_transaksi_id', [3, 4])->sum('jumlah');
 
         return [
             'jumlah_anggaran' => $jumlahAnggaran,
@@ -183,10 +182,10 @@ class DatabaseHelper
 
         $transaksi =  Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->get();
 
-        // $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->whereIn('jenis_transaksi_id', [1,4])->sum('jumlah');
+        // $jumlahPendapatan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->whereIn('jenis_transaksi_id', [1,2])->sum('jumlah');
         // $jumlahTabungan = Transaksi::where('user_id', $userId)->where('void', false)->whereMonth('tanggal', DatabaseHelper::getMonth())->where('jenis_transaksi_id', 3)->sum('jumlah');
 
-        $jumlahPendapatan = $transaksi->whereIn('jenis_transaksi_id', [1,4])->sum('jumlah');
+        $jumlahPendapatan = $transaksi->whereIn('jenis_transaksi_id', [1, 2])->sum('jumlah');
         $jumlahTabungan = $transaksi->where('jenis_transaksi_id', 3)->sum('jumlah');
 
         $dataTabungan = Kategori_anggaran::where('user_id', $userId)->where('nama', 'Tabungan')->value('value');
@@ -203,7 +202,6 @@ class DatabaseHelper
         }
 
         return $persentase;
-
     }
 
     public static function getMonth()
@@ -219,7 +217,6 @@ class DatabaseHelper
 
         // Mendapatkan bulan saat ini dalam bentuk nomor (1-12)
         return $tanggalSaatIni->month;
-
     }
 
     public static function getYear()
@@ -235,18 +232,16 @@ class DatabaseHelper
 
         // Mendapatkan bulan saat ini dalam bentuk nomor (1-12)
         return $tanggalSaatIni->year;
-
     }
 
     public static function getMonthTransaki()
     {
         return Transaksi::where('user_id', auth()->user()->id)
-                            ->where('void', false)
-                            ->selectRaw('DATE_FORMAT(tanggal, "%M") as bulan_transaksi')
-                            ->selectRaw('DATE_FORMAT(tanggal, "%m") as id_bulan')
-                            ->distinct()
-                            ->get();
-
+            ->where('void', false)
+            ->selectRaw('DATE_FORMAT(tanggal, "%M") as bulan_transaksi')
+            ->selectRaw('DATE_FORMAT(tanggal, "%m") as id_bulan')
+            ->distinct()
+            ->get();
     }
 
     public static function getDate()
@@ -261,7 +256,8 @@ class DatabaseHelper
     }
 
     public static function getTime()
-    {App::setLocale('id');
+    {
+        App::setLocale('id');
 
         $date = Carbon::now(); // Mengambil tanggal dan waktu saat ini
         $formattedTime = $date->format('H:i A'); // Format waktu dalam format 24 jam (misalnya, "00:55")
@@ -292,16 +288,16 @@ class DatabaseHelper
     public static function getTransaksiPemasukanGroupByKategori()
     {
         $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                        ->where('transaksis.user_id', auth()->user()->id)
-                        ->where('void', false)
-                        ->whereIn('transaksis.jenis_transaksi_id', [1,4]);
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('void', false)
+            ->whereIn('transaksis.jenis_transaksi_id', [1, 2]);
 
-        if(request()->id == 'all') {
-            $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
-        }else{
+        if (request()->id == 'all') {
+            $transaksi->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+        } else {
             $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
         }
 
         return $transaksi->get();
@@ -309,22 +305,20 @@ class DatabaseHelper
 
     public static function getTransaksiPengeluaranGroupByKategori()
     {
-          $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                        ->where('transaksis.user_id', auth()->user()->id)
-                        ->where('void', false)
-                        ->whereIn('transaksis.jenis_transaksi_id', [2,5]);
+        $transaksi = Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('void', false)
+            ->whereIn('transaksis.jenis_transaksi_id', [3, 4]);
 
-        if(request()->id == 'all') {
-            $transaksi ->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
-        }else{
+        if (request()->id == 'all') {
+            $transaksi->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id')->get();
+        } else {
             $transaksi->whereMonth('tanggal', request()->id)->select('kategori_transaksis.nama', DB::raw('SUM(transaksis.jumlah) as jumlah'))
-            ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
+                ->groupBy('kategori_transaksis.nama', 'transaksis.kategori_transaksi_id');
         }
 
         return $transaksi->get();
-
-
     }
 
     public static function getNextMonth()
@@ -359,21 +353,20 @@ class DatabaseHelper
         }
 
         function generateSignature($payload = [])
-            {
-                openssl_sign(
-                    json_encode($payload),
-                    $generatedSignature,
-                    openssl_pkey_get_private(getPrivateKey()),
-                    'sha256WithRSAEncryption'
-                );
+        {
+            openssl_sign(
+                json_encode($payload),
+                $generatedSignature,
+                openssl_pkey_get_private(getPrivateKey()),
+                'sha256WithRSAEncryption'
+            );
 
-                return base64_encode($generatedSignature);
-            }
+            return base64_encode($generatedSignature);
+        }
 
         $signature = generateSignature($payload);
         // $signature_acc_inq = generateSignature($payload_acc_inq);
 
         return $signature;
     }
-
 }
