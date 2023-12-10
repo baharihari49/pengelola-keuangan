@@ -43,12 +43,16 @@
                         {{ $t->tanggal }}</th>
                     <td id="tabel-date" class="px-4 py-3 border">{{ $t->no_transaksi ?? '--' }}</td>
                     <td id="tabel-date" class="px-4 py-3 border">
-                        @if ($t->jenis_transaksi->nama == 'Pemasukan')
+                        @if ($t->jenis_transaksi->nama == 'Pendapatan Tetap')
                         <i class="fa-solid fa-arrow-down-long" style="color: #25c137;"></i>
-                        Pemasukan
-                        @elseif ($t->jenis_transaksi->nama == 'Pengeluaran')
+                        Pendapatan Tetap
+                        @elseif ($t->jenis_transaksi->nama == 'Pendapatan Tidak Tetap')
                         <i class="fa-solid fa-arrow-up-long" style="color: #e61e1e;"></i>
-                        Pengeluaran
+                        Pendapatan Tidak Tetap
+                        @elseif ($t->jenis_transaksi->nama == 'Pengeluaran Pokok')
+                        <i class="fa-solid fa-wallet" style="color: #1C64F2"></i> Pengeluaran Pokok
+                        @elseif ($t->jenis_transaksi->nama == 'Pengeluaran Tambahan')
+                        <i class="fa-solid fa-wallet" style="color: #1C64F2"></i> Pengeluaran Tambahan
                         @elseif ($t->jenis_transaksi->nama == 'Tabungan')
                         <i class="fa-solid fa-wallet" style="color: #1C64F2"></i> Tabungan
                         @else

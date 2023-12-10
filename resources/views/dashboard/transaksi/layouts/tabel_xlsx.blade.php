@@ -15,10 +15,14 @@
                     {{ $t->tanggal }}</th>
                 <td>{{ $t->no_transaksi ?? '--' }}</td>
                 <td>
-                    @if ($t->jenis_transaksi->nama == 'Pemasukan')
-                    Pemasukan
-                    @elseif ($t->jenis_transaksi->nama == 'Pengeluaran')
-                    Pengeluaran
+                    @if ($t->jenis_transaksi->nama == 'Pendapatan Tetap')
+                    Pendapatan Tetap
+                    @elseif ($t->jenis_transaksi->nama == 'Pendapatan Tidak Tetap')
+                    Pendapatan Tidak Tetap
+                    @elseif ($t->jenis_transaksi->nama == 'Pengeluaran Pokok')
+                    Pengeluaran Pokok
+                    @elseif ($t->jenis_transaksi->nama == 'Pengeluaran Tambahan')
+                    Pengeluaran Tambahan
                     @elseif ($t->jenis_transaksi->nama == 'Tabungan')
                     Tabungan
                     @else
