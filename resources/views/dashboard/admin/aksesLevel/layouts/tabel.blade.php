@@ -155,7 +155,7 @@
                                 <td class="px-4 py-3 space-x-4 flex items-center justify-end">
 
 
-                                    @if (auth()->user()->can('ubah akseslevel'))
+                                    @if (auth()->user()->can('ubah akses level'))
                                         <a href="/edit_akses_level/?id={{ $item->id }}">
                                             <svg class="w-5 h-5 text-blue-500 cursor-pointer dark:text-white"
                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
