@@ -159,7 +159,48 @@
                                         <th id="tabel-date" scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${res.tanggal}</th>
                                         <td id="tabel-date" class="px-4 py-3">${res.no_transaksi}</td>
-                                        <td id="tabel-date" class="px-4 py-3">${(res.jenis_transaksi_id == 1) ? '<i class="fa-solid fa-arrow-down-long" style="color: #25c137;"></i> Pemasukan' : (res.jenis_transaksi_id == 2) ? '<i class="fa-solid fa-arrow-up-long" style="color: #e61e1e;"></i> Pengeluaran' : `<i class="fa-solid fa-wallet" style="color: #1C64F2"></i> Tabungan`}</td>
+                                        <td id="tabel-date" class="px-4 py-3">
+                                        ${res.jenis_transaksi_id == 1 ?
+                                            `<div class="flex gap-2 items-center">
+                                                <svg class="w-3 h-3 font-medium text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9"/>
+                                                </svg>
+                                                <span>Pendapatan Tetap</span>
+                                            </div>` :
+                                            (res.jenis_transaksi_id == 2 ?
+                                                `<div class="flex gap-2 items-center">
+                                                    <svg class="w-3 h-3 font-medium text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9"/>
+                                                    </svg>
+                                                    <span>Pendapatan Tidak Tetap</span>
+                                                </div>` :
+                                                (res.jenis_transaksi_id == 3 ?
+                                                    `<div class="flex gap-2 items-center">
+                                                    <svg class="w-3 h-3 text-red-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                                                  </svg>
+                                                        <span>Pengeluaran Pokok</span>
+                                                    </div>` :
+                                                    (res.jenis_transaksi_id == 4 ?
+                                                        `<div class="flex gap-2 items-center">
+                                                        <svg class="w-3 h-3 text-red-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                                                      </svg>
+                                                            <span>Pengeluaran Tambahan</span>
+                                                        </div>` :
+                                                        `<div class="flex gap-2 items-center">
+                                                        <svg class="w-3 h-3 text-blue-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z"/>
+                                                        <path d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539.41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z"/>
+                                                      </svg>
+                                                            <span>Tabungan</span>
+                                                        </div>`
+                                                    )
+                                                )
+                                            )
+                                        }
+                                    </td>
+
                                         <td id="tabel-kategori" class="px-4 py-3 hidden">${res.kategori_transaksi.nama}</td>
                                         <td id="tabel-supplier" class="px-4 py-3 hidden">${res.suppliers_or_customers_nama_bisnis ?? '--'}</td>
                                         <td id="tabel-deskripsi" class="px-4 py-3 hidden">${res.deskripsi ?? '--'}</td>
