@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             KategoriTransaksiSeeder::class,
             SUP_COS::class,
             UsersSeeder::class,
+            paymentSeeder::class,
             addPermsission::class,
             rolePermision::class,
         ]);

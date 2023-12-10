@@ -17,6 +17,8 @@ class UsersSeeder extends Seeder
             'username' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
             'password' => bcrypt('admin12345'),
+            'email_verified_at' => '2023-12-10 13:43:34',
+            'payment_id' => 1,
         ]);
     }
 }
