@@ -358,5 +358,5 @@ Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(fun
 
 
 Route::get('/info_bisni', function () {
-    return DatabaseHelper::getTransaksiPemasukanGroupByKategori();
+    return DatabaseHelper::getPersentasePerbandinganDaily();
 });

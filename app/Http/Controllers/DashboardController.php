@@ -71,6 +71,7 @@ class DashboardController extends Controller
                 ->whereDate('tanggal', '<=', Carbon::now()->format('Y-m-d'))
                 ->limit(7)->get(),
             'anggarans' => DatabaseHelper::getPersentaseAnggaran(),
+            'persentasePerbandingan' => DatabaseHelper::getPersentasePerbandinganDaily(),
             'topPengeluaran' => $topPengeluaran,
             'dataBudgeting' => DatabaseHelper::getJumlahBudgeting(),
             'persentaseBudgeting' => DatabaseHelper::getPersentaseBudgeting(),
@@ -175,7 +176,7 @@ class DashboardController extends Controller
     public function getBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-            ->whereIn('jenis_transaksi_id', [1,2])
+            ->whereIn('jenis_transaksi_id', [1, 2])
             ->whereMonth('tanggal', DatabaseHelper::getMonth())
             ->sum('jumlah');
 

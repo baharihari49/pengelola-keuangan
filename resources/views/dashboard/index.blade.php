@@ -94,14 +94,27 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M1 1v14h16M4 10l3-4 4 4 5-5m0 0h-3.207M16 5v3.207" />
                     </svg>
-                    <div class="flex items-center xl:gap-1">
-                        <p class="text-green-500 text-xs xl:text-base font-semibold">0%</p>
-                        <svg class="w-3 h-3 xl:w-4 xl:h-4 text-green-500 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13V1m0 0L1 5m4-4 4 4" />
-                        </svg>
-                    </div>
+                    @if ($persentasePerbandingan['persentaseSelisihPendapatan'] > 0)
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-green-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihPendapatan'] }}%</p>
+                            <svg class="w-3 h-3 xl:w-4 xl:h-4 text-green-500 text-gray-800 dark:text-white"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-red-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihPendapatan'] }}%</p>
+                            <svg class="w-3 h-3 text-red-500 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 1v12m0 0 4-4m-4 4L1 9" />
+                            </svg>
+                        </div>
+                    @endif
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pendapatan, 0, ',', '.') }}</p>
@@ -116,14 +129,28 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M1 1v14h16M4 5l3 4 4-4 5 5m0 0h-3.207M16 10V6.793" />
                     </svg>
-                    <div class="flex items-center xl:gap-1">
-                        <p class="text-red-500 text-xs xl:text-base font-semibold">%</p>
-                        <svg class="w-3 h-3 xl:w-4 xl:h-4 text-red-500 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13V1m0 0L1 5m4-4 4 4" />
-                        </svg>
-                    </div>
+                    @if ($persentasePerbandingan['persentaseSelisihPengeluaran'] > 0)
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-green-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihPengeluaran'] }}%</p>
+                            <svg class="w-3 h-3 xl:w-4 xl:h-4 text-green-500 text-gray-800 dark:text-white"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-red-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihPengeluaran'] }}%</p>
+                            <svg class="w-3 h-3 text-red-500 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9" />
+                            </svg>
+                        </div>
+                    @endif
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($pengeluaran, 0, ',', '.') }}</p>
@@ -138,14 +165,28 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11.905 1.316 15.633 6M18 10h-5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h5m0-5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1v-3m-6.367-9L7.905 1.316 2.352 6h9.281Z" />
                     </svg>
-                    <div class="flex items-center xl:gap-1">
-                        <p class="text-green-500 text-xs xl:text-base font-semibold">0%</p>
-                        <svg class="w-3 h-3 xl:w-4 xl:h-4 text-green-500 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13V1m0 0L1 5m4-4 4 4" />
-                        </svg>
-                    </div>
+                    @if ($persentasePerbandingan['persentaseSelisihSaldo'] > 0)
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-green-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihSaldo'] }}%</p>
+                            <svg class="w-3 h-3 xl:w-4 xl:h-4 text-green-500 text-gray-800 dark:text-white"
+                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-red-500 text-xs xl:text-base font-semibold">
+                                {{ $persentasePerbandingan['persentaseSelisihSaldo'] }}%</p>
+                            <svg class="w-3 h-3 text-red-500 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9" />
+                            </svg>
+                        </div>
+                    @endif
                 </div>
                 <p class="mt-3 mb-1 text-md xl:text-2xl 2xl:text-3xl font-bold">Rp
                     {{ number_format($saldo[0]->saldo, 0, ',', '.') }}</p>

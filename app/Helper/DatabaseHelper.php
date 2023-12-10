@@ -118,6 +118,49 @@ class DatabaseHelper
 
         return $anggaranDenganPersentase;
     }
+    public static function getPersentasePerbandinganDaily()
+    {
+        $getYesterday = Carbon::yesterday()->format('Y-m-d');
+        $getMinusTwoDay = Carbon::today()->subDays(2)->format('Y-m-d');
+        $getTotalPendapatanYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [1, 2])->select(
+            'jumlah'
+        )
+            ->sum('jumlah');
+        $getTotalPendapatanMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [1, 2])->select('jumlah')->sum('jumlah');
+        $getTotalPengeluaranYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [3, 4])->select('jumlah')->sum('jumlah');
+        $getTotalPengeluaranMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [3, 4])->select('jumlah')->sum('jumlah');
+        $getSaldoYesterday = $getTotalPendapatanYesterday - $getTotalPengeluaranYesterday;
+        $getSaldoMinusTwoDay = $getTotalPendapatanMinusTwoDay - $getTotalPengeluaranMinusTwoDay;
+        $getSelisihPendapatan = ($getTotalPendapatanYesterday - $getTotalPendapatanMinusTwoDay);
+        $persentaseSelisihPendapatan = round(($getSelisihPendapatan / $getTotalPendapatanMinusTwoDay) * 100, 2);
+        $getSelisihPengeluaran = ($getTotalPengeluaranYesterday - $getTotalPengeluaranMinusTwoDay);
+        $persentaseSelisihPengeluaran = round(($getSelisihPengeluaran / $getTotalPengeluaranMinusTwoDay) * 100, 2);
+        $getSelisihSaldo = ($getSaldoYesterday - $getSaldoMinusTwoDay);
+        $persentaseSelisihSaldo = round(($getSelisihSaldo / $getSaldoMinusTwoDay) * 100, 2);
+
+        // Hitung perbandingan pendapatan dari bulan lalu ke bulan tanggal berjalan sekarang
+        $tanggalAwalBulanLalu = Carbon::now()->startOfMonth()->subMonthsNoOverflow()->toDateString();
+        $tanggalAkhirBulanLalu = Carbon::now()->subMonthsNoOverflow()->endOfMonth()->toDateString();
+        $tanggalAwalBulan = Carbon::now()->startOfMonth()->toDateString();
+        $tanggalSekarang = Carbon::now()->toDateString();
+        $getTotalPendapatanBulanLalu = Transaksi::whereBetween('tanggal', [$tanggalAwalBulanLalu, $tanggalAkhirBulanLalu])->where('jenis_transaksi_id', [1, 2])->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->select('jumlah')->sum('jumlah');
+        $persentaseSelisihPendapatBulanBerjalan = round((($getTotalPendapatanBulanBerjalan - $getTotalPendapatanBulanLalu) / $getTotalPendapatanBulanLalu) * 100, 2);
+        return [
+            'getTotalPendapatanYesterday' => $getTotalPendapatanYesterday,
+            'getTotalPendapatanMinusTwoDay' => $getTotalPendapatanMinusTwoDay,
+            'getSelisihPendapatan' => $getSelisihPendapatan,
+            'persentaseSelisihPendapatan' => $persentaseSelisihPendapatan,
+            'getTotalPengeluaranYesterday' => $getTotalPengeluaranYesterday,
+            'getTotalPengeluaranMinusTwoDay' => $getTotalPengeluaranMinusTwoDay,
+            'getSelisihPengeluaran' => $getSelisihPengeluaran,
+            'persentaseSelisihPengeluaran' => $persentaseSelisihPengeluaran,
+            'getSaldoYesterday' => $getSaldoYesterday,
+            'getSaldoMinusTwoDay' => $getSaldoMinusTwoDay,
+            'persentaseSelisihSaldo' => $persentaseSelisihSaldo,
+            'persentaseSelisihPendapatBulanBerjalan' => $persentaseSelisihPendapatBulanBerjalan
+        ];
+    }
 
     public static function getJumlahTransaksiBudgeting($param)
     {
