@@ -175,7 +175,8 @@ class DashboardController extends Controller
     public function getBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
-            ->where('kategori_transaksi_id', 1)
+            ->whereIn('jenis_transaksi_id', [1,2])
+            ->whereMonth('tanggal', DatabaseHelper::getMonth())
             ->sum('jumlah');
 
 

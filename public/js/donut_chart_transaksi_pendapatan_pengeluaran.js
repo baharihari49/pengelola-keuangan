@@ -85,7 +85,7 @@ window.addEventListener("load", function() {
         },
       }
     }
-  
+
     if (document.getElementById("donut-chart") && typeof ApexCharts !== 'undefined') {
       const chart = new ApexCharts(document.getElementById("donut-chart"), getChartOptions());
       chart.render();
@@ -94,5 +94,5 @@ window.addEventListener("load", function() {
 
   xhr.open('GET', '/get_perbandingan_pemasukan_pengeluaran', true)
   xhr.send()
-  
+
 });
