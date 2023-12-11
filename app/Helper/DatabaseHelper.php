@@ -153,8 +153,8 @@ class DatabaseHelper
         $tanggalAkhirBulanLalu = Carbon::now()->subMonthsNoOverflow()->endOfMonth()->toDateString();
         $tanggalAwalBulan = Carbon::now()->startOfMonth()->toDateString();
         $tanggalSekarang = Carbon::now()->toDateString();
-        $getTotalPendapatanBulanLalu = Transaksi::whereBetween('tanggal', [$tanggalAwalBulanLalu, $tanggalAkhirBulanLalu])->where('jenis_transaksi_id', [1, 2])->select('jumlah')->sum('jumlah');
-        $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanBulanLalu = Transaksi::whereBetween('tanggal', [$tanggalAwalBulanLalu, $tanggalAkhirBulanLalu])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
         $persentaseSelisihPendapatBulanBerjalan = $getTotalPendapatanBulanLalu > 0 ? round((($getTotalPendapatanBulanBerjalan - $getTotalPendapatanBulanLalu) / $getTotalPendapatanBulanLalu) * 100, 2) : 0;
         return [
             'getTotalPendapatanYesterday' => $getTotalPendapatanYesterday,
