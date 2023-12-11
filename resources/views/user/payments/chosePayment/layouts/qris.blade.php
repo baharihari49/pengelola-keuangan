@@ -11,7 +11,7 @@
             <img class="w-80" src="./image/qr_code.png" alt="">
         </figure> --}}
         <div class="visible-print text-center">
-            {!! QrCode::size(330)->generate($qrCode); !!}
+            {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(330)->generate($qrCode); !!}
             {{-- <p>Scan me to return to the original page.</p> --}}
         </div>
     </div>
