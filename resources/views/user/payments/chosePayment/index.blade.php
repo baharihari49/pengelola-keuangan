@@ -1,4 +1,5 @@
 @extends('user.layouts.main_layouts')
+@include('user.payments.chosePayment.layouts.qris_modal')
 
 @section('container')
     <section class="bg-gray-50 flex flex-col justify-center items-center h-screen">
@@ -10,9 +11,15 @@
                 <h3 class="text-center font-semibold text-2xl mb-10">Pilih Metode Pembayaran</h3>
                 <div class="flex gap-3 justify-center">
                     <div class="border rounded-md flex items-center px-5 text-blue-500 font-semibold text-xl text-center lg:text-2xl"><p>Virtual Account</p></div>
-                    <div class="border rounded-md p-5">
+                    <form action="create_payment" method="POST">
+                        @csrf
+                        <button class="submit" class="border cursor-pointer rounded-md p-5 hover:bg-gray-100">
+                            <img class="w-28" src="image/logo/logo_qris.png" alt="logo qris">
+                        </button>
+                    </form>
+                    {{-- <div data-modal-target="default-modal" data-modal-toggle="default-modal"  class="border cursor-pointer rounded-md p-5 hover:bg-gray-100">
                         <img class="w-28" src="image/logo/logo_qris.png" alt="logo qris">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="border bg-white w-full rounded-md shadow-md lg:col-span-1 p-5">
