@@ -71,7 +71,7 @@ class paymentController extends Controller
             $paymenId = Payment::where('user_id', auth()->user()->id)->value('id');
             User::where('id', auth()->user()->id)->update(['payment_id' => $paymenId]);
             return view('user.payments.chosePayment.layouts.qris',[
-                'qrCode' => $qrCode
+                'qrCode' => $qrCode,
             ]);
         }
 
