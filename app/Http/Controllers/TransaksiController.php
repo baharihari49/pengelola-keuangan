@@ -122,7 +122,7 @@ class TransaksiController extends Controller
 
         if($user->payment_id != null && $user->payment != null){
            if($user->payment->status == 'pending') {
-                if(Transaksi::where('user_id', auth()->user()->id)->count() > 5) {
+                if(Transaksi::where('user_id', auth()->user()->id)->count() > 50) {
                     return redirect('/transaksi');
                 }else{
                     if(empty($data_anggaran[0]['jumlah'])){
@@ -139,7 +139,7 @@ class TransaksiController extends Controller
                         return redirect('/transaksi')->with('error', 'Data gagal ditambahakan');
                     }
             }
-           }else if($user->payment->status == 'successful'){
+           }else if($user->payment->status == 'successful' || $user->payment->status == 'paid'){
                 if(empty($data_anggaran[0]['jumlah'])){
                     $validate['anggaran'] = false;
                     Transaksi::create($validate);
