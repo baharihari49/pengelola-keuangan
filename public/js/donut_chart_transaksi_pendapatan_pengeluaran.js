@@ -5,7 +5,7 @@ window.addEventListener("load", function() {
     const getChartOptions = () => {
       return {
         series: response,
-        colors: ["#F05252", "#0E9F6E"],
+        colors: ["#d24f98", "#5d369c"],
         chart: {
           height: 320,
           width: "100%",

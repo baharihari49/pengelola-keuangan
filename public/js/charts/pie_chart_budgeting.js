@@ -11,7 +11,7 @@ window.addEventListener("load", function() {
             const getChartOptions = () => {
             return {
               series: jumlah,
-              colors: ['#1C64F2','#5850EC', '#0E9F6E'],
+              colors: ['#d24f98','#5d369c', '#9345a3'],
               chart: {
                 height: 420,
                 width: "100%",
@@ -24,7 +24,7 @@ window.addEventListener("load", function() {
               plotOptions: {
                 pie: {
                   labels: {
-                    show: false,
+                    show: true,
                   },
                   size: "100%",
                   dataLabels: {
@@ -60,7 +60,7 @@ window.addEventListener("load", function() {
                   show: false,
                 },
                 axisBorder: {
-                  show: false,
+                  show: true,
                 },
               },
             }

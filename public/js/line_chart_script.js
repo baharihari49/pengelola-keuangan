@@ -81,13 +81,17 @@
               enabled: false,
             },
             stroke: {
+            curve: 'smooth',
               width: 6,
             },
             legend: {
               show: true
             },
             grid: {
-              show: false,
+              show: true,
+            },
+            markers: {
+                size: 1,
             },
           }
 

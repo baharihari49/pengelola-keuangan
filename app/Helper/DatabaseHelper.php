@@ -130,8 +130,8 @@ class DatabaseHelper
     public static function getPersentasePerbandinganDaily()
     {
         $getId = auth()->user()->id;
-        $getYesterday = Carbon::today()->format('Y-m-d');
-        $getMinusTwoDay = Carbon::yesterday()->format('Y-m-d');
+        $getYesterday = Carbon::yesterday()->format('Y-m-d');
+        $getMinusTwoDay = Carbon::now()->subDays(2)->format('Y-m-d');
         $getTotalPendapatanYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select(
             'jumlah'
         )
@@ -157,6 +157,9 @@ class DatabaseHelper
         $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
         $persentaseSelisihPendapatBulanBerjalan = $getTotalPendapatanBulanLalu > 0 ? round((($getTotalPendapatanBulanBerjalan - $getTotalPendapatanBulanLalu) / $getTotalPendapatanBulanLalu) * 100, 2) : 0;
         return [
+            'today' => Carbon::now()->format('Y-m-d'),
+            'yesterday' => $getYesterday,
+            'twoDaysBeforeToday' => $getMinusTwoDay,
             'getTotalPendapatanYesterday' => $getTotalPendapatanYesterday,
             'getTotalPendapatanMinusTwoDay' => $getTotalPendapatanMinusTwoDay,
             'getSelisihPendapatan' => $getSelisihPendapatan,
