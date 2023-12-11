@@ -50,10 +50,7 @@ class DashboardController extends Controller
 
 
         return view('dashboard.index', [
-            'pendapatan' => Transaksi::where('user_id', auth()->user()->id)
-                ->whereIn('jenis_transaksi_id', [1, 2])
-                ->where('void', false)
-                ->sum('jumlah'),
+            'pendapatan' => DatabaseHelper::getPendapatan(),
             'pendapatan_bulan_ini' => Transaksi::where('user_id', auth()->user()->id)
                 ->whereIn('jenis_transaksi_id', [1, 2])
                 ->where('void', false)

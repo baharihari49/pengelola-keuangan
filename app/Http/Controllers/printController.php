@@ -42,19 +42,19 @@ class printController extends Controller
             $transaksi = $transaksi->whereMonth('tanggal', request()->id)->get();
             $bulanAngka = request()->id;
             $tanggal = Carbon::create(null, $bulanAngka, 1);
-    
+
             $namaBulan = $tanggal->isoFormat('MMMM');
         };
 
 
         $pdf = Pdf::loadview('dashboard.transaksi.layouts.print.print_transaksi_by_month', ['transaksi' => $transaksi, 'bulan' => $namaBulan]);
-        return $pdf->setPaper('a4', 'landscape')->stream();        
+        return $pdf->setPaper('a4', 'landscape')->stream();
     }
 
-    public function dwonlodTransaksiPemasukan() 
+    public function dwonlodTransaksiPemasukan()
     {
         $transaksi = Transaksi::where('user_id', auth()->user()->id)
-                                ->where('jenis_transaksi_id', 1)
+                                ->whereIn('jenis_transaksi_id', [1,2])
                                 ->where('void', false)
                                 ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers']);
 
@@ -65,16 +65,16 @@ class printController extends Controller
             $transaksi->whereMonth('tanggal', request()->id);
             $bulanAngka = request()->id;
             $tanggal = Carbon::create(null, $bulanAngka, 1);
-    
+
             $namaBulan = $tanggal->isoFormat('MMMM');
-        }                        
+        }
         $pdf = Pdf::loadview('dashboard.laporan.pemasukan.layouts.print.print_transaksi_pemasukan', [
             'data' => $transaksi->get(),
             'pemasukan' => $transaksi->sum('jumlah'),
             'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
                                     ->where('transaksis.user_id', auth()->user()->id)
                                     ->where('void', false)
-                                    ->where('transaksis.jenis_transaksi_id', 1)
+                                    ->whereIn('transaksis.jenis_transaksi_id', [1,2])
                                     ->distinct()
                                     ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
                                     ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
@@ -85,7 +85,7 @@ class printController extends Controller
         return $pdf->setPaper('a4', 'landscape')->stream();
     }
 
-    public function dwonlodTransaksiPengeluaran() 
+    public function dwonlodTransaksiPengeluaran()
     {
         $transaksi = Transaksi::where('user_id', auth()->user()->id)
                                 ->where('jenis_transaksi_id', 2)
@@ -99,9 +99,9 @@ class printController extends Controller
             $transaksi->whereMonth('tanggal', request()->id);
             $bulanAngka = request()->id;
             $tanggal = Carbon::create(null, $bulanAngka, 1);
-    
+
             $namaBulan = $tanggal->isoFormat('MMMM');
-        }                        
+        }
         $pdf = Pdf::loadview('dashboard.laporan.pengeluaran.layouts.print.print_transaksi_pengeluaran', [
             'data' => $transaksi->get(),
             'pengeluaran' => $transaksi->sum('jumlah'),
@@ -128,10 +128,10 @@ class printController extends Controller
             $transaksi->whereMonth('tanggal', request()->id);
             $bulanAngka = request()->id;
             $tanggal = Carbon::create(null, $bulanAngka, 1);
-        
+
             $namaBulan = $tanggal->isoFormat('MMMM');
         }
-    
+
         $transaksi = $transaksi->get(); // Eksekusi query dan dapatkan hasilnya
         $pdf = Pdf::loadView('dashboard.laporan.labarugi.layouts.print.index', [
             'pemasukan' => $transaksi->where('jenis_transaksi_id', 1)->sum('jumlah'),
