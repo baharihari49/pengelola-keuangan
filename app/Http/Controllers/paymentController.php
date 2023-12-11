@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\User;
 use GuzzleHttp;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class paymentController extends Controller
 {
 
@@ -30,7 +30,7 @@ class paymentController extends Controller
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
         $payloads = [
-            "title" => 'bayar octans',
+            "title" => 'Langganan octans finance',
             "amount" => 10000,
             "type" => "SINGLE",
             "expired_date" => "2023-12-30 15:50",
@@ -56,13 +56,12 @@ class paymentController extends Controller
 
         $dataResponse = json_decode($response);
 
-        return $dataResponse;
-
+        $qrCode = $dataResponse->bill_payment->receiver_bank_account->qr_code_data;
 
         $payment = new Payment();
 
-        $payment->title = $request->title;
-        $payment->amount = $request->amount;
+        $payment->title = $dataResponse->title;
+        $payment->amount = $dataResponse->amount;
         $payment->status = 'pending';
         $payment->external_id = $dataResponse->link_id;
         $payment->url = $dataResponse->payment_url;
@@ -71,7 +70,9 @@ class paymentController extends Controller
         if($payment->save()){
             $paymenId = Payment::where('user_id', auth()->user()->id)->value('id');
             User::where('id', auth()->user()->id)->update(['payment_id' => $paymenId]);
-            return redirect($dataResponse->payment_url);
+            return view('user.payments.chosePayment.layouts.qris',[
+                'qrCode' => $qrCode
+            ]);
         }
 
 
