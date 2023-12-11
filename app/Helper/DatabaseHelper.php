@@ -14,6 +14,15 @@ use GuzzleHttp;
 
 class DatabaseHelper
 {
+    public static function getPendapatan()
+    {
+        $transaksi = Transaksi::where('user_id', auth()->user()->id)
+                            ->whereIn('jenis_transaksi_id', [1,2])
+                            ->where('void', false)
+                            ->sum('jumlah');
+
+        return $transaksi;
+    }
     public static function getJumlahBudgeting()
     {
         $jumlahPendapatanTransaksi = Transaksi::where('user_id', auth()->user()->id)
