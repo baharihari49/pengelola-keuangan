@@ -104,7 +104,7 @@
                                     d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
-                    @else
+                    @elseif ($persentasePerbandingan['persentaseSelisihPendapatan'] < 0)
                         <div class="flex items-center xl:gap-1">
                             <p class="text-red-500 text-xs xl:text-base font-semibold">
                                 {{ $persentasePerbandingan['persentaseSelisihPendapatan'] }}%</p>
@@ -113,6 +113,11 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 1v12m0 0 4-4m-4 4L1 9" />
                             </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-gray-500 text-xs xl:text-base font-semibold">
+                                0%</p>
                         </div>
                     @endif
                 </div>
@@ -140,7 +145,7 @@
                                     stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
-                    @else
+                    @elseif ($persentasePerbandingan['persentaseSelisihPengeluaran'] < 0)
                         <div class="flex items-center xl:gap-1">
                             <p class="text-red-500 text-xs xl:text-base font-semibold">
                                 {{ $persentasePerbandingan['persentaseSelisihPengeluaran'] }}%</p>
@@ -149,6 +154,11 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9" />
                             </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-gray-500 text-xs xl:text-base font-semibold">
+                                0%</p>
                         </div>
                     @endif
                 </div>
@@ -176,7 +186,7 @@
                                     stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
-                    @else
+                    @elseif ($persentasePerbandingan['persentaseSelisihSaldo'] < 0)
                         <div class="flex items-center xl:gap-1">
                             <p class="text-red-500 text-xs xl:text-base font-semibold">
                                 {{ $persentasePerbandingan['persentaseSelisihSaldo'] }}%</p>
@@ -185,6 +195,11 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9" />
                             </svg>
+                        </div>
+                    @else
+                        <div class="flex items-center xl:gap-1">
+                            <p class="text-gray-500 text-xs xl:text-base font-semibold">
+                                0%</p>
                         </div>
                     @endif
                 </div>
@@ -368,15 +383,15 @@
                             data-dropdown-placement="bottom"
                             class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
                             type="button">
-                            Today
-                            <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            Minggu ini
+                            {{-- <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
-                            </svg>
+                            </svg> --}}
                         </button>
                         <!-- Dropdown menu -->
-                        <div id="lastDaysdropdownTransaksi"
+                        {{-- <div id="lastDaysdropdownTransaksi"
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownDefaultButton">
@@ -389,7 +404,7 @@
                                         class="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</button>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <a href="/transaksi"
                             class="uppercase text-xs lg:text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
                             Full Report
