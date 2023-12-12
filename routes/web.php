@@ -368,27 +368,26 @@ Route::get('/info_bisni', function () {
         ->get();
 });
 
-Route::get('/get_pendapatan', function()
-{
+Route::get('/get_pendapatan', function () {
     return response()->json([
         'pemasukan' => DatabaseHelper::getPendapatan(),
-                'data' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                    ->where('transaksis.user_id', auth()->user()->id)
-                    ->whereIn('transaksis.jenis_transaksi_id', [1, 2])
-                    ->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2])
-                    ->where('void', false)
-                    ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
-                    ->paginate(15),
-                'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
-                    ->where('transaksis.user_id', auth()->user()->id)
-                    ->where('void', false)
-                    ->whereIn('transaksis.jenis_transaksi_id', [1, 2])
-                    ->distinct()
-                    ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
-                    ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
-                    ->get(),
-                'dataBulan' => DatabaseHelper::getMonthTransaki(),
-                'user' => DatabaseHelper::getUser()[0]
+        'data' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->whereIn('transaksis.jenis_transaksi_id', [1, 2])
+            ->whereIn('kategori_transaksis.jenis_transaksi_id', [1, 2])
+            ->where('void', false)
+            ->with(['kategori_transaksi', 'jenis_transaksi', 'suppliers_or_customers'])
+            ->paginate(15),
+        'kategori' => Transaksi::join('kategori_transaksis', 'transaksis.kategori_transaksi_id', '=', 'kategori_transaksis.id')
+            ->where('transaksis.user_id', auth()->user()->id)
+            ->where('void', false)
+            ->whereIn('transaksis.jenis_transaksi_id', [1, 2])
+            ->distinct()
+            ->select('kategori_transaksis.nama', 'kategori_transaksis.id')
+            ->groupBy('kategori_transaksis.nama', 'kategori_transaksis.id')
+            ->get(),
+        'dataBulan' => DatabaseHelper::getMonthTransaki(),
+        'user' => DatabaseHelper::getUser()[0]
     ]);
 });
 Route::get('/debug-bin', function () {
