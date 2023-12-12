@@ -107,7 +107,7 @@ window.addEventListener("load", function () {
         }
 
         var chart = new ApexCharts(
-            document.querySelector("#transaksiBulanan"),
+            document.querySelector("#donut-chart"),
             getChartOptions()
         );
         chart.render();
