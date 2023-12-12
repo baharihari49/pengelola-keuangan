@@ -2,16 +2,6 @@ window.addEventListener("load", function () {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         let response = JSON.parse(this.responseText);
-        function formatRupiah(angka) {
-            if (isNaN(angka)) {
-                return "N/A";
-            }
-            const formattedAngka = angka.toString().replace(/[^0-9\.]/g, "");
-            const rupiah =
-                "Rp. " +
-                formattedAngka.toFixed(2).replace(/\d(?=(\d{3})+[^\d])/g, ".");
-            return rupiah;
-        }
 
         function getChartOptions() {
             return {
@@ -21,14 +11,60 @@ window.addEventListener("load", function () {
                     width: "100%",
                     type: "bar",
                 },
-                series: response.map((data) => ({
-                    name: data.monthName,
-                    data: [
-                        numeral(data.income).format("0.0.0"),
-                        numeral(data.outcome).format("0.0.0"),
-                        numeral(data.saldo).format("0.0.0"),
-                    ],
-                })),
+                series: [
+                    {
+                        name: "Income",
+                        data: response.map((data) => data.income),
+                    },
+                    {
+                        name: "Outcome",
+                        data: response.map((data) => data.outcome),
+                    },
+                    {
+                        name: "Saldo",
+                        data: response.map((data) => data.saldo),
+                    },
+                ],
+                xaxis: {
+                    type: "category",
+                    categories: response.map((data) => data.monthName),
+                    labels: {
+                        formatter: function (value) {
+                            return value ? value.toUpperCase() : "";
+                        },
+                    },
+                },
+                yaxis: {
+                    title: {
+                        text: "IDR (Rupiahs)",
+                    },
+                    labels: {
+                        formatter: function (value) {
+                            return (
+                                "Rp. " +
+                                value.toLocaleString("id-ID", {
+                                    minimumFractionDigits: 2,
+                                })
+                            );
+                        },
+                    },
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            // Convert the value to a number if it's a string
+                            const value =
+                                typeof val === "string" ? parseFloat(val) : val;
+                            // Format the number with the thousands separator and two decimal places
+                            return (
+                                "Rp. " +
+                                value.toLocaleString("id-ID", {
+                                    minimumFractionDigits: 2,
+                                })
+                            );
+                        },
+                    },
+                },
                 chart: {
                     type: "bar",
                     height: 350,
@@ -55,30 +91,17 @@ window.addEventListener("load", function () {
                 plotOptions: {
                     bar: {
                         horizontal: false,
-                        borderRadius: 10,
-                        dataLabels: {
-                            total: {
-                                enabled: true,
-                                style: {
-                                    fontSize: "13px",
-                                    fontWeight: 900,
-                                },
-                            },
-                        },
+                        columnWidth: "55%",
+                        endingShape: "rounded",
                     },
                 },
-                xaxis: {
-                    type: "category",
-                    categories: response.map((data) => data.monthName),
-                    labels: {
-                        formatter: function (value) {
-                            return value.toUpperCase(); // Ubah ke huruf kapital
-                        },
-                    },
+                dataLabels: {
+                    enabled: false,
                 },
-                legend: {
-                    position: "right",
-                    offsetY: 40,
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ["transparent"],
                 },
             };
         }

@@ -427,6 +427,14 @@ class DatabaseHelper
     }
     public static function getKeuanganMonthly()
     {
+        function formatRupiah($number)
+        {
+            $rupiah = number_format($number, 2, ".", ",");
+            if ($number < 0) {
+                $rupiah = "-$rupiah";
+            }
+            return $rupiah;
+        };
         $bulan_transaksi = Transaksi::where('user_id', auth()->user()->id)
             ->where('void', false)
             ->selectRaw('DATE_FORMAT(tanggal, "%m") as bulan_transaksi')
@@ -444,7 +452,7 @@ class DatabaseHelper
             $data->monthName = Carbon::createFromDate(null, intval($data->bulan_transaksi), 1)->format('F');
             $data->income = intval($jumlah_pendapatan);
             $data->outcome = intval($jumlah_pengeluaran);
-            $data->saldo = $jumlah_pendapatan - $jumlah_pengeluaran;
+            $data->saldo = intval(($jumlah_pendapatan - $jumlah_pengeluaran));
         }
 
         return response()->json($bulan_transaksi);
