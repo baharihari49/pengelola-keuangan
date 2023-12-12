@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo; // Gunakan BelongsTo denga
 use App\Models\Jenis_transaksi;
 use App\Models\Kategori_transaksi;
 use App\Models\suppliers_or_customers;
+use Carbon\Carbon;
 
 class Transaksi extends Model
 {
@@ -51,4 +52,3 @@ class Transaksi extends Model
         return $this->belongsTo(suppliers_or_customers::class);
     }
 }
-

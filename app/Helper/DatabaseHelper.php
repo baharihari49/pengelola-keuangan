@@ -132,13 +132,13 @@ class DatabaseHelper
         $getId = auth()->user()->id;
         $getYesterday = Carbon::yesterday()->format('Y-m-d');
         $getMinusTwoDay = Carbon::now()->subDays(2)->format('Y-m-d');
-        $getTotalPendapatanYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select(
+        $getTotalPendapatanYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->where('void', false)->select(
             'jumlah'
         )
             ->sum('jumlah');
-        $getTotalPendapatanMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
-        $getTotalPengeluaranYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [3, 4])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
-        $getTotalPengeluaranMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [3, 4])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->where('void', false)->select('jumlah')->sum('jumlah');
+        $getTotalPengeluaranYesterday = Transaksi::where('tanggal', $getYesterday)->where('jenis_transaksi_id', [3, 4])->where('user_id', $getId)->where('void', false)->select('jumlah')->sum('jumlah');
+        $getTotalPengeluaranMinusTwoDay = Transaksi::where('tanggal', $getMinusTwoDay)->where('jenis_transaksi_id', [3, 4])->where('user_id', $getId)->where('void', false)->select('jumlah')->sum('jumlah');
         $getSaldoYesterday = $getTotalPendapatanYesterday - $getTotalPengeluaranYesterday;
         $getSaldoMinusTwoDay = $getTotalPendapatanMinusTwoDay - $getTotalPengeluaranMinusTwoDay;
         $getSelisihPendapatan = ($getTotalPendapatanYesterday - $getTotalPendapatanMinusTwoDay);
@@ -153,8 +153,8 @@ class DatabaseHelper
         $tanggalAkhirBulanLalu = Carbon::now()->subMonthsNoOverflow()->endOfMonth()->toDateString();
         $tanggalAwalBulan = Carbon::now()->startOfMonth()->toDateString();
         $tanggalSekarang = Carbon::now()->toDateString();
-        $getTotalPendapatanBulanLalu = Transaksi::whereBetween('tanggal', [$tanggalAwalBulanLalu, $tanggalAkhirBulanLalu])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
-        $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanBulanLalu = Transaksi::whereBetween('tanggal', [$tanggalAwalBulanLalu, $tanggalAkhirBulanLalu])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->where('void', false)->select('jumlah')->sum('jumlah');
+        $getTotalPendapatanBulanBerjalan = Transaksi::whereBetween('tanggal', [$tanggalAwalBulan, $tanggalSekarang])->where('jenis_transaksi_id', [1, 2])->where('user_id', $getId)->where('void', false)->select('jumlah')->sum('jumlah');
         $persentaseSelisihPendapatBulanBerjalan = $getTotalPendapatanBulanLalu > 0 ? round((($getTotalPendapatanBulanBerjalan - $getTotalPendapatanBulanLalu) / $getTotalPendapatanBulanLalu) * 100, 2) : 0;
         return [
             'today' => Carbon::now()->format('Y-m-d'),
@@ -424,5 +424,28 @@ class DatabaseHelper
         // $signature_acc_inq = generateSignature($payload_acc_inq);
 
         return $signature;
+    }
+    public static function getKeuanganMonthly()
+    {
+        $bulan_transaksi = Transaksi::where('user_id', auth()->user()->id)
+            ->where('void', false)
+            ->selectRaw('DATE_FORMAT(tanggal, "%m") as bulan_transaksi')
+            ->groupBy('bulan_transaksi')
+            ->get();
+        foreach ($bulan_transaksi as $data) {
+            $jumlah_pendapatan = Transaksi::whereMonth('tanggal', $data->bulan_transaksi)
+                ->where('jenis_transaksi_id', [1, 2])
+                ->sum('jumlah');
+
+            $jumlah_pengeluaran = Transaksi::whereMonth('tanggal', $data->bulan_transaksi)
+                ->where('jenis_transaksi_id', [3, 4])
+                ->sum('jumlah');
+            $data->income = $jumlah_pendapatan;
+            $data->outcome = $jumlah_pengeluaran;
+            $data->saldo = $jumlah_pendapatan - $jumlah_pengeluaran;
+        }
+
+        return response()->json($bulan_transaksi);
+        // $incomeMonthly = Transaksi::where('')
     }
 }

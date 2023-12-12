@@ -160,6 +160,7 @@ Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(fun
         Route::get('/get_perbandingan_pemasukan_pengeluaran', 'get_perbandingan_pemasukan_pengeluaran');
 
         Route::get('/get_budgeting', 'getBudgeting');
+        Route::get('/get_keuangan_bulanan', 'get_keuangan_bulanan');
     });
 
 
@@ -358,7 +359,7 @@ Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(fun
 
 
 Route::get('/info_bisni', function () {
-    return DatabaseHelper::getPersentasePerbandinganDaily();
+    return DatabaseHelper::getKeuanganMonthly();
 });
 
 Route::get('/get_pendapatan', function () {

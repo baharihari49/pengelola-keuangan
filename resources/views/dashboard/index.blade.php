@@ -428,7 +428,7 @@
                 @include('dashboard.top_pengeluaran')
             </div>
 
-            <div class="bg-white shadow-md rounded-lg p-5">
+            <div class="bg-white shadow-md rounded-lg p-5" id="transaksiBulanan">
                 @include('dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
             </div>
 

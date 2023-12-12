@@ -169,6 +169,10 @@ class DashboardController extends Controller
             intval($data_jumlah_pendapatan) - intval($data_jumlah_pengeluaran),
         ];
     }
+    public function get_keuangan_bulanan()
+    {
+        return DatabaseHelper::getKeuanganMonthly();
+    }
 
     public function getBudgeting()
     {
