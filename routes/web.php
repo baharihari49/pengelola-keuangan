@@ -46,7 +46,9 @@ use Carbon\Carbon;
 
 
 
-
+Route::get('/test_qrcode', function () {
+    return view('user.payments.chosePayment.layouts.qris');
+});
 
 Route::get('test', function () {
     $now = DatabaseHelper::getNowMonth();
@@ -359,7 +361,11 @@ Route::middleware(['auth', 'verified', 'check.user', 'free_account'])->group(fun
 
 
 Route::get('/info_bisni', function () {
-    return DatabaseHelper::getKeuanganMonthly();
+    return Transaksi::where('user_id', auth()->user()->id)
+        ->whereIn('jenis_transaksi_id', [1, 2])
+        ->where('void', false)
+        ->whereMonth('tanggal', DatabaseHelper::getMonth())
+        ->get();
 });
 
 Route::get('/get_pendapatan', function () {
