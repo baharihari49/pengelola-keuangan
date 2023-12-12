@@ -2,13 +2,15 @@ window.addEventListener("load", function () {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         let response = JSON.parse(this.responseText);
-
         function formatRupiah(angka) {
-            const formatter = new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "Rp. ",
-            });
-            return formatter.format(angka);
+            if (isNaN(angka)) {
+                return "N/A";
+            }
+            const formattedAngka = angka.toString().replace(/[^0-9\.]/g, "");
+            const rupiah =
+                "Rp. " +
+                formattedAngka.toFixed(2).replace(/\d(?=(\d{3})+[^\d])/g, ".");
+            return rupiah;
         }
 
         function getChartOptions() {
@@ -20,11 +22,11 @@ window.addEventListener("load", function () {
                     type: "bar",
                 },
                 series: response.map((data) => ({
-                    name: data.bulan_transaksi,
+                    name: data.monthName,
                     data: [
-                        formatRupiah(data.income),
-                        formatRupiah(data.outcome),
-                        formatRupiah(data.saldo),
+                        numeral(data.income).format("0.0.0"),
+                        numeral(data.outcome).format("0.0.0"),
+                        numeral(data.saldo).format("0.0.0"),
                     ],
                 })),
                 chart: {
@@ -67,14 +69,7 @@ window.addEventListener("load", function () {
                 },
                 xaxis: {
                     type: "category",
-                    categories: response.map((data) => {
-                        const date = new Date(data.bulan_transaksi, 0, 1);
-                        console.log(date);
-                        const formatter = new Intl.DateTimeFormat("id-ID", {
-                            month: "long",
-                        });
-                        return formatter.format(date);
-                    }),
+                    categories: response.map((data) => data.monthName),
                     labels: {
                         formatter: function (value) {
                             return value.toUpperCase(); // Ubah ke huruf kapital

@@ -390,3 +390,6 @@ Route::get('/get_pendapatan', function () {
         'user' => DatabaseHelper::getUser()[0]
     ]);
 });
+Route::get('/debug-bin', function () {
+    return DatabaseHelper::getKeuanganMonthly();
+});

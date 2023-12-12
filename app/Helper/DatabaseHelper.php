@@ -440,8 +440,10 @@ class DatabaseHelper
             $jumlah_pengeluaran = Transaksi::whereMonth('tanggal', $data->bulan_transaksi)
                 ->where('jenis_transaksi_id', [3, 4])
                 ->sum('jumlah');
-            $data->income = $jumlah_pendapatan;
-            $data->outcome = $jumlah_pengeluaran;
+            // $numericMonth = 11; // atau 12
+            $data->monthName = Carbon::createFromDate(null, intval($data->bulan_transaksi), 1)->format('F');
+            $data->income = intval($jumlah_pendapatan);
+            $data->outcome = intval($jumlah_pengeluaran);
             $data->saldo = $jumlah_pendapatan - $jumlah_pengeluaran;
         }
 

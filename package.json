@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "apexcharts": "^3.41.1",
-        "echarts": "^5.4.3"
+        "echarts": "^5.4.3",
+        "numeral": "^2.0.6"
     }
 }
