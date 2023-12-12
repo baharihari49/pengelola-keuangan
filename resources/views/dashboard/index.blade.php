@@ -241,9 +241,15 @@
     </div>
 
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-3 xl:grid-cols-3 gap-4 mb-4">
+        <div class="bg-white shadow-md rounded-lg p-5" id="transaksiBulanan">
+            @include('dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
+        </div>
         <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
-            <div>
+            @include('dashboard.charts.pie_chart_budgeting')
+        </div>
+        <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
+            <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <h5 class="text-base xl:text-xl font-reguler">Anggaran kebutuhan</h5>
                 </div>
@@ -281,9 +287,7 @@
                     @endif
                 </div>
             </div>
-        </div>
-        <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
-            <div>
+            <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <h5 class="text-base xl:text-xl font-reguler">Anggaran keinginan</h5>
                 </div>
@@ -321,9 +325,7 @@
                     @endif
                 </div>
             </div>
-        </div>
-        <div class="bg-white shadow-md rounded-lg border-gray-300 p-3 xl:p-5">
-            <div>
+            <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <h5 class="text-base xl:text-xl font-reguler">Perkiraan tabungan</h5>
                 </div>
@@ -365,10 +367,15 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
         <div class="bg-white shadow-md p-0 rounded-lg lg:col-span-2 border-gray-300 dark:border-gray-600 h-max">
             @include('dashboard.charts.line_chart')
         </div>
+        <div class="bg-white shadow-md lg:col-span-1 rounded-lg p-3">
+            <h5 class="font-bold text-gray-700 text-xl mb-4 mt-2">Pengeluaran terbanyak</h5>
+            @include('dashboard.top_pengeluaran')
+        </div>
+
         <div
             class="bg-white shadow-md relative p-0 rounded-lg lg:col-span-1 border-gray-300 dark:border-gray-600 max-h-max xl:h">
             <div class="py-2">
@@ -418,32 +425,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-32">
-        <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-
-            <div class="bg-white shadow-md rounded-lg p-3">
-                <h5 class="font-bold text-gray-700 text-xl mb-4 mt-2">Pengeluaran terbanyak</h5>
-                @include('dashboard.top_pengeluaran')
-            </div>
-
-            <div class="bg-white shadow-md rounded-lg p-5" id="transaksiBulanan">
-                @include('dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
-            </div>
-
-            {{-- <div class="bg-white shadow-md rounded-lg p-5">
-                @include('dashboard.charts.pie_chart_transaksi_anggaran')
-            </div> --}}
-        </div>
-        <div class="bg-white shadow-md rounded-lg p-5">
-            @include('dashboard.charts.pie_chart_budgeting')
-        </div>
-        {{-- <div class="col-span-2 md:col-span-1 w-full">
-            <div class="bg-white shadow-md rounded-lg p-5">
-                @include('dashboard.charts.pie_chart_anggaran')
-            </div>
-        </div> --}}
     </div>
 
 

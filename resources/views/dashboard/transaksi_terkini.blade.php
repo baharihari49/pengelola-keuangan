@@ -16,7 +16,13 @@
                             <tr id="tabel-row" class="border-b dark:border-gray-700">
                                 <td style="color: {{ $item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4 ? '#057A55' : ($item['jenis_transaksi_id'] == 3 ? '#1C64F2' : '#E02424') }}"
                                     class="px-4 py-3 font-medium text-sm">
-                                    {{ substr($item['kategori_transaksi']->nama, 0, 25) ?? '--' }}</td>
+                                    {{-- {{ substr($item['kategori_transaksi']->nama, 0, 25) ?? '--' }} --}}
+                                    @if (strlen($item['kategori_transaksi']->nama) <= 15)
+                                        {{ $item['kategori_transaksi']->nama }}
+                                    @else
+                                        {{ Str::limit($item['kategori_transaksi']->nama, 15) }}
+                                    @endif
+                                </td>
 
                                 <th scope="row"
                                     style="color: {{ $item['jenis_transaksi_id'] == 1 || $item['jenis_transaksi_id'] == 4 ? '#057A55' : ($item['jenis_transaksi_id'] == 3 ? '#1C64F2' : '#E02424') }}"
