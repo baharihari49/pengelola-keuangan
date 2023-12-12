@@ -14,7 +14,11 @@
                         @foreach ($topPengeluaran as $index => $item)
                             <tr id="tabel-row" class="border-b dark:border-gray-700">
                                 <td class="px-4 py-3 text-red-600 font-medium">
-                                    {{ substr($item['nama'], 0, 15) }}
+                                    @if (strlen($item['nama']) <= 15)
+                                        {{ $item['nama'] }}
+                                    @else
+                                        {{ Str::limit($item['nama'], 15) }}
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-red-600 font-medium">Rp
                                     {{ number_format($item['total_jumlah'], 0, ',', '.') }}</td>

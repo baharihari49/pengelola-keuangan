@@ -3749,3 +3749,17 @@
 1702377272-1792-163774447,1702377272.1606,GET,/chose-payment-methode,"App\Http\Controllers\paymentController@chosePaymentMethode",200,2237.9858493805,request
 1702377320-7805-823858000,1702377320.771,GET,/chose-payment-methode,"App\Http\Controllers\paymentController@chosePaymentMethode",200,2867.1410083771,request
 1702377337-5814-1815089570,1702377337.5749,GET,/chose-payment-methode,"App\Http\Controllers\paymentController@chosePaymentMethode",200,1768.1980133057,request
+1702383290-9926-2101939982,1702383290.8627,GET,/,"App\Http\Controllers\DashboardController@index",200,3114.602804184,request
+1702383294-4038-154761617,1702383294.3825,GET,/get_keuangan_bulanan,"App\Http\Controllers\DashboardController@get_keuangan_bulanan",200,1009.7689628601,request
+1702383295-4079-404633419,1702383295.3988,GET,/get_transaksi_by_jenis_transaksi_id_line_chart?id=1&id2=4,"App\Http\Controllers\TransaksiController@api4",200,769.80400085449,request
+1702383296-1783-2110876983,1702383296.1718,GET,/get_all_anggaran,"App\Http\Controllers\AnggaranController",200,584.79499816895,request
+1702383296-7686-1876912016,1702383296.7596,GET,/get_budgeting,"App\Http\Controllers\DashboardController@getBudgeting",200,1279.510974884,request
+1702383298-0576-1581683206,1702383298.0427,GET,/get_persentase_transaksi_anggaran,"App\Http\Controllers\DashboardController@get_persentase",200,609.39002037048,request
+1702383298-6578-669529260,1702383298.654,GET,/get_transaksi_by_jenis_transaksi_id_line_chart?id=2&id2=5,"App\Http\Controllers\TransaksiController@api4",200,716.80402755737,request
+1702383442-0672-498224512,1702383441.9718,GET,/,"App\Http\Controllers\DashboardController@index",200,2697.2579956055,request
+1702383445-1151-1976757369,1702383445.1074,GET,/get_keuangan_bulanan,"App\Http\Controllers\DashboardController@get_keuangan_bulanan",200,1279.7789573669,request
+1702383446-3946-1324270316,1702383446.391,GET,/get_transaksi_by_jenis_transaksi_id_line_chart?id=1&id2=4,"App\Http\Controllers\TransaksiController@api4",200,702.48699188232,request
+1702383447-1049-1173362934,1702383447.0998,GET,/get_all_anggaran,"App\Http\Controllers\AnggaranController",200,636.46602630615,request
+1702383447-7456-1938224213,1702383447.7398,GET,/get_persentase_transaksi_anggaran,"App\Http\Controllers\DashboardController@get_persentase",200,658.05101394653,request
+1702383448-4069-203794119,1702383448.3992,GET,/get_budgeting,"App\Http\Controllers\DashboardController@getBudgeting",200,612.33496665955,request
+1702383449-0157-1687700644,1702383449.0129,GET,/get_transaksi_by_jenis_transaksi_id_line_chart?id=2&id2=5,"App\Http\Controllers\TransaksiController@api4",200,690.69290161133,request
