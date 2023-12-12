@@ -429,6 +429,7 @@
             </div>
 
             <div class="bg-white shadow-md rounded-lg p-5" id="transaksiBulanan">
+                <h5 class="font-bold text-gray-700 text-xl mb-4 mt-2">Keuangan Bulanan</h5>
                 @include('dashboard.charts.donut_chart_transaksi_pendapatan_pengeluaran')
             </div>
 
