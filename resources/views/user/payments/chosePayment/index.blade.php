@@ -1,7 +1,8 @@
 @extends('user.layouts.main_layouts')
 
 @section('container')
-    <section class="bg-gray-50 flex flex-col justify-center items-center h-screen">
+@include('user.payments.chosePayment.layouts.chose_virtual_account')
+<section class="bg-gray-50 flex flex-col justify-center items-center h-screen">
         <a href="#" class="flex items-center mb-8 text-2xl font-semibold text-gray-900 dark:text-white">
             <img class="h-20 mr-2" src="./image/logo/octans.png" alt="logo">
         </a>
@@ -9,7 +10,7 @@
             <div class="border lg:col-span-2 bg-white shadow-md rounded-md p-10">
                 <h3 class="text-center font-semibold text-2xl mb-10">Pilih Metode Pembayaran</h3>
                 <div class="flex gap-3 justify-center">
-                    <div class="border rounded-md flex items-center px-5 text-blue-500 font-semibold text-xl text-center lg:text-2xl"><p>Virtual Account</p></div>
+                    <div data-modal-target="chose-virtual-account" data-modal-toggle="chose-virtual-account" class="border hover:bg-gray-100 cursor-pointer rounded-md flex items-center px-5 text-blue-500 font-semibold text-xl text-center lg:text-2xl"><p>Virtual Account</p></div>
                     <form class="border cursor-pointer rounded-md p-5 hover:bg-gray-100" action="create_payment" method="POST">
                         @csrf
                         <button class="submit" class="">
@@ -25,7 +26,7 @@
                 <h3 class="text-center text-lg">Ringkasan Orderan</h3>
                 <hr class="my-2">
 
-                <p class="text-center text-sm text-gray-600">No Tagihan : 57575346</p>
+                {{-- <p class="text-center text-sm text-gray-600">No Tagihan : </p> --}}
                 <br>
                 <table class="w-full" style="border: none">
                     <tr class="">
@@ -38,7 +39,7 @@
                     </tr>
                     <tr class="border-t-2">
                         <td class="text-gray-800 font-medium pt-1">Total</td>
-                        <td class="text-right text-blue-500 pt-1 font-medium text-lg">Rp55.0</td>
+                        <td class="text-right text-blue-500 pt-1 font-medium text-lg">Rp55.074</td>
                     </tr>
                 </table>
             </div>

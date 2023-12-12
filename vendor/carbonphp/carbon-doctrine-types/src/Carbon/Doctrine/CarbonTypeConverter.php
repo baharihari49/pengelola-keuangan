@@ -8,10 +8,6 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Platforms\DB2Platform;
-use Doctrine\DBAL\Platforms\OraclePlatform;
-use Doctrine\DBAL\Platforms\SQLitePlatform;
-use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Types\Exception\InvalidType;
 use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Exception;
@@ -39,10 +35,7 @@ trait CarbonTypeConverter
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        $precision = min(
-            $fieldDeclaration['precision'] ?? DateTimeDefaultPrecision::get(),
-            $this->getMaximumPrecision($platform),
-        );
+        $precision = $fieldDeclaration['precision'] ?? DateTimeDefaultPrecision::get();
 
         $type = parent::getSQLDeclaration($fieldDeclaration, $platform);
 
@@ -110,22 +103,5 @@ trait CarbonTypeConverter
         }
 
         return $date;
-    }
-
-    private function getMaximumPrecision(AbstractPlatform $platform): int
-    {
-        if ($platform instanceof DB2Platform) {
-            return 12;
-        }
-
-        if ($platform instanceof OraclePlatform) {
-            return 9;
-        }
-
-        if ($platform instanceof SQLServerPlatform || $platform instanceof SQLitePlatform) {
-            return 3;
-        }
-
-        return 6;
     }
 }

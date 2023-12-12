@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\User;
 use GuzzleHttp;
+use PhpParser\Node\Stmt\Return_;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class paymentController extends Controller
 {
@@ -76,6 +77,72 @@ class paymentController extends Controller
         }
 
 
+    }
+
+    public function createBillVA()
+    {
+        $ch = curl_init();
+        $secret_key = env('SECRETKEY_FLIP');
+        $encoded_auth = base64_encode($secret_key . ":");
+        $base_url = env('BASE_URL');
+
+        curl_setopt($ch, CURLOPT_URL, $base_url."pwf/bill");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+
+        $payloads = [
+            "title" => 'Langganan octans finance',
+            "amount" => 10000,
+            "type" => "SINGLE",
+            "expired_date" => "2023-12-30 15:50",
+            "redirect_url" => "", // Ganti dengan URL yang valid
+            "is_address_required" => 0,
+            "is_phone_number_required" => 0,
+            'step' => 3,
+            'sender_name' => 'bahari',
+            'sender_email' => 'baharihari49@gmail.com',
+            "sender_bank"=> request()->sender_bank,
+            "sender_bank_type"=> "virtual_account",
+        ];
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Authorization: Basic " . $encoded_auth,
+            "Content-Type: application/x-www-form-urlencoded"
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $dataResponse = json_decode($response);
+
+        // return $dataResponse;
+
+        $noVa = $dataResponse->bill_payment->receiver_bank_account->account_number;
+        $senderBank = $dataResponse->bill_payment->sender_bank;
+        // $qrCode = $dataResponse->bill_payment->receiver_bank_account->qr_code_data;
+
+        $payment = new Payment();
+
+        $payment->title = $dataResponse->title;
+        $payment->amount = $dataResponse->amount;
+        $payment->status = 'pending';
+        $payment->external_id = $dataResponse->link_id;
+        $payment->url = $dataResponse->payment_url;
+        $payment->user_id = auth()->user()->id;
+
+        if($payment->save()){
+            $paymenId = Payment::where('user_id', auth()->user()->id)->value('id');
+            User::where('id', auth()->user()->id)->update(['payment_id' => $paymenId]);
+            return view('user.payments.chosePayment.layouts.virtual_account',[
+                'noVa' => $noVa,
+                'sender_bank' => $senderBank,
+                'amount' => $dataResponse->amount
+            ]);
+        }
     }
 
     public function changeStatus(Request $request)
@@ -451,5 +518,29 @@ class paymentController extends Controller
         return view('user.payments.paymentManage.index', [
             'data' => $payment
         ]);
+    }
+
+    public function getInfoBank()
+    {
+        $ch = curl_init();
+        $base_url = env('BASE_URL');
+        $secret_key = env('SECRETKEY_FLIP');
+        $encoded_auth = base64_encode($secret_key . ":");
+
+        curl_setopt($ch, CURLOPT_URL, $base_url."general/banks");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: Basic " . $encoded_auth,
+        "Content-Type: application/x-www-form-urlencoded"
+        ));
+
+        curl_setopt($ch, CURLOPT_USERPWD, $secret_key.":");
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
     }
 }

@@ -50,6 +50,12 @@ Route::get('/test_qrcode', function () {
     return view('user.payments.chosePayment.layouts.qris');
 });
 
+Route::get('test_virtual_account', function(){
+    return view('user.payments.chosePayment.layouts.virtual_account');
+});
+
+Route::get('/get-bank', [paymentController::class, 'getInfoBank']);
+
 Route::get('test', function () {
     $now = DatabaseHelper::getNowMonth();
     $payments = Payment::where('langganan_berakhir', '<', $now)->update(['status' => 'expired']);
@@ -108,6 +114,8 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/create_payment', [paymentController::class, 'store']);
     Route::get('/create_payment', [paymentController::class, 'index']);
+
+    Route::post('create-bill-va', [paymentController::class, 'createBillVA']);
 
     Route::group(['middleware' => ['role:super admin']], function () {
         Route::controller(UserController::class)->group(function () {
